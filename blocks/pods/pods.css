@@ -1,0 +1,413 @@
+.pods {
+  position: relative;
+}
+
+.pods p,
+.pods [class^="body-"] { margin: var(--spacing-xs) 0; }
+
+.pods [class^="heading"] { margin: 0 0 var(--spacing-xs) 0; }
+
+.pods.heading-xs [class^="heading"] {
+  font-size: var(--type-heading-xs-size);
+  line-height: var(--type-heading-xs-lh);
+  margin-bottom: 0;
+}
+
+.pods.heading-xs p.body-m {
+  font-size: var(--type-body-s-size);
+  line-height: var(--type-body-s-lh);
+  margin: 4px 0;
+}
+
+.pods [class^="detail"] { margin: 0 0 var(--spacing-xxs) 0; }
+
+.pods p.action-area { margin-top: var(--spacing-s); }
+
+.pods div > *:last-child { margin-bottom: 0; }
+
+.grid .pods div > *:last-child { margin-bottom: var(--spacing-s); }
+
+.pods .foreground > div *:first-child { margin-top: 0; }
+
+.pods .background {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.pods .background > div {
+  height: 100%;
+}
+
+.pods .background img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.pods .background img[style] {
+  object-fit: contain;
+}
+
+
+.pods .foreground {
+  max-width: var(--grid-container-width);
+  margin: 0 auto;
+}
+
+[class*='-up'] .pods .foreground {
+  max-width: none;
+  margin: 0;
+}
+
+.pods .action-area {
+  margin-top: var(--spacing-s);
+  display: flex;
+  gap: var(--spacing-s);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.pods.dark,
+.pods.part-1-dark .foreground > div:first-child,
+.pods.part-2-dark .foreground > div:last-child {
+  color: #FFF;
+}
+
+.pods a,
+.pods.click-pod a:not(.con-button),
+.pods.link-pod a:not(.con-button) {
+  color: inherit;
+  font-weight: 700;
+}
+
+.pods.click-pod .foreground p.detail-m:first-child {
+  font-size: var(--type-detail-l-size);
+  line-height: var(--type-detail-l-lh);
+}
+
+/* .pods.link-pod h4 {
+  font-size: var(--type-body-s-size);
+  margin-bottom: 0;
+} */
+
+.pods.link-pod .foreground > div {
+  padding: var(--spacing-s) var(--spacing-s) 0 var(--spacing-s);
+}
+
+.pods.link-pod .foreground > div:last-child {
+  padding-bottom: var(--spacing-s);
+}
+
+.pods,
+.pods.link-pod.split-background  .foreground > div,
+.pods[class*="highlight"] > div {
+  padding: var(--spacing-s);
+}
+
+.pods.click-pod {
+  padding-top: 32px;
+  cursor: pointer;
+}
+
+.pods.link-pod,
+.pods.link-pod .foreground {
+  padding: 0;
+}
+
+.section.border-radius-s .pods .highlight-row,
+.section.border-radius-s .pods.link-pod.split-background .foreground > div:first-child {
+  border-radius: 4px 4px 0 0;
+}
+
+.section.border-radius-l .pods .highlight-row,
+.section.border-radius-l .pods.link-pod.split-background .foreground > div:first-child {
+  border-radius: 16px 16px 0 0;
+}
+
+.section.border-radius-s .pods.link-pod.split-background .foreground > div:last-child {
+  border-radius: 0 0 4px 4px;
+}
+
+.section.border-radius-l .pods.link-pod.split-background .foreground > div:last-child {
+  border-radius: 0 0 16px 16px;
+}
+
+@media screen and (min-width: 600px) and (max-width: 1023px) {
+  .pods.link-pod .foreground {
+    height: 100%;
+    display: flex;
+  }
+
+  .pods.link-pod .foreground > div {
+    width: 50%;
+  }
+
+  .section.border-radius-s .pods.link-pod.split-background .foreground > div:first-child {
+    border-radius: 4px 0 0 4px;
+  }
+
+  .section.border-radius-l .pods.link-pod.split-background .foreground > div:first-child {
+    border-radius: 16px 0 0 16px;
+  }
+
+  .section.border-radius-s .pods.link-pod.split-background .foreground > div:last-child {
+    border-radius: 0 4px 4px 0;
+  }
+
+  .section.border-radius-l .pods.link-pod.split-background .foreground > div:last-child {
+    border-radius: 0 16px 16px 0;
+  }
+}
+
+
+.pods[class*="highlight"] {
+  padding: 0 !important;
+}
+
+.pods[class*="highlight"] div.highlight-empty {
+  padding: var(--spacing-xs);
+}
+
+.pods.link-pod .highlight-row {
+  color: #FFF;
+  background: linear-gradient(125deg, rgba(237, 5, 41, 1) 0%, rgba(155, 0, 193, 1) 50%, rgba(91, 0, 198, 1) 100%) ;
+  font-weight: 700;
+  padding: 24px 24px 20px 24px;
+}
+
+.pods.link-pod hr {
+  margin-bottom: 17px;
+}
+
+.pods.news-pod .highlight-row {
+  color: #FFF;
+  background: linear-gradient(90deg, rgba(33,99,212,1) 0%, rgba(93,227,116,1) 100%);
+}
+
+.pods .positioned-background {
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.pods .positioned-background picture {
+  display: none;
+}
+
+.pods .mobileOnly,
+.pods .tabletOnly,
+.pods .desktopOnly {
+  display: none;
+}
+
+@media screen and (max-width: 599px) {
+  .pods div.mobileOnly {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 600px) and (max-width: 1199px) {
+  .pods .tabletOnly {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .pods .desktopOnly {
+    display: block;
+  }
+}
+
+/* Alignment */
+.pods.center {
+  text-align: center;
+  align-items: center;
+}
+
+.pods.center .action-area { justify-content: center; }
+
+.pods.right {
+  text-align: right;
+  align-items: end;
+}
+
+.pods.right .action-area { justify-content: end; }
+
+/* Vertical */
+.vertical.pods .foreground {
+  padding-bottom: var(--spacing-m);
+}
+
+/* Inset */
+.inset.pods .foreground {
+  position: relative;
+  padding-top: var(--spacing-m);
+  padding-bottom: var(--spacing-m);
+}
+
+.inset.pods .foreground::before {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  left: -8.3%;
+  top: 0;
+  background: var(--color-gray-400);
+}
+
+.inset.pods [class^="heading"]:nth-child(n+2) {
+  margin-top: var(--spacing-xxl);
+}
+
+.inset.pods .foreground ul,
+.inset.pods .foreground ol {
+  list-style: outside;
+  padding-left: var(--spacing-xs);;
+}
+
+/* Tablet */
+@media screen and (min-width: 600px) {
+  .inset.pods .foreground::before {
+    display: none;
+  }
+
+  .inset.pods .foreground {
+    border-left: 2px solid var(--color-gray-400);
+  }
+
+  .inset.pods .foreground > div {
+    padding-left: var(--spacing-l);
+  }
+}
+
+/* quick-tools-bar */
+.pods.quick-tools-bar {
+  padding: calc(var(--spacing-s) - 8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000;
+}
+
+.pods.quick-tools-bar .foreground {
+  margin: 0;
+  text-align: center;
+}
+
+.pods.quick-tools-bar .action-area {
+  margin-top: 0;
+}
+
+.pods.quick-tools-bar div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.pods.quick-tools-bar h3 {
+  margin: 8px;
+  line-height: 24px;
+  font-size: 20px;
+}
+
+.pods.quick-tools-bar p {
+  display: flex;
+  margin: 8px 0;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.pods.quick-tools-bar a.con-button {
+  display: flex;
+  align-items: center;
+  margin: 8px;
+  width: auto;
+  padding: 0 14px;
+  min-height: 26px;
+}
+
+.pods.quick-tools-bar
+  a.con-button.outline:hover
+  svg
+  path {
+  fill: #fff;
+}
+
+.pods.quick-tools-bar a.con-button svg {
+  width: auto;
+  height: auto;
+}
+
+@media screen and (max-width: 599px) {
+  .pods.quick-tools-bar.mobile-full-width-buttons div,
+  .pods.quick-tools-bar.mobile-full-width-buttons p {
+    width: 100%;
+  }
+
+  .pods.quick-tools-bar.mobile-full-width-buttons
+    .foreground
+    > div {
+    display: flex;
+    align-items: stretch;
+  }
+
+  .pods.quick-tools-bar.mobile-full-width-buttons
+    a {
+    width: auto;
+  }
+
+  .pods.quick-tools-bar {
+    flex-direction: column;
+    padding-bottom: 24px;
+  }
+
+  .pods.quick-tools-bar h3 {
+    margin-bottom: 14px;
+  }
+
+  .pods.quick-tools-bar a.con-button {
+    justify-content: center;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .pods.quick-tools-bar {
+    flex-direction: column;
+    padding-bottom: 24px;
+  }
+
+  .pods.quick-tools-bar div,
+  .pods.quick-tools-bar p {
+    flex-direction: row;
+  }
+
+  .pods.quick-tools-bar h3 {
+    margin-bottom: 14px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .pods.quick-tools-bar {
+    flex-direction: row;
+    padding-bottom: 16px;
+  }
+
+  .pods.quick-tools-bar h3 {
+    margin-bottom: 8px;
+  }
+
+  .pods.quick-tools-bar p {
+    margin: 0;
+  }
+
+  .pods.quick-tools-bar a.con-button {
+    margin: 8px;
+  }
+}
