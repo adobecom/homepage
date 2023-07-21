@@ -1,5 +1,4 @@
-import { decorateButtons, decorateBlockText } from '../../utils/decorate.js';
-import { decorateBlockAnalytics, decorateLinkAnalytics } from '../../martech/attributes.js';
+import { getLibs } from '../../scripts/utils.js';
 
 // size: [heading, body, ...detail]
 // blockTypeSizes array order: heading, body, detail, button, link
@@ -120,7 +119,10 @@ function enforceHeaderLevel(node, level) {
   node.replaceWith(clone);
 }
 
-export default function init(el) {
+export default async function init(el) {
+  const { decorateButtons, decorateBlockText } = await import(`${getLibs()}/utils/decorate.js`);
+  const { decorateBlockAnalytics, decorateLinkAnalytics } = await import(`${getLibs()}/martech/attributes.js`);
+
   const blockSize = getBlockSize(el);
   decorateButtons(el, `button-${blockTypeSizes[blockSize][3]}`);
   decorateLinks(el, blockTypeSizes[blockSize][4]);

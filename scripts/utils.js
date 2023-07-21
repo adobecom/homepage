@@ -28,15 +28,3 @@ export const [setLibs, getLibs] = (() => {
     }, () => libs,
   ];
 })();
-
-/*
- * ------------------------------------------------------------
- * Edit above at your own risk.
- *
- * Note: This file should have no self-invoking functions.
- * ------------------------------------------------------------
- */
-
-export async function useMiloSample() {
-  const { createTag } = await import(`${getLibs()}/utils/utils.js`);
-}

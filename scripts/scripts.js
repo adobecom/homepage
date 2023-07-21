@@ -22,7 +22,7 @@ const LIBS = '/libs';
 const CONFIG = {
   // codeRoot: '',
   // contentRoot: '',
-  // imsClientId: 'college',
+  imsClientId: 'homepage',
   // geoRouting: 'off',
   // fallbackRouting: 'off',
   locales: {
