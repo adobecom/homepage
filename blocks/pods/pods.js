@@ -50,6 +50,7 @@ function decorateLinks(el, size) {
             .getAttribute('alt')}</span>`,
         );
       }
+
       // link.outerHTML = `<strong>${link.outerHTML}</strong>`;
     }
     const parent = link.closest('p, div');
