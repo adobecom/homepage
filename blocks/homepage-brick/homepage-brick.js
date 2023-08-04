@@ -7,13 +7,9 @@ const blockTypeSizes = {
   medium: ['l', 'm', 'm', 'l', 'm'],
   large: ['xl', 'm', 'l', 'l', 'm'],
   xlarge: ['xxl', 'l', 'xl', 'l', 'l'],
-
-  /* TODO: add this to CSS */
-  podFullSizePodDesktop: ['xl', 'm', 'l', 'm'],
-
-  'link-pod': ['m', 'xs', 'm', 's', 'xs'],
-  'news-pod': ['s', 'm', 'm', 's', 'xs'],
-  'quick-tools-bar': ['l', 'l', 'm', 's', 'xs'],
+  'link': ['m', 'xs', 'm', 's', 'xs'],
+  'news': ['s', 'm', 'm', 's', 'xs'],
+  'full-desktop': ['xl', 'l', 'm', 'l', 'm'],
   default: ['m', 'm', 'l', 's', 'xs'],
 };
 
@@ -26,7 +22,7 @@ function goToDataHref() {
 }
 
 function getBlockSize(el) {
-  const sizes = ['small', 'medium', 'large', 'xlarge', 'link-pod', 'news-pod', 'quick-tools-bar', 'default'];
+  const sizes = Object.keys(blockTypeSizes);
   return sizes.find((size) => el.classList.contains(size)) || sizes[7];
 }
 
@@ -56,19 +52,6 @@ function decorateLinks(el, size) {
     const parent = link.closest('p, div');
     parent.setAttribute('class', `body-${size}`);
   });
-}
-
-function getBlockSegmentBackground(el) {
-  const image = el.querySelector('img');
-  const text = el.textContent.trim();
-  let background = false;
-  if (image) {
-    background = `url(${image.getAttribute('src')})`;
-  } if (text !== '') {
-    background = text;
-  }
-  el.remove();
-  return background;
 }
 
 function decorateBlockBg(block, node) {
@@ -120,53 +103,53 @@ function enforceHeaderLevel(node, level) {
 }
 
 export default async function init(el) {
+  //temp fix for masonry
+  document.querySelectorAll('.section.masonry:not(.masonry-up)').forEach((section) => section.classList.add('masonry-up'));
+
+  const index = Array.from(el.parentNode.children).indexOf(el);
+  el.classList.add(`brick-${index}`);
+  
   const { decorateButtons, decorateBlockText } = await import(`${getLibs()}/utils/decorate.js`);
-  const { decorateBlockAnalytics, decorateLinkAnalytics } = await import(`${getLibs()}/martech/attributes.js`);
+  const { decorateBlockAnalytics } = await import(`${getLibs()}/martech/attributes.js`);
+
+  if (!el.classList.contains('link') && !el.classList.contains('news')) el.classList.add('click');
 
   const blockSize = getBlockSize(el);
   decorateButtons(el, `button-${blockTypeSizes[blockSize][3]}`);
   decorateLinks(el, blockTypeSizes[blockSize][4]);
   let rows = el.querySelectorAll(':scope > div');
 
-  let [head, ...tail] = rows;
-  if (rows.length > 1) {
-    decorateBlockBg(el, head);
-    rows = tail;
-    if (rows.length > 1 && el.classList.contains('two-backgrounds')) {
-      [head, ...tail] = rows;
+  if (!el.classList.contains('link') && !el.classList.contains('news')) {
+    let [head, ...tail] = rows;
+    el.classList.add('click');
+    if (rows.length > 1) {
       decorateBlockBg(el, head);
+      head.classList.add('first-background');
       rows = tail;
+      if (rows.length > 1) {
+        [head, ...tail] = rows;
+        decorateBlockBg(el, head);
+        rows = tail;
+      }
     }
   }
 
-  const backgrounds = {};
-  if (el.classList.contains('highlight-background')) {
-    [head, ...tail] = rows;
-    if (tail.length) backgrounds.highlight = getBlockSegmentBackground(head);
-    rows = tail;
-  }
-
-  if (el.classList.contains('link-pod') && el.classList.contains('split-background')) {
-    [head, ...tail] = rows;
-    const split = head.querySelectorAll(':scope > div');
-    if (split.length > 1) {
-      const part1 = el.querySelector(':scope > div:last-child > div:first-child');
-      backgrounds.part1 = getBlockSegmentBackground(split[0]);
-      if (part1 && backgrounds.part1) part1.style.background = backgrounds.part1;
-      const part2 = el.querySelectorAll(':scope > div:last-child > div:last-child');
-      backgrounds.part2 = getBlockSegmentBackground(split[1]);
-      if (part2 && backgrounds.part2) part2.style.background = backgrounds.part2;
-    }
-    rows = tail;
-  }
-
-  if (el.classList.contains('highlight')) {
-    [head, ...tail] = rows;
-    head.classList.add('highlight-row');
-    if (head.textContent.trim() === '') {
-      head.classList.add('highlight-empty');
-    }
-    if (backgrounds.highlight) head.style.background = backgrounds.highlight;
+  if (el.classList.contains('link')) {
+    const { createTag } = await import(`${getLibs()}/utils/utils.js`);
+    const background = createTag('div', { class: 'background first-background' }, false);
+    el.prepend(background);
+    if (el.classList.contains('split-background') && rows.length === 2) {
+      const [left, right] = rows;
+      const rightColumn = right.querySelector(':scope > div');
+      left.appendChild(rightColumn);
+      right.remove();
+    } else if (!el.classList.contains('split-background')) {
+      const highlight = createTag('div', { class: 'highlight-row' }, false);
+      el.prepend(highlight);
+    } 
+  } else if (el.classList.contains('news') && rows.length > 1) {
+    const [highlight, ...tail] = rows;
+    highlight.classList.add('highlight-row');
     rows = tail;
   }
 
@@ -188,14 +171,21 @@ export default async function init(el) {
   rows.forEach((row) => { row.classList.add('foreground'); });
 
   decorateBlockAnalytics(el);
-  const heading = el.querySelector('h3, h4');
-  const text = heading.closest('.foreground') || heading.closest('.highlight-row');
-  decorateLinkAnalytics(text, headers);
 
-  if (el.classList.contains('link-pod') || el.classList.contains('click-pod') || el.classList.contains('news-pod')) {
-    const links = el.querySelectorAll('a');
-    if (el.classList.contains('click-pod') && links.length) {
-      const link = links[0];
+  if (el.classList.contains('news') || el.classList.contains('link')) {
+    let header = '';
+    el.querySelectorAll('h3, h4, a').forEach((item) => {
+      if (item.nodeName === 'A') {
+        item.setAttribute('daa-ll', `link|${item.textContent}|${header}`);
+      } else {
+        header = item.textContent;
+      }
+    });
+  } else {
+    const heading = el.querySelector('h3');
+    const text = heading.closest('.foreground');
+    const link = el.querySelector('a');
+    if (link) {
       el.dataset.href = link.href;
       if (link.hasAttribute('target')) {
         el.dataset.target = link.getAttribute('target');

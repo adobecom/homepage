@@ -284,7 +284,7 @@
 }
 
 /* quick-tools-bar */
-.pods.quick-tools-bar {
+.homepage-link-bar {
   padding: calc(var(--spacing-s) - 8px);
   display: flex;
   justify-content: center;
@@ -292,16 +292,16 @@
   color: #000;
 }
 
-.pods.quick-tools-bar .foreground {
+.homepage-link-bar .foreground {
   margin: 0;
   text-align: center;
 }
 
-.pods.quick-tools-bar .action-area {
+.homepage-link-bar .action-area {
   margin-top: 0;
 }
 
-.pods.quick-tools-bar div {
+.homepage-link-bar div {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -309,13 +309,13 @@
   flex-direction: column;
 }
 
-.pods.quick-tools-bar h3 {
+.homepage-link-bar h3 {
   margin: 8px;
   line-height: 24px;
   font-size: 20px;
 }
 
-.pods.quick-tools-bar p {
+.homepage-link-bar p {
   display: flex;
   margin: 8px 0;
   justify-content: center;
@@ -323,7 +323,7 @@
   flex-direction: column;
 }
 
-.pods.quick-tools-bar a.con-button {
+.homepage-link-bar a.con-button {
   display: flex;
   align-items: center;
   margin: 8px;
@@ -332,81 +332,100 @@
   min-height: 26px;
 }
 
-.pods.quick-tools-bar
+.homepage-link-bar
   a.con-button.outline:hover
   svg
   path {
   fill: #fff;
 }
 
-.pods.quick-tools-bar a.con-button svg {
+.homepage-link-bar a.con-button svg {
   width: auto;
   height: auto;
 }
 
 @media screen and (max-width: 599px) {
-  .pods.quick-tools-bar.mobile-full-width-buttons div,
-  .pods.quick-tools-bar.mobile-full-width-buttons p {
+  .homepage-link-bar.mobile-full-width-buttons div,
+  .homepage-link-bar.mobile-full-width-buttons p {
     width: 100%;
   }
 
-  .pods.quick-tools-bar.mobile-full-width-buttons
+  .homepage-link-bar.mobile-full-width-buttons
     .foreground
     > div {
     display: flex;
     align-items: stretch;
   }
 
-  .pods.quick-tools-bar.mobile-full-width-buttons
+  .homepage-link-bar.mobile-full-width-buttons
     a {
     width: auto;
   }
 
-  .pods.quick-tools-bar {
+  .homepage-link-bar {
     flex-direction: column;
     padding-bottom: 24px;
   }
 
-  .pods.quick-tools-bar h3 {
+  .homepage-link-bar h3 {
     margin-bottom: 14px;
   }
 
-  .pods.quick-tools-bar a.con-button {
+  .homepage-link-bar a.con-button {
     justify-content: center;
   }
 }
 
 @media screen and (min-width: 600px) {
-  .pods.quick-tools-bar {
+  .homepage-link-bar {
     flex-direction: column;
     padding-bottom: 24px;
   }
 
-  .pods.quick-tools-bar div,
-  .pods.quick-tools-bar p {
+  .homepage-link-bar div,
+  .homepage-link-bar p {
     flex-direction: row;
   }
 
-  .pods.quick-tools-bar h3 {
+  .homepage-link-bar h3 {
     margin-bottom: 14px;
   }
 }
 
 @media screen and (min-width: 1200px) {
-  .pods.quick-tools-bar {
+  .homepage-link-bar:not(.early-wrap) {
     flex-direction: row;
     padding-bottom: 16px;
   }
 
-  .pods.quick-tools-bar h3 {
+  .homepage-link-bar:not(.early-wrap) h3 {
     margin-bottom: 8px;
   }
 
-  .pods.quick-tools-bar p {
+  .homepage-link-bar:not(.early-wrap) p {
     margin: 0;
   }
 
-  .pods.quick-tools-bar a.con-button {
+  .homepage-link-bar:not(.early-wrap) a.con-button {
+    margin: 8px;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .homepage-link-bar {
+    flex-direction: row;
+    padding-bottom: 16px;
+  }
+
+  .homepage-link-bar h3 {
+    margin-bottom: 8px;
+  }
+
+  .homepage-link-bar p {
+    margin: 0;
+  }
+
+  .homepage-link-bar a.con-button {
     margin: 8px;
   }
 }
