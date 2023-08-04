@@ -345,19 +345,19 @@
 }
 
 @media screen and (max-width: 599px) {
-  .homepage-link-bar.mobile-full-width-buttons div,
-  .homepage-link-bar.mobile-full-width-buttons p {
+  .homepage-link-bar.justified div,
+  .homepage-link-bar.justified p {
     width: 100%;
   }
 
-  .homepage-link-bar.mobile-full-width-buttons
+  .homepage-link-bar.justified
     .foreground
     > div {
     display: flex;
     align-items: stretch;
   }
 
-  .homepage-link-bar.mobile-full-width-buttons
+  .homepage-link-bar.justified
     a {
     width: auto;
   }

@@ -3,6 +3,8 @@
 /* defaults */
 .section.masonry {
   grid-template-columns: 1fr;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .section.masonry:not([class*="spacing"]) {
@@ -50,7 +52,7 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .section.masonry .full-tablet {
+  .section.masonry .full-grid {
     grid-column: span 2;
   }
 }
@@ -61,20 +63,20 @@
   }
 
   .section.masonry > div { grid-column: span 4; }
-  .section.masonry .half-desktop { grid-column: span 6; }
-  .section.masonry .double-desktop { grid-column: span 8; }
-  .section.masonry .full-desktop {grid-column: span 12; }
+  .section.masonry .half-grid { grid-column: span 6; }
+  .section.masonry .two-thirds-grid { grid-column: span 8; }
+  .section.masonry [class*="full-grid"] {grid-column: span 12; }
 
-  .section.masonry .homepage-brick.click.full-desktop {
+  .section.masonry .homepage-brick.click[class*="full-grid"] {
     padding-top: var(--spacing-xl-static);
     text-align: center;
   }
 
-  .section.masonry .homepage-brick.click.full-desktop.desktop-left-align {
+  .section.masonry .homepage-brick.click.left-align-desktop[class*="full-grid"] {
     text-align: left;
   }
 
-  .section.masonry .homepage-brick.click.full-desktop.desktop-right-align {
+  .section.masonry .homepage-brick.click.right-align-desktop[class*="full-grid"] {
     text-align: right;
   }
 }
