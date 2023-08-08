@@ -12,9 +12,9 @@
   margin-right: auto;
 }
 
-.section.masonry > div > div.fragment,
-.section.masonry > div > div.fragment > div.section,
-.section.masonry > div > div.fragment > div.section > div {
+.section.masonry > div:not([class]) > div.fragment,
+.section.masonry > div:not([class]) > div.fragment > div.section,
+.section.masonry > div:not([class]) > div.fragment > div.section > div {
   height: 100%;
 }
 
