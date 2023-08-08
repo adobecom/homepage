@@ -12,11 +12,11 @@
   margin-right: auto;
 }
 
-.section.masonry > div:not([class]) > div.fragment,
+/* .section.masonry > div:not([class]) > div.fragment,
 .section.masonry > div:not([class]) > div.fragment > div.section,
 .section.masonry > div:not([class]) > div.fragment > div.section > div.link {
   height: 100%;
-}
+} */
 
 .section.masonry:not([class*="spacing"]) {
   max-width: 1920px;
