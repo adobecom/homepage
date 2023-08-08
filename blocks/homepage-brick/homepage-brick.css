@@ -12,6 +12,12 @@
   margin-right: auto;
 }
 
+.section.masonry > div > div.fragment,
+.section.masonry > div > div.fragment > div.section,
+.section.masonry > div > div.fragment > div.section > div {
+  height: 100%;
+}
+
 .section.masonry:not([class*="spacing"]) {
   max-width: 1920px;
   align-items: stretch;
