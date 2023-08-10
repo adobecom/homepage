@@ -183,6 +183,7 @@ export default async function init(el) {
     if (!head.querySelectorAll('h2, h3, a').length) {
       decorateBlockBg(el, head);
       rows = tail;
+      el.classList.add('custom-bg');
     }
   }
   if (rows.length > 1) {
@@ -199,11 +200,24 @@ export default async function init(el) {
   decorateBlockText(el, config);
 
   const { createTag } = await import(`${getLibs()}/utils/utils.js`);
-  const linkRows = [
+  const buttonRows = [
+    createTag('div', { class: 'button-row' }),
+    createTag('div', { class: 'button-row' })
+  ];
+  rows.forEach((row, index) => {
+    let rowNumber = 0;
+    if (index >= 3 || (index === 2 && rows.length === 4)) rowNumber = 1;
+    buttonRows[rowNumber].appendChild(row);
+  });
+  el.appendChild(buttonRows[0]);
+  el.appendChild(buttonRows[1]);
+
+  
+/*     const linkRows = [
     createTag('div', { class: 'foreground' }),
     createTag('div', { class: 'foreground' }),
   ];
-  const links = el.querySelectorAll('a');
+const links = el.querySelectorAll('a');
   links.forEach((link, i) => {
     const div = createTag('div', { 'data-valign': 'middle' }, false);
     div.appendChild(link);
@@ -223,7 +237,7 @@ export default async function init(el) {
     } else {
       row.remove();
     }
-  });
+  }); */
 
 
 

@@ -5,25 +5,6 @@
 
 /* masonry support */
 
-/* defaults */
-.section.masonry {
-  grid-template-columns: 1fr;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* .section.masonry > div:not([class]) > div.fragment,
-.section.masonry > div:not([class]) > div.fragment > div.section,
-.section.masonry > div:not([class]) > div.fragment > div.section > div.link {
-  height: 100%;
-} */
-
-.section.masonry:not([class*="spacing"]) {
-  max-width: 1920px;
-  align-items: stretch;
-  padding: var(--spacing-l) var(--spacing-xl);
-}
-
 /* border radius */
 .section.border-radius-s > div,
 .section.border-radius-s > div .background {
@@ -43,7 +24,9 @@
 
 
 .section.masonry:not([class*="border-radius"]) > div,
-.section.masonry:not([class*="border-radius"]) > div .background {
+.section.masonry:not([class*="border-radius"]) > div > div.fragment > div.section > div,
+.section.masonry:not([class*="border-radius"]) > div .background,
+.section.masonry:not([class*="border-radius"]) > div > div.fragment > div.section > div .background {
   border-radius: 16px;
 }
 
@@ -57,6 +40,28 @@
   padding-right: var(--grid-margins-width);
 }
 
+/* defaults */
+.section.masonry {
+  grid-template-columns: repeat(1, 1fr);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section.masonry > div:not([class]),
+.section.masonry > div:not([class]) > div.fragment,
+.section.masonry > div:not([class]) > div.fragment > div.section {
+  display: grid;
+}
+
+.section.masonry:not([class*="spacing"]) {
+  max-width: 1920px;
+  align-items: stretch;
+  padding: var(--spacing-m) var(--spacing-xl);
+}
+
+.section.masonry.small-top-padding:not([class*="spacing"]) {
+  padding-top: var(--spacing-s);
+}
 
 @media screen and (min-width: 1024px) and (max-width: 1199px) {
   .section.masonry {
@@ -98,7 +103,7 @@
 }
 
 .masonry .homepage-brick {
-  min-height: 450px;
+  min-height: 394px;
 }
 
 .homepage-brick .background {
@@ -182,7 +187,7 @@
 
 .homepage-brick.link:not(.split-background) .foreground:last-child > div {
   padding-top: var(--spacing-xs);
-  padding-bottom: var(--spacing-s);
+  /* padding-bottom: var(--spacing-s); */
 }
 
 .homepage-brick.dark,
@@ -227,7 +232,7 @@
   border-radius: 4px 4px 0 0;
 }
 
-@media screen and (min-width: 600px) and (max-width: 1023px) {
+@media screen and (min-width: 700px) and (max-width: 1199px) {
   .homepage-brick.link .foreground {
     height: 100%;
     display: flex;
@@ -304,8 +309,8 @@
 }
 
 @media screen and (max-width: 599px) {
-  .homepage-brick.mobile-only {
-    display: block;
+  .section.masonry:not([class*="spacing"]) {
+    padding: var(--spacing-s) var(--spacing-s);
   }
 }
 

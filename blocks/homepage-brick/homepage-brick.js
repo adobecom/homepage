@@ -103,8 +103,9 @@ function enforceHeaderLevel(node, level) {
 }
 
 export default async function init(el) {
-  //temp fix for masonry
-  document.querySelectorAll('.section.masonry:not(.masonry-up)').forEach((section) => section.classList.add('masonry-up'));
+  if (document.querySelector('.homepage-link-bar:not(.custom-bg)')) {
+    document.querySelector('.section.masonry')?.classList.add('small-top-padding');
+  }
 
   const index = Array.from(el.parentNode.children).indexOf(el);
   el.classList.add(`brick-${index}`);
@@ -138,12 +139,13 @@ export default async function init(el) {
     const { createTag } = await import(`${getLibs()}/utils/utils.js`);
     const background = createTag('div', { class: 'background first-background' }, false);
     el.prepend(background);
-    if (el.classList.contains('split-background') && rows.length === 2) {
+    if (rows.length === 2) {
       const [left, right] = rows;
       const rightColumn = right.querySelector(':scope > div');
       left.appendChild(rightColumn);
       right.remove();
-    } else if (!el.classList.contains('split-background')) {
+    }
+    if (!el.classList.contains('split-background')) {
       const highlight = createTag('div', { class: 'highlight-row' }, false);
       el.prepend(highlight);
     } 
