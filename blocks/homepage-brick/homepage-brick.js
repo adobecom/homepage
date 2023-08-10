@@ -109,8 +109,6 @@ export default async function init(el) {
     }
   });
 
-  document.querySelector('.marquee video')?.removeAttribute('loop');
-
   if (document.querySelector('.homepage-link-bar:not(.custom-bg)')) {
     document.querySelector('.section.masonry')?.classList.add('small-top-padding');
   }
