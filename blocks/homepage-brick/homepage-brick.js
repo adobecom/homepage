@@ -103,6 +103,12 @@ function enforceHeaderLevel(node, level) {
 }
 
 export default async function init(el) {
+  el.classList.forEach((className) => {
+    if (className.includes('-grid')) {
+      el.closest('.fragment')?.parentNode.classList.add(className);
+    }
+  });
+
   if (document.querySelector('.homepage-link-bar:not(.custom-bg)')) {
     document.querySelector('.section.masonry')?.classList.add('small-top-padding');
   }
