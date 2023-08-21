@@ -102,6 +102,11 @@ function enforceHeaderLevel(node, level) {
   node.replaceWith(clone);
 }
 
+function decorateBlockAnalytics(blockEl) {
+  blockEl.setAttribute('daa-im', 'true');
+  blockEl.setAttribute('daa-lh', [...blockEl.classList].slice(0, 2).join('--'));
+}
+
 export default async function init(el) {
   el.classList.forEach((className) => {
     if (className.includes('-grid')) {
@@ -117,7 +122,7 @@ export default async function init(el) {
   el.classList.add(`brick-${index}`);
   
   const { decorateButtons, decorateBlockText } = await import(`${getLibs()}/utils/decorate.js`);
-  const { decorateBlockAnalytics } = await import(`${getLibs()}/martech/attributes.js`);
+  //const { decorateBlockAnalytics } = await import(`${getLibs()}/martech/attributes.js`);
 
   if (!el.classList.contains('link') && !el.classList.contains('news')) el.classList.add('click');
 
@@ -180,31 +185,28 @@ export default async function init(el) {
 
   decorateBlockAnalytics(el);
 
-  if (el.classList.contains('news') || el.classList.contains('link')) {
-    let header = '';
-    el.querySelectorAll('h3, h4, a').forEach((item) => {
-      if (item.nodeName === 'A') {
-        item.setAttribute('daa-ll', `link|${item.textContent}|${header}`);
-      } else {
-        header = item.textContent;
-      }
-    });
-  } else {
-    const heading = el.querySelector('h3');
-    const text = heading.closest('.foreground');
+  let header = '';
+  let linkCount = 1;
+  el.querySelectorAll('h3, h4, a').forEach((item) => {
+    if (item.nodeName === 'A') {
+      item.setAttribute('daa-ll', `${item.textContent?.slice(0, 8)}-${linkCount}|${header?.slice(0, 8)}`);
+      linkCount++;
+    } else {
+      header = item.textContent;
+    }
+  });
+
+  if (el.classList.contains('click')) {
     const link = el.querySelector('a');
     if (link) {
       el.dataset.href = link.href;
       if (link.hasAttribute('target')) {
         el.dataset.target = link.getAttribute('target');
       }
-      if (link.hasAttribute('daa-ll')) {
-        el.setAttribute('id', `${el.getAttribute('daa-lh')}|${text.getAttribute('daa-lh')}|${link.getAttribute('daa-ll')}`);
-        el.setAttribute('daa-ll', `${el.getAttribute('daa-lh')}|${text.getAttribute('daa-lh')}|${link.getAttribute('daa-ll')}`);
-        el.removeAttribute('daa-lh');
-        text.removeAttribute('daa-lh');
-        link.removeAttribute('daa-ll');
-      }
+      el.setAttribute('daa-ll', `${link.getAttribute('daa-ll')}|${el.getAttribute('daa-lh')}`);
+      el.removeAttribute('daa-lh');
+      link.removeAttribute('href');
+      link.removeAttribute('daa-ll');
       el.addEventListener('click', goToDataHref);
     }
   }
