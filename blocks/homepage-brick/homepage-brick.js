@@ -118,8 +118,8 @@ export default async function init(el) {
     document.querySelector('.section.masonry')?.classList.add('small-top-padding');
   }
 
-  const index = Array.from(el.parentNode.children).indexOf(el);
-  el.classList.add(`brick-${index}`);
+  //const index = Array.from(el.parentNode.children).indexOf(el);
+  //el.classList.add(`brick-${index}`);
   
   const { decorateButtons, decorateBlockText } = await import(`${getLibs()}/utils/decorate.js`);
   //const { decorateBlockAnalytics } = await import(`${getLibs()}/martech/attributes.js`);
