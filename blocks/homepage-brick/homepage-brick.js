@@ -1,4 +1,5 @@
 import { getLibs } from '../../scripts/utils.js';
+import { decorateBlockAnalytics, decorateLinkAnalytics } from '../homepage-tracking/homepage-tracking.js';
 
 // size: [heading, body, ...detail]
 // blockTypeSizes array order: heading, body, detail, button, link
@@ -102,11 +103,6 @@ function enforceHeaderLevel(node, level) {
   node.replaceWith(clone);
 }
 
-function decorateBlockAnalytics(blockEl) {
-  blockEl.setAttribute('daa-im', 'true');
-  blockEl.setAttribute('daa-lh', [...blockEl.classList].slice(0, 2).join('--'));
-}
-
 export default async function init(el) {
   el.classList.forEach((className) => {
     if (className.includes('-grid')) {
@@ -122,29 +118,12 @@ export default async function init(el) {
   //el.classList.add(`brick-${index}`);
   
   const { decorateButtons, decorateBlockText } = await import(`${getLibs()}/utils/decorate.js`);
-  //const { decorateBlockAnalytics } = await import(`${getLibs()}/martech/attributes.js`);
-
-  if (!el.classList.contains('link') && !el.classList.contains('news')) el.classList.add('click');
+  //const { decorateBlockAnalytics, decorateLinkAnalytics } = await import(`${getLibs()}/martech/attributes.js`);
 
   const blockSize = getBlockSize(el);
   decorateButtons(el, `button-${blockTypeSizes[blockSize][3]}`);
   decorateLinks(el, blockTypeSizes[blockSize][4]);
   let rows = el.querySelectorAll(':scope > div');
-
-  if (!el.classList.contains('link') && !el.classList.contains('news')) {
-    let [head, ...tail] = rows;
-    el.classList.add('click');
-    if (rows.length > 1) {
-      decorateBlockBg(el, head);
-      head.classList.add('first-background');
-      rows = tail;
-      if (rows.length > 1) {
-        [head, ...tail] = rows;
-        decorateBlockBg(el, head);
-        rows = tail;
-      }
-    }
-  }
 
   if (el.classList.contains('link')) {
     const { createTag } = await import(`${getLibs()}/utils/utils.js`);
@@ -164,6 +143,21 @@ export default async function init(el) {
     const [highlight, ...tail] = rows;
     highlight.classList.add('highlight-row');
     rows = tail;
+  } else {
+    let [head, ...tail] = rows;
+    const classList = el.className.split(' ');
+    classList.splice(1, 0, 'click');
+    el.className = classList.join(' ');
+    if (rows.length > 1) {
+      decorateBlockBg(el, head);
+      head.classList.add('first-background');
+      rows = tail;
+      if (rows.length > 1) {
+        [head, ...tail] = rows;
+        decorateBlockBg(el, head);
+        rows = tail;
+      }
+    }
   }
 
   const headers = el.querySelectorAll('h1, h2, h3, h4, h5, h6, .highlight-row > *');
@@ -184,17 +178,7 @@ export default async function init(el) {
   rows.forEach((row) => { row.classList.add('foreground'); });
 
   decorateBlockAnalytics(el);
-
-  let header = '';
-  let linkCount = 1;
-  el.querySelectorAll('h3, h4, a').forEach((item) => {
-    if (item.nodeName === 'A') {
-      item.setAttribute('daa-ll', `${item.textContent?.slice(0, 8)}-${linkCount}|${header?.slice(0, 8)}`);
-      linkCount++;
-    } else {
-      header = item.textContent;
-    }
-  });
+  decorateLinkAnalytics(el);
 
   if (el.classList.contains('click')) {
     const link = el.querySelector('a');
