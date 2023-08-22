@@ -31,5 +31,9 @@ export default async function init(el) {
   if (marquee) {
     decorateBlockAnalytics(marquee);
     decorateLinkAnalytics(marquee);
+  } else {
+    setTimeout(function () {
+      init();
+    }, 500);
   }
 }
