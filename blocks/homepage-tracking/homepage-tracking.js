@@ -27,7 +27,7 @@ export function decorateLinkAnalytics(el) {
 }
 
 export default async function init(el) {
-  const marquee = document.querySelector('.marquee');
+  const marquee = document.querySelector('.marquee[daa-im="true"]');
   if (marquee) {
     decorateBlockAnalytics(marquee);
     decorateLinkAnalytics(marquee);
