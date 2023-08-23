@@ -5,7 +5,7 @@ export function decorateBlockAnalytics(el) {
   } else if (el.closest('footer')) {
     blockNumber = 'footer';
   } else {
-    const blocks = Array.prototype.slice.call(document.querySelectorAll('main .section > div[class]:not(.section-metadata):not(.homepage-tracking)'));
+    const blocks = Array.prototype.slice.call(document.querySelectorAll('main > div > div[class]:not([class="two-thirds-grid"]):not(.section-metadata):not(.homepage-tracking), .section > div[class]:not([class="two-thirds-grid"]):not(.section-metadata):not(.homepage-tracking)'));
     blockNumber = `b${blocks.indexOf(el) + 1}`;
   }
   const manifestId = el.dataset.manifestId ? el.dataset.manifestId: 'default';
