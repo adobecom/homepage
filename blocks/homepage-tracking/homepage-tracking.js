@@ -29,6 +29,7 @@ export function decorateLinkAnalytics(el) {
 export default async function init(el) {
   const marquee = document.querySelector('.marquee[daa-im="true"]');
   if (marquee) {
+    marquee.querySelectorAll('[daa-lh]').forEach((lh) => lh.removeAttribute('daa-lh'));
     decorateBlockAnalytics(marquee);
     decorateLinkAnalytics(marquee);
   } else {
