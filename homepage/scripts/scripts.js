@@ -20,8 +20,8 @@ const LIBS = '/libs';
 
 // Add any config options.
 const CONFIG = {
-  codeRoot: 'homepage',
-  contentRoot: 'homepage',
+  codeRoot: '/homepage',
+  // contentRoot: '',
   imsClientId: 'homepage',
   // geoRouting: 'off',
   // fallbackRouting: 'off',
