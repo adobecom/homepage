@@ -142,7 +142,7 @@
 .homepage-brick [class^="heading"] { margin: 0 0 var(--spacing-xxs) 0; }
 
 .homepage-brick.news [class^="heading"] {
-  font-size: var(--type-heading-xs-size);
+  font-size: var(--type-heading-s-size);
   line-height: var(--type-heading-xs-lh);
   margin-bottom: 0;
 }
