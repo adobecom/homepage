@@ -63,7 +63,7 @@
   padding-top: var(--spacing-s);
 }
 
-@media screen and (min-width: 1024px) and (max-width: 1199px) {
+@media screen and (min-width: 600px) and (max-width: 1199px) {
   .section.masonry {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -232,7 +232,7 @@
   border-radius: 4px 4px 0 0;
 }
 
-@media screen and (min-width: 1024px) and (max-width: 1199px) {
+@media screen and (min-width: 600px) and (max-width: 1199px) {
   .homepage-brick.link .foreground {
     height: 100%;
     display: flex;
@@ -318,7 +318,7 @@
   }
 }
 
-@media screen and (min-width: 1024px) and (max-width: 1199px) {
+@media screen and (min-width: 600px) and (max-width: 1199px) {
   .homepage-brick .tabletOnly {
     display: block;
   }
@@ -330,7 +330,7 @@
   }
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 600px) {
   .masonry .homepage-brick {
     min-height: 444px;
   }
