@@ -78,16 +78,15 @@ function decorateBlockBg(block, node) {
 
     [...node.children].forEach((e) => {
       const image = e.querySelector('img');
-      const p = e.querySelectorAll('p');
-      if (image && p.length > 1) {
-        const text = p[1].textContent.trim();
+      if (image) {
+        const text = e.textContent.trim();
         if (text !== '') {
-          const points = text?.slice(text.indexOf(':') + 1).split(',');
-          const [x, y = '', s = ''] = points;
+          //const points = text?.slice(text.indexOf(':') + 1).split(',');
+          const [x, y = '', s = ''] = text.split(',');
           image.style.objectPosition = `${x.trim().toLowerCase()} ${y.trim().toLowerCase()}`;
           if (s !== '') image.style.objectFit = s.trim().toLowerCase();
           const picture = e.querySelector('picture');
-          e.insertBefore(picture, p[0]);
+          e.innerHTML = picture.outerHTML;
         }
       }
     });
