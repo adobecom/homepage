@@ -1,15 +1,7 @@
 import { getLibs } from '../../scripts/utils.js';
 
-// size: [heading, body, ...detail]
-// blockTypeSizes array order: heading, body, detail, button, link
-const blockTypeSizes = {
-  small: ['m', 's', 's', 'l', 's'],
-  medium: ['l', 'm', 'm', 'l', 'm'],
-  large: ['xl', 'm', 'l', 'l', 'm'],
-  xlarge: ['xxl', 'l', 'xl', 'l', 'l'],
-  'homepage-link-bar': ['m', 'xs', 'm', 's', 'xs'],
-};
-
+// array order: heading, body, detail, button, link
+const blockSize = ['m', 'xs', 'm', 's', 'xs'];
 const icons = {
   'edit-pdfs': `<svg width="19.373" height="17.688" viewBox="0 0 19.373 17.688">
       <g id="Group_596630" data-name="Group 596630" transform="translate(9367.873 9248.978)">
@@ -51,99 +43,6 @@ const icons = {
 
 }
 
-function goToDataHref() {
-  if (this.dataset.target === '_blank') {
-    window.open(this.dataset.href, '_blank');
-  } else {
-    window.location.href = this.dataset.href;
-  }
-}
-
-function getBlockSize(el) {
-  const sizes = Object.keys(blockTypeSizes);
-  return sizes.find((size) => el.classList.contains(size)) || sizes[7];
-}
-
-function decorateLinks(el, size) {
-  const links = el.querySelectorAll('a:not(.con-button)');
-  if (links.length === 0) return;
-  links.forEach((link) => {
-    if (
-      link.closest('.section')
-      && link.closest('.section').querySelector('.quick-tools-bar')
-    ) {
-      // link.setAttribute('class', 'con-button outline button-s');
-      if (
-        link.querySelector('img')
-        && link.querySelector('img').getAttribute('alt')
-      ) {
-        link.insertAdjacentHTML(
-          'beforeEnd',
-          `<span class="spectrum-Button-label">${link
-            .querySelector('img')
-            .getAttribute('alt')}</span>`,
-        );
-      }
-
-      // link.outerHTML = `<strong>${link.outerHTML}</strong>`;
-    }
-    const parent = link.closest('p, div');
-    parent.setAttribute('class', `body-${size}`);
-  });
-}
-
-function getBlockSegmentBackground(el) {
-  const image = el.querySelector('img');
-  const text = el.textContent.trim();
-  let background = false;
-  if (image) {
-    background = `url(${image.getAttribute('src')})`;
-  } if (text !== '') {
-    background = text;
-  }
-  el.remove();
-  return background;
-}
-
-/* function decorateBlockBg(block, node) {
-  node.classList.add('background');
-  if (!node.querySelector('img')) {
-    node.style.background = node.textContent.trim();
-    [...node.children].forEach((e) => {
-      e.remove();
-    });
-  } else {
-    node.classList.add('background');
-    if (node.childElementCount > 1) {
-      const viewports = ['mobileOnly', 'tabletOnly', 'desktopOnly'];
-      if (node.childElementCount === 2) {
-        node.children[0].classList.add(viewports[0], viewports[1]);
-        node.children[1].classList.add(viewports[2]);
-      } else {
-        [...node.children].forEach((e, i) => {
-          e.classList.add(viewports[i]);
-        });
-      }
-    }
-
-    [...node.children].forEach((e) => {
-      const image = e.querySelector('img');
-      const p = e.querySelectorAll('p');
-      if (image && p.length > 1) {
-        const text = p[1].textContent.trim();
-        if (text !== '') {
-          const points = text?.slice(text.indexOf(':') + 1).split(',');
-          const [x, y = '', s = ''] = points;
-          image.style.objectPosition = `${x.trim().toLowerCase()} ${y.trim().toLowerCase()}`;
-          if (s !== '') image.style.objectFit = s.trim().toLowerCase();
-          const picture = e.querySelector('picture');
-          e.insertBefore(picture, p[0]);
-        }
-      }
-    });
-  }
-} */
-
 function enforceHeaderLevel(node, level) {
   const clone = document.createElement(`H${level}`);
   for (const attr of node.attributes) {
@@ -157,93 +56,39 @@ export default async function init(el) {
   const { decorateButtons, decorateBlockText, decorateBlockBg } = await import(`${getLibs()}/utils/decorate.js`);
   const { decorateBlockAnalytics, decorateLinkAnalytics } = await import(`${getLibs()}/martech/attributes.js`);
 
+  decorateBlockText(el, blockSize);
+  decorateBlockAnalytics(el);
+  const headings = el.querySelectorAll('h1, h2, h3, h4, h5, h6');
+  decorateLinkAnalytics(el, headings);
+
   el.querySelectorAll('span.icon').forEach((span) => {
     const icon = icons[span.getAttribute('class').replace('icon icon-', '')];
     if (icon) span.innerHTML = icon;
     span.classList.add('margin-right');
   });
 
-  const blockSize = getBlockSize(el);
-  decorateButtons(el, `button-${blockTypeSizes[blockSize][3]}`);
-  decorateLinks(el, blockTypeSizes[blockSize][4]);
+  decorateButtons(el, `button-${blockSize[3]}`);
   let rows = el.querySelectorAll(':scope > div');
 
-  const headers = el.querySelectorAll('h1, h2, h3, h4, h5, h6');
-  headers.forEach((header, counter) => {
-    if (!counter) {
-      enforceHeaderLevel(header, 2);
-    } else {
-      enforceHeaderLevel(header, 3);
-    }
-  });
-
-  /* TODO fix */
   if (rows.length > 1) {
     let [head, ...tail] = rows;
-    if (!head.querySelectorAll('h2, h3, a').length) {
+    if (!head.querySelector('h1, h2, h3, h4, h5, h6, a')) {
       decorateBlockBg(el, head);
-      rows = tail;
       el.classList.add('custom-bg');
+      rows = tail;
     }
   }
+
   if (rows.length > 1) {
     let [head, ...tail] = rows;
-    if (head.querySelectorAll('h2, h3').length) rows = tail;
+    const header = head.querySelector('h1, h2, h3, h4, h5, h6');
+    if (header) {
+      header.classList.add('header');
+      enforceHeaderLevel(header, 2);
+      rows = tail;
+    }
   }
 
-  const config = blockTypeSizes[blockSize];
-  const overrides = ['-heading', '-body', '-detail'];
-  overrides.forEach((override, index) => {
-    const hasClass = [...el.classList].filter((listItem) => listItem.includes(override));
-    if (hasClass.length) config[index] = hasClass[0].split('-').shift().toLowerCase();
-  });
-  decorateBlockText(el, config);
-
-  const { createTag } = await import(`${getLibs()}/utils/utils.js`);
-  const buttonRows = [
-    createTag('div', { class: 'button-row' }),
-    createTag('div', { class: 'button-row' })
-  ];
-  rows.forEach((row, index) => {
-    let rowNumber = 0;
-    if (index >= 3 || (index === 2 && rows.length === 4)) rowNumber = 1;
-    buttonRows[rowNumber].appendChild(row);
-  });
-  el.appendChild(buttonRows[0]);
-  el.appendChild(buttonRows[1]);
-
-  
-/*     const linkRows = [
-    createTag('div', { class: 'foreground' }),
-    createTag('div', { class: 'foreground' }),
-  ];
-const links = el.querySelectorAll('a');
-  links.forEach((link, i) => {
-    const div = createTag('div', { 'data-valign': 'middle' }, false);
-    div.appendChild(link);
-    if (i>2 || (i === 2 && links.length === 4)) {
-      linkRows[1].appendChild(div);
-    } else {
-      linkRows[0].appendChild(div);
-    }
-  });
-  el.appendChild(linkRows[0]);
-  if (links.length > 3) el.appendChild(linkRows[1]);
-  
-  rows.forEach((row) => {
-    const rowHeaders = row.querySelectorAll('h2, h3');
-    if (rowHeaders.length) {
-      row.classList.add('foreground');
-    } else {
-      row.remove();
-    }
-  }); */
-
-
-
-  decorateBlockAnalytics(el);
-  
-  el.querySelectorAll('a').forEach((button) => {
-    button.setAttribute('daa-ll', `outline|${button.textContent.trim()}`);
-  });
+  el.classList.add(`button-count-${rows.length}`);
+  rows.forEach((row, index) => row.classList.add(`button-index-${index + 1}`));
 }
