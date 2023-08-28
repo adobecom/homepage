@@ -4,6 +4,7 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  text-size-adjust: none;
 }
 
 .homepage-link-bar > div {
