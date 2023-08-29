@@ -84,7 +84,7 @@ export default async function init(el) {
     let [head, ...tail] = rows;
     const header = head.querySelector('h1, h2, h3, h4, h5, h6');
     if (header) {
-      header.classList.add('header');
+      head.classList.add('header');
       enforceHeaderLevel(header, 2);
       rows = tail;
     }
