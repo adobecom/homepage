@@ -22,7 +22,7 @@ const LIBS = '/libs';
 const CONFIG = {
   codeRoot: '/homepage',
   // contentRoot: '',
-  imsClientId: 'homepage',
+  imsClientId: 'homepage_milo',
   // geoRouting: 'off',
   // fallbackRouting: 'off',
   locales: {
