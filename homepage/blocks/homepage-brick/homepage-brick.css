@@ -239,10 +239,10 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 }
 
 .section:not(.no-border-radius) .homepage-brick.link.split-background .foreground > div:last-child {
-    border-radius: 0 16px 16px 0;
+    border-radius: 0 0 16px 16px;
 }
 
-@media screen and (min-width: 600px) and (max-width: 1199px) {
+/* @media screen and (min-width: 600px) and (max-width: 1199px) {
   .homepage-brick.link .foreground {
     height: 100%;
     display: flex;
@@ -275,7 +275,7 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
   .homepage-brick.link.split-background .foreground:last-child > div {
     padding-top: var(--spacing-s);
   }
-}
+} */
 
 .homepage-brick.news,
 .homepage-brick.link:not(.split-background) {
