@@ -220,8 +220,14 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 }
 
 .homepage-brick.click {
-  padding-top: var(--spacing-m);
+  padding: 0;
+  display: flex;
   cursor: pointer;
+}
+
+.homepage-brick.click > .foreground {
+  padding: var(--spacing-m) var(--spacing-s) var(--spacing-s);
+  flex-grow: 1;
 }
 
 .homepage-brick.link,

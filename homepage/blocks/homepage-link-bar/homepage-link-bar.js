@@ -1,5 +1,4 @@
 import { getLibs } from '../../scripts/utils.js';
-import { decorateBlockAnalytics, decorateLinkAnalytics } from '../homepage-tracking/homepage-tracking.js';
 
 // array order: heading, body, detail, button, link
 const blockSize = ['m', 'xs', 'm', 's', 'xs'];
@@ -55,12 +54,8 @@ function enforceHeaderLevel(node, level) {
 
 export default async function init(el) {
   const { decorateButtons, decorateBlockText, decorateBlockBg } = await import(`${getLibs()}/utils/decorate.js`);
-  //const { decorateBlockAnalytics, decorateLinkAnalytics } = await import(`${getLibs()}/martech/attributes.js`);
 
   decorateBlockText(el, blockSize);
-  decorateBlockAnalytics(el);
-  const headings = el.querySelectorAll('h1, h2, h3, h4, h5, h6');
-  decorateLinkAnalytics(el, headings);
 
   el.querySelectorAll('span.icon').forEach((span) => {
     const icon = icons[span.getAttribute('class').replace('icon icon-', '')];

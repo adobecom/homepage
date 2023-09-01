@@ -1,5 +1,4 @@
 import { getLibs } from '../../scripts/utils.js';
-import { decorateBlockAnalytics, decorateLinkAnalytics } from '../homepage-tracking/homepage-tracking.js';
 
 // size: [heading, body, ...detail]
 // blockTypeSizes array order: heading, body, detail, button, link
@@ -112,12 +111,8 @@ export default async function init(el) {
   if (document.querySelector('.homepage-link-bar:not(.custom-bg)')) {
     document.querySelector('.section.masonry')?.classList.add('small-top-padding');
   }
-
-  //const index = Array.from(el.parentNode.children).indexOf(el);
-  //el.classList.add(`brick-${index}`);
   
   const { decorateButtons, decorateBlockText } = await import(`${getLibs()}/utils/decorate.js`);
-  //const { decorateBlockAnalytics, decorateLinkAnalytics } = await import(`${getLibs()}/martech/attributes.js`);
 
   const blockSize = getBlockSize(el);
   decorateButtons(el, `button-${blockTypeSizes[blockSize][3]}`);
@@ -176,21 +171,18 @@ export default async function init(el) {
   decorateBlockText(el, config);
   rows.forEach((row) => { row.classList.add('foreground'); });
 
-  decorateBlockAnalytics(el);
-  decorateLinkAnalytics(el);
-
   if (el.classList.contains('click')) {
     const link = el.querySelector('a');
-    if (link) {
-      el.dataset.href = link.href;
+    const foreground = el.querySelector('.foreground');
+    if (link && foreground) {
+      foreground.dataset.href = link.href;
       if (link.hasAttribute('target')) {
-        el.dataset.target = link.getAttribute('target');
+        foreground.dataset.target = link.getAttribute('target');
       }
-      el.setAttribute('daa-ll', `${link.getAttribute('daa-ll')}|${el.getAttribute('daa-lh')}`);
-      el.removeAttribute('daa-lh');
+      foreground.setAttribute('daa-ll', link.getAttribute('daa-ll'));
       link.removeAttribute('href');
       link.removeAttribute('daa-ll');
-      el.addEventListener('click', goToDataHref);
+      foreground.addEventListener('click', goToDataHref);
     }
   }
 }
