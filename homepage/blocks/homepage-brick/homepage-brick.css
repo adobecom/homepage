@@ -97,7 +97,7 @@
   }
 }
 
-body:not([data-mep-highlight="true"]) .section.masonry[data-removed-manifest-id] {
+body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id] {
   display: none;
 }
 
