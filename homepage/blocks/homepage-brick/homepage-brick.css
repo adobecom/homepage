@@ -97,6 +97,10 @@
   }
 }
 
+body:not([data-mep-highlight="true"]) .section.masonry[data-removed-manifest-id] {
+  display: none;
+}
+
 /* block CSS */
 .homepage-brick {
   position: relative;
