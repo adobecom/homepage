@@ -108,7 +108,7 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 }
 
 .masonry .homepage-brick {
-  min-height: 394px;
+  min-height: 450px;
 }
 
 .homepage-brick .background {
@@ -348,7 +348,7 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 
 @media screen and (min-width: 600px) {
   .masonry .homepage-brick {
-    min-height: 444px;
+    min-height: 500px;
   }
 }
 
