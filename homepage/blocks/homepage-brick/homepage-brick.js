@@ -120,7 +120,11 @@ export default async function init(el) {
   decorateLinks(el, blockTypeSizes[blockSize][4]);
   let rows = el.querySelectorAll(':scope > div');
 
-  await decorateDefaultLinkAnalytics(el);
+  try {
+    await decorateDefaultLinkAnalytics(el);
+  } catch (e) {
+    console.log('need new libs');
+  }
 
   if (el.classList.contains('link')) {
     const background = createTag('div', { class: 'background first-background' }, false);
