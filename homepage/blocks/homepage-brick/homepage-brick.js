@@ -113,14 +113,16 @@ export default async function init(el) {
   }
   
   const { decorateButtons, decorateBlockText } = await import(`${getLibs()}/utils/decorate.js`);
+  const { decorateDefaultLinkAnalytics, createTag } = await import(`${getLibs()}/utils/utils.js`);
 
   const blockSize = getBlockSize(el);
   decorateButtons(el, `button-${blockTypeSizes[blockSize][3]}`);
   decorateLinks(el, blockTypeSizes[blockSize][4]);
   let rows = el.querySelectorAll(':scope > div');
 
+  await decorateDefaultLinkAnalytics(el);
+
   if (el.classList.contains('link')) {
-    const { createTag } = await import(`${getLibs()}/utils/utils.js`);
     const background = createTag('div', { class: 'background first-background' }, false);
     el.prepend(background);
     if (rows.length === 2) {

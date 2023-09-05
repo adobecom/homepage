@@ -1,8 +1,3 @@
-/* temp support for static links */
-.section.static-links a:not([class]) {
-  color: inherit;
-}
-
 /* masonry support */
 
 /* border radius */
