@@ -197,10 +197,14 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 }
 
 .homepage-brick a,
-.homepage-brick.click a:not(.con-button),
+.homepage-brick.click div.click-link,
 .homepage-brick.link a:not(.con-button) {
   color: inherit;
   font-weight: 700;
+}
+
+.homepage-brick.click div.click-link:hover {
+  text-decoration: underline;
 }
 
 .homepage-brick.click .foreground p.detail-m:first-child {

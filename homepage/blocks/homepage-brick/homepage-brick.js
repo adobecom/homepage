@@ -182,8 +182,10 @@ export default async function init(el) {
         foreground.dataset.target = link.getAttribute('target');
       }
       foreground.setAttribute('daa-ll', link.getAttribute('daa-ll'));
-      link.removeAttribute('href');
-      link.removeAttribute('daa-ll');
+      const div = createTag('div', { class: 'click-link' }, link.innerText);
+      link.insertAdjacentElement('beforebegin', div);
+      link.remove();
+
       foreground.addEventListener('click', goToDataHref);
     }
   }
