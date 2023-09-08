@@ -57,6 +57,7 @@
   grid-template-columns: repeat(1, 1fr);
   margin-left: auto;
   margin-right: auto;
+  z-index: -2;
 }
 
 .section.masonry > div:not([class]),
@@ -66,9 +67,12 @@
 }
 
 .section.masonry:not([class*="spacing"]) {
-  max-width: 1920px;
   align-items: stretch;
   padding: var(--spacing-m) var(--spacing-xl);
+}
+
+.section.masonry:not([class*="spacing"]):not([style]) {
+  max-width: 1920px;
 }
 
 .section.masonry.small-top-padding:not([class*="spacing"]) {
@@ -160,8 +164,6 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 .homepage-brick.link [class^="heading"]:not(:first-child) { margin-top: var(--spacing-xs); }
 
 .homepage-brick.news [class^="heading"] {
-  font-size: var(--type-heading-xs-size);
-  line-height: var(--type-heading-xs-lh);
   margin-bottom: 0;
 }
 
