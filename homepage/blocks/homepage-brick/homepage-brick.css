@@ -233,7 +233,7 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
   font-weight: 700;
 }
 
-.homepage-brick.click div.click-link:hover {
+.homepage-brick.click:hover div.click-link {
   text-decoration: underline;
 }
 
