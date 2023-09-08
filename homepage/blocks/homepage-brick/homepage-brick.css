@@ -1,3 +1,33 @@
+/* marquee temp support */
+.marquee.high-contrast {
+  color: #000;
+}
+
+@media screen and (min-width: 600px) {
+  .marquee.tablet-high-contrast {
+    color: #000;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .marquee.desktop-high-contrast {
+    color: #000;
+  }
+}
+
+@media screen and (min-width: 600px) and (max-width: 1199px) {
+  .section.masonry {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .section.masonry .full-grid {
+    grid-column: span 2;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+
+
 /* masonry support */
 
 /* border radius */
