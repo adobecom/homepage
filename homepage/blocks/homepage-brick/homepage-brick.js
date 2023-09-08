@@ -8,7 +8,7 @@ const blockTypeSizes = {
   large: ['xl', 'm', 'l', 'l', 'm'],
   xlarge: ['xxl', 'l', 'xl', 'l', 'l'],
   'link': ['m', 'xs', 'm', 's', 'xs'],
-  'news': ['m', 'm', 'm', 's', 'xs'],
+  'news': ['xs', 'm', 'm', 's', 'xs'],
   'full-desktop': ['xl', 'l', 'm', 'l', 'm'],
   default: ['m', 'm', 'l', 's', 'xs'],
 };
@@ -142,6 +142,14 @@ export default async function init(el) {
   } else if (el.classList.contains('news') && rows.length > 1) {
     const [highlight, ...tail] = rows;
     highlight.classList.add('highlight-row');
+    const highlightHeader = highlight.querySelector(':scope > h1, :scope > h2, :scope > h3, :scope > h4, :scope > h5, :scope > h6');
+    if (highlightHeader) {
+      const detail = createTag('div', { class: 'detail-l' }, highlightHeader.textContent);
+      highlight.appendChild(detail);
+      highlightHeader.remove();
+    } else {
+      highlight.querySelector(':scope > *')?.classList.add('detail-l');
+    }
     rows = tail;
   } else {
     let [head, ...tail] = rows;
@@ -160,7 +168,7 @@ export default async function init(el) {
     }
   }
 
-  const headers = el.querySelectorAll('h1, h2, h3, h4, h5, h6, .highlight-row > *');
+  const headers = el.querySelectorAll('h1, h2, h3, h4, h5, h6');
   headers.forEach((header, counter) => {
     if (!counter) {
       enforceHeaderLevel(header, 3);
@@ -177,9 +185,7 @@ export default async function init(el) {
   decorateBlockText(el, config);
   rows.forEach((row) => { row.classList.add('foreground'); });
 
-  if (el.classList.contains('news')) {
-    el.querySelector('.highlight-row > *')?.setAttribute('class', 'heading-s');
-  } else if (el.classList.contains('click')) {
+  if (el.classList.contains('click')) {
     const link = el.querySelector('a');
     const foreground = el.querySelector('.foreground');
     if (link && foreground) {
