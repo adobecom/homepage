@@ -180,8 +180,8 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 .homepage-brick .foreground {
   max-width: var(--grid-container-width);
   margin: 0 auto;
-  z-index: 2;
   position: relative;
+  z-index: 2;
 }
 
 [class*='-up'] .homepage-brick .foreground {
