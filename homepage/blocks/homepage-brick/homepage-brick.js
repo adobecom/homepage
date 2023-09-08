@@ -142,7 +142,6 @@ export default async function init(el) {
   } else if (el.classList.contains('news') && rows.length > 1) {
     const [highlight, ...tail] = rows;
     highlight.classList.add('highlight-row');
-    highlight.querySelector(':scope > *')?.className = 'heading-s';
     rows = tail;
   } else {
     let [head, ...tail] = rows;
@@ -178,7 +177,9 @@ export default async function init(el) {
   decorateBlockText(el, config);
   rows.forEach((row) => { row.classList.add('foreground'); });
 
-  if (el.classList.contains('click')) {
+  if (el.classList.contains('news')) {
+    el.querySelector('.highlight-row > *')?.setAttribute('class', 'heading-s');
+  } else if (el.classList.contains('click')) {
     const link = el.querySelector('a');
     const foreground = el.querySelector('.foreground');
     if (link && foreground) {
