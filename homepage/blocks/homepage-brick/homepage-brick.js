@@ -8,7 +8,7 @@ const blockTypeSizes = {
   large: ['xl', 'm', 'l', 'l', 'm'],
   xlarge: ['xxl', 'l', 'xl', 'l', 'l'],
   'link': ['m', 'xs', 'm', 's', 'xs'],
-  'news': ['s', 'm', 'm', 's', 'xs'],
+  'news': ['m', 'm', 'm', 's', 'xs'],
   'full-desktop': ['xl', 'l', 'm', 'l', 'm'],
   default: ['m', 'm', 'l', 's', 'xs'],
 };
@@ -142,6 +142,7 @@ export default async function init(el) {
   } else if (el.classList.contains('news') && rows.length > 1) {
     const [highlight, ...tail] = rows;
     highlight.classList.add('highlight-row');
+    highlight.querySelector(':scope > *')?.className = 'heading-s';
     rows = tail;
   } else {
     let [head, ...tail] = rows;
