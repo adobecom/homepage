@@ -1,4 +1,4 @@
-import { readFile } from '@web/test-runner-commands';
+import { readFile, sendMouse } from '@web/test-runner-commands';
 import { expect } from '@esm-bundle/chai';
 import { setLibs } from '../../../homepage/scripts/utils.js';
 
@@ -7,8 +7,18 @@ setLibs('/libs');
 document.body.innerHTML = await readFile({ path: './mocks/body.html' });
 const { default: init } = await import('../../../homepage/blocks/homepage-brick/homepage-brick.js');
 
+function getMiddleOfElement(element) {
+  const { x, y, width, height } = element.getBoundingClientRect();
+
+  return {
+    x: Math.floor(x + window.pageXOffset + width / 2),
+    y: Math.floor(y + window.pageYOffset + height / 2),
+  };
+}
+
 describe('homepage-brick block', () => {
   const blocks = document.querySelectorAll('.homepage-brick');
+  
   describe('click variant', () => {
     it('click variation', async () => {
       const block = blocks[0];
@@ -23,6 +33,8 @@ describe('homepage-brick block', () => {
       expect(h3).to.be.exist;
       const link = block.querySelector('div.click-link');
       expect(link).to.be.exist;
+      const { x, y } = getMiddleOfElement(block);
+      await sendMouse({ type: 'click', position: [x, y] });
     });
   });
   describe('news variant', () => {
@@ -61,6 +73,5 @@ describe('homepage-brick block', () => {
     });
     init(blocks[4]);
     init(blocks[5]);
-    blocks[0].click();
   });
 });
