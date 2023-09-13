@@ -26,34 +26,6 @@ function getBlockSize(el) {
   return sizes.find((size) => el.classList.contains(size)) || sizes[7];
 }
 
-function decorateLinks(el, size) {
-  const links = el.querySelectorAll('a:not(.con-button)');
-  if (links.length === 0) return;
-  links.forEach((link) => {
-    if (
-      link.closest('.section')
-      && link.closest('.section').querySelector('.quick-tools-bar')
-    ) {
-      // link.setAttribute('class', 'con-button outline button-s');
-      if (
-        link.querySelector('img')
-        && link.querySelector('img').getAttribute('alt')
-      ) {
-        link.insertAdjacentHTML(
-          'beforeEnd',
-          `<span class="spectrum-Button-label">${link
-            .querySelector('img')
-            .getAttribute('alt')}</span>`,
-        );
-      }
-
-      // link.outerHTML = `<strong>${link.outerHTML}</strong>`;
-    }
-    const parent = link.closest('p, div');
-    parent.setAttribute('class', `body-${size}`);
-  });
-}
-
 function decorateBlockBg(block, node) {
   node.classList.add('background');
   if (!node.querySelector('img')) {
@@ -112,12 +84,12 @@ export default async function init(el) {
     document.querySelector('.section.masonry')?.classList.add('small-top-padding');
   }
   
-  const { decorateButtons, decorateBlockText } = await import(`${getLibs()}/utils/decorate.js`);
-  const { decorateDefaultLinkAnalytics, createTag } = await import(`${getLibs()}/utils/utils.js`);
+  const miloLibs = getLibs();
+  const { decorateButtons, decorateBlockText } = await import(`${miloLibs}/utils/decorate.js`);
+  const { decorateDefaultLinkAnalytics, createTag } = await import(`${miloLibs}/utils/utils.js`);
 
   const blockSize = getBlockSize(el);
   decorateButtons(el, `button-${blockTypeSizes[blockSize][3]}`);
-  decorateLinks(el, blockTypeSizes[blockSize][4]);
   let rows = el.querySelectorAll(':scope > div');
 
   try {
