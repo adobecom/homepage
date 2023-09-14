@@ -117,9 +117,7 @@ export default async function init(el) {
     rows = tail;
   } else {
     let [head, ...tail] = rows;
-    const classList = el.className.split(' ');
-    classList.splice(1, 0, 'click');
-    el.className = classList.join(' ');
+    el.classList.add('click');
     if (rows.length > 1) {
       decorateBlockBg(el, head);
       head.classList.add('first-background');
