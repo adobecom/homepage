@@ -1,0 +1,122 @@
+.homepage-link-bar {
+  padding: var(--spacing-s) var(--spacing-s) 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  text-size-adjust: none;
+}
+
+.homepage-link-bar > div {
+  flex-basis: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.homepage-link-bar.custom-bg {
+  padding-bottom: var(--spacing-s);
+}
+
+.homepage-link-bar h2 {
+  margin: var(--spacing-xxs);
+  line-height: var(--spacing-s);
+  font-size: 20px;
+  text-align: center;
+}
+
+.homepage-link-bar a.con-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: var(--spacing-xxs);
+  width: auto;
+  padding: 0 14px;
+  min-height: 26px;
+  white-space: nowrap;
+}
+
+.homepage-link-bar a.con-button.outline:hover svg path {
+  fill: #fff;
+}
+
+.homepage-link-bar a.con-button svg {
+  width: auto;
+  height: auto;
+  margin-top: 4px;
+}
+
+.homepage-link-bar.justified > div > div {
+  flex-basis: 100%;
+}
+
+@media screen and (min-width: 600px) and (max-width: 1199px) {
+  .homepage-link-bar > div {
+    flex-basis: 0;
+  }
+  
+  .homepage-link-bar.button-count-5 div.button-index-1,
+  .homepage-link-bar.button-count-5 div.button-index-2 {
+    flex-basis: 50%;
+    justify-content: flex-end;
+  }
+
+  .homepage-link-bar.button-count-5 div.button-index-2 {
+    justify-content: flex-start;
+  }
+
+  .homepage-link-bar.justified > div > div {
+    flex-basis: auto;
+  }
+
+  .homepage-link-bar.button-count-6 div:not(.header) {
+    flex-basis: 33%;
+    justify-content: flex-end;
+  }
+
+  .homepage-link-bar.button-count-6 div.button-index-2,
+  .homepage-link-bar.button-count-6 div.button-index-5 {
+    flex-basis: 0;
+  }
+
+  .homepage-link-bar.button-count-6 div.button-index-3,
+  .homepage-link-bar.button-count-6 div.button-index-6 {
+    justify-content: flex-start;
+  }
+
+  .homepage-link-bar > div.header {
+    flex-basis: 100%;
+    white-space: nowrap;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .homepage-link-bar {
+      flex-wrap: nowrap;
+  }
+
+  .homepage-link-bar.button-count-6 {
+      flex-wrap: wrap;
+  }
+
+  .homepage-link-bar > div {
+    flex-basis: content;
+  }
+
+  .homepage-link-bar > div.header {
+    white-space: nowrap;
+  }
+
+  .homepage-link-bar.button-count-6 > div.header {
+    flex-basis: 100%;
+  }
+}
+
+@media screen and (min-width: 1300px) {
+  .homepage-link-bar.button-count-6 > div.header {
+    flex-basis: content;
+  }
+
+  .homepage-link-bar.button-count-6 {
+      flex-wrap: nowrap;
+  }
+}
