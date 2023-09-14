@@ -49,11 +49,11 @@
   flex-basis: 100%;
 }
 
-@media screen and (min-width: 600px) and (max-width: 1024px) {
+@media screen and (min-width: 600px) and (max-width: 1199px) {
   .homepage-link-bar > div {
     flex-basis: 0;
   }
-
+  
   .homepage-link-bar.button-count-5 div.button-index-1,
   .homepage-link-bar.button-count-5 div.button-index-2 {
     flex-basis: 50%;
@@ -62,6 +62,10 @@
 
   .homepage-link-bar.button-count-5 div.button-index-2 {
     justify-content: flex-start;
+  }
+
+  .homepage-link-bar.justified > div > div {
+    flex-basis: auto;
   }
 
   .homepage-link-bar.button-count-6 div:not(.header) {
@@ -81,14 +85,11 @@
 
   .homepage-link-bar > div.header {
     flex-basis: 100%;
-  }
-
-  .homepage-link-bar.justified > div > div {
-    flex-basis: auto;
+    white-space: nowrap;
   }
 }
 
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 1200px) {
   .homepage-link-bar {
       flex-wrap: nowrap;
   }
