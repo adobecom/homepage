@@ -8,7 +8,7 @@ const blockTypeSizes = {
   large: ['xl', 'm', 'l', 'l', 'm'],
   xlarge: ['xxl', 'l', 'xl', 'l', 'l'],
   'link': ['m', 'xs', 'm', 's', 'xs'],
-  'news': ['s', 'm', 'm', 's', 'xs'],
+  'news': ['xs', 's', 'm', 's', 'xs'],
   'full-desktop': ['xl', 'l', 'm', 'l', 'm'],
   default: ['m', 'm', 'l', 's', 'xs'],
 };
@@ -24,34 +24,6 @@ function goToDataHref() {
 function getBlockSize(el) {
   const sizes = Object.keys(blockTypeSizes);
   return sizes.find((size) => el.classList.contains(size)) || sizes[7];
-}
-
-function decorateLinks(el, size) {
-  const links = el.querySelectorAll('a:not(.con-button)');
-  if (links.length === 0) return;
-  links.forEach((link) => {
-    if (
-      link.closest('.section')
-      && link.closest('.section').querySelector('.quick-tools-bar')
-    ) {
-      // link.setAttribute('class', 'con-button outline button-s');
-      if (
-        link.querySelector('img')
-        && link.querySelector('img').getAttribute('alt')
-      ) {
-        link.insertAdjacentHTML(
-          'beforeEnd',
-          `<span class="spectrum-Button-label">${link
-            .querySelector('img')
-            .getAttribute('alt')}</span>`,
-        );
-      }
-
-      // link.outerHTML = `<strong>${link.outerHTML}</strong>`;
-    }
-    const parent = link.closest('p, div');
-    parent.setAttribute('class', `body-${size}`);
-  });
 }
 
 function decorateBlockBg(block, node) {
@@ -77,16 +49,15 @@ function decorateBlockBg(block, node) {
 
     [...node.children].forEach((e) => {
       const image = e.querySelector('img');
-      const p = e.querySelectorAll('p');
-      if (image && p.length > 1) {
-        const text = p[1].textContent.trim();
+      if (image) {
+        const text = e.textContent.trim();
         if (text !== '') {
-          const points = text?.slice(text.indexOf(':') + 1).split(',');
-          const [x, y = '', s = ''] = points;
+          //const points = text?.slice(text.indexOf(':') + 1).split(',');
+          const [x, y = '', s = ''] = text.split(',');
           image.style.objectPosition = `${x.trim().toLowerCase()} ${y.trim().toLowerCase()}`;
           if (s !== '') image.style.objectFit = s.trim().toLowerCase();
           const picture = e.querySelector('picture');
-          e.insertBefore(picture, p[0]);
+          e.innerHTML = picture.outerHTML;
         }
       }
     });
@@ -112,37 +83,22 @@ export default async function init(el) {
   if (document.querySelector('.homepage-link-bar:not(.custom-bg)')) {
     document.querySelector('.section.masonry')?.classList.add('small-top-padding');
   }
-
-  const index = Array.from(el.parentNode.children).indexOf(el);
-  el.classList.add(`brick-${index}`);
   
-  const { decorateButtons, decorateBlockText } = await import(`${getLibs()}/utils/decorate.js`);
-  const { decorateBlockAnalytics } = await import(`${getLibs()}/martech/attributes.js`);
-
-  if (!el.classList.contains('link') && !el.classList.contains('news')) el.classList.add('click');
+  const miloLibs = getLibs();
+  const { decorateButtons, decorateBlockText } = await import(`${miloLibs}/utils/decorate.js`);
+  const { decorateDefaultLinkAnalytics, createTag } = await import(`${miloLibs}/utils/utils.js`);
 
   const blockSize = getBlockSize(el);
   decorateButtons(el, `button-${blockTypeSizes[blockSize][3]}`);
-  decorateLinks(el, blockTypeSizes[blockSize][4]);
   let rows = el.querySelectorAll(':scope > div');
 
-  if (!el.classList.contains('link') && !el.classList.contains('news')) {
-    let [head, ...tail] = rows;
-    el.classList.add('click');
-    if (rows.length > 1) {
-      decorateBlockBg(el, head);
-      head.classList.add('first-background');
-      rows = tail;
-      if (rows.length > 1) {
-        [head, ...tail] = rows;
-        decorateBlockBg(el, head);
-        rows = tail;
-      }
-    }
+  try {
+    await decorateDefaultLinkAnalytics(el);
+  } catch (e) {
+    console.log('need new libs');
   }
 
   if (el.classList.contains('link')) {
-    const { createTag } = await import(`${getLibs()}/utils/utils.js`);
     const background = createTag('div', { class: 'background first-background' }, false);
     el.prepend(background);
     if (rows.length === 2) {
@@ -159,6 +115,19 @@ export default async function init(el) {
     const [highlight, ...tail] = rows;
     highlight.classList.add('highlight-row');
     rows = tail;
+  } else {
+    let [head, ...tail] = rows;
+    el.classList.add('click');
+    if (rows.length > 1) {
+      decorateBlockBg(el, head);
+      head.classList.add('first-background');
+      rows = tail;
+      if (rows.length > 1) {
+        [head, ...tail] = rows;
+        decorateBlockBg(el, head);
+        rows = tail;
+      }
+    }
   }
 
   const headers = el.querySelectorAll('h1, h2, h3, h4, h5, h6, .highlight-row > *');
@@ -178,34 +147,20 @@ export default async function init(el) {
   decorateBlockText(el, config);
   rows.forEach((row) => { row.classList.add('foreground'); });
 
-  decorateBlockAnalytics(el);
-
-  if (el.classList.contains('news') || el.classList.contains('link')) {
-    let header = '';
-    el.querySelectorAll('h3, h4, a').forEach((item) => {
-      if (item.nodeName === 'A') {
-        item.setAttribute('daa-ll', `link|${item.textContent}|${header}`);
-      } else {
-        header = item.textContent;
-      }
-    });
-  } else {
-    const heading = el.querySelector('h3');
-    const text = heading.closest('.foreground');
+  if (el.classList.contains('click')) {
     const link = el.querySelector('a');
-    if (link) {
-      el.dataset.href = link.href;
+    const foreground = el.querySelector('.foreground');
+    if (link && foreground) {
+      foreground.dataset.href = link.href;
       if (link.hasAttribute('target')) {
-        el.dataset.target = link.getAttribute('target');
+        foreground.dataset.target = link.getAttribute('target');
       }
-      if (link.hasAttribute('daa-ll')) {
-        el.setAttribute('id', `${el.getAttribute('daa-lh')}|${text.getAttribute('daa-lh')}|${link.getAttribute('daa-ll')}`);
-        el.setAttribute('daa-ll', `${el.getAttribute('daa-lh')}|${text.getAttribute('daa-lh')}|${link.getAttribute('daa-ll')}`);
-        el.removeAttribute('daa-lh');
-        text.removeAttribute('daa-lh');
-        link.removeAttribute('daa-ll');
-      }
-      el.addEventListener('click', goToDataHref);
+      foreground.setAttribute('daa-ll', link.getAttribute('daa-ll'));
+      const div = createTag('div', { class: 'click-link' }, link.innerText);
+      link.insertAdjacentElement('beforebegin', div);
+      link.remove();
+
+      foreground.addEventListener('click', goToDataHref);
     }
   }
 }
