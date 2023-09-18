@@ -114,6 +114,7 @@ export default async function init(el) {
   } else if (el.classList.contains('news') && rows.length > 1) {
     const [highlight, ...tail] = rows;
     highlight.classList.add('highlight-row');
+    el.querySelectorAll('a').forEach((a) => a.classList.add('body-xs'));
     rows = tail;
   } else {
     let [head, ...tail] = rows;
@@ -151,6 +152,10 @@ export default async function init(el) {
     const link = el.querySelector('a');
     const foreground = el.querySelector('.foreground');
     if (link && foreground) {
+      const newForeground = createTag('a', {
+        class: 'foreground',
+        href: link.href
+      }, foreground.innerHTML);
       foreground.dataset.href = link.href;
       if (link.hasAttribute('target')) {
         foreground.dataset.target = link.getAttribute('target');
