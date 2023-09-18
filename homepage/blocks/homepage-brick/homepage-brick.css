@@ -222,6 +222,7 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
   color: inherit;
 }
 
+.homepage-brick.news a,
 .homepage-brick.click div.click-link,
 .homepage-brick.link a:not(.con-button) {
   color: inherit;
