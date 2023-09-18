@@ -220,7 +220,16 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 .homepage-brick.click div.click-link,
 .homepage-brick.link a:not(.con-button) {
   color: inherit;
+}
+
+.homepage-brick.click div.click-link,
+.homepage-brick.link a:not(.con-button) {
+  color: inherit;
   font-weight: 700;
+}
+
+.homepage-brick.click a:hover {
+  text-decoration: none;
 }
 
 .homepage-brick.click:hover div.click-link {

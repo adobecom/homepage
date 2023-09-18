@@ -24,7 +24,7 @@ describe('homepage-brick block', () => {
       const block = blocks[0];
       await init(block);
       expect(block.className).to.equal('homepage-brick click');
-      const directChildren = block.querySelectorAll(':scope > div');
+      const directChildren = block.querySelectorAll(':scope > *');
       expect(directChildren.length).to.equal(3);
       expect(directChildren[0].className).to.equal('background first-background');
       expect(directChildren[1].className).to.equal('background');

@@ -13,20 +13,12 @@ const blockTypeSizes = {
   default: ['m', 'm', 'l', 's', 'xs'],
 };
 
-function goToDataHref() {
-  if (this.dataset.target === '_blank') {
-    window.open(this.dataset.href, '_blank');
-  } else {
-    window.location.href = this.dataset.href;
-  }
-}
-
 function getBlockSize(el) {
   const sizes = Object.keys(blockTypeSizes);
   return sizes.find((size) => el.classList.contains(size)) || sizes[7];
 }
 
-function decorateBlockBg(block, node) {
+function decorateBlockBg(node) {
   node.classList.add('background');
   if (!node.querySelector('img')) {
     node.style.background = node.textContent.trim();
@@ -120,12 +112,12 @@ export default async function init(el) {
     let [head, ...tail] = rows;
     el.classList.add('click');
     if (rows.length > 1) {
-      decorateBlockBg(el, head);
+      decorateBlockBg(head);
       head.classList.add('first-background');
       rows = tail;
       if (rows.length > 1) {
         [head, ...tail] = rows;
-        decorateBlockBg(el, head);
+        decorateBlockBg(head);
         rows = tail;
       }
     }
@@ -152,20 +144,20 @@ export default async function init(el) {
     const link = el.querySelector('a');
     const foreground = el.querySelector('.foreground');
     if (link && foreground) {
-      const newForeground = createTag('a', {
+      const attributes = {
         class: 'foreground',
-        href: link.href
-      }, foreground.innerHTML);
-      foreground.dataset.href = link.href;
-      if (link.hasAttribute('target')) {
-        foreground.dataset.target = link.getAttribute('target');
-      }
-      foreground.setAttribute('daa-ll', link.getAttribute('daa-ll'));
-      const div = createTag('div', { class: 'click-link body-xs' }, link.innerText);
-      link.insertAdjacentElement('beforebegin', div);
+        href: link.href,
+        'daa-ll': link.getAttribute('daa-ll')
+      };
+      if (link.hasAttribute('target')) attributes.target = link.getAttribute('target')
+
+      const divLink = createTag('div', { class: 'click-link body-xs' }, link.innerText);
+      link.insertAdjacentElement('beforebegin', divLink);
       link.remove();
 
-      foreground.addEventListener('click', goToDataHref);
+      const newForeground = createTag('a', attributes, foreground.innerHTML);
+      foreground.insertAdjacentElement('beforebegin', newForeground);
+      foreground.remove();
     }
   }
 }
