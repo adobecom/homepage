@@ -156,7 +156,7 @@ export default async function init(el) {
         foreground.dataset.target = link.getAttribute('target');
       }
       foreground.setAttribute('daa-ll', link.getAttribute('daa-ll'));
-      const div = createTag('div', { class: 'click-link' }, link.innerText);
+      const div = createTag('div', { class: 'click-link body-xs' }, link.innerText);
       link.insertAdjacentElement('beforebegin', div);
       link.remove();
 
