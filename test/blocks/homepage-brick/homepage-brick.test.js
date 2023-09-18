@@ -29,12 +29,12 @@ describe('homepage-brick block', () => {
       expect(directChildren[0].className).to.equal('background first-background');
       expect(directChildren[1].className).to.equal('background');
       expect(directChildren[2].className).to.equal('foreground');
+      expect(directChildren[2].getAttribute('target')).to.equal('_blank');
       const h3 = block.querySelector('h3');
       expect(h3).to.be.exist;
-      const link = block.querySelector('div.click-link');
-      expect(link).to.be.exist;
-      const { x, y } = getMiddleOfElement(block);
-      await sendMouse({ type: 'click', position: [x, y] });
+      const divLink = block.querySelector('div.click-link');
+      expect(divLink).to.be.exist;
+      expect(directChildren[2].className).to.equal('foreground');
     });
   });
   describe('news variant', () => {
