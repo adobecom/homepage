@@ -32,18 +32,6 @@ const CONFIG = {
   },
 };
 
-(function addCookieAndReload() {
-  const { hash } = new URL(window.location);
-  if (!hash.includes('from_ims=true')) return;
-
-  const ACOM_SIGNED_IN_STATUS = 'acomsis';
-  const date = new Date();
-  date.setTime(date.getTime() + (365*24*60*60*1000));
-  document.cookie = ACOM_SIGNED_IN_STATUS + '=1;path=/;expires='+ date.toUTCString() + ';';
-  window.location.hash = '';
-  window.location.reload();
-}());
-
 // Load LCP image immediately
 (function loadLCPImage() {
   const lcpImg = document.querySelector('img');
@@ -58,20 +46,30 @@ const CONFIG = {
 
 const miloLibs = setLibs(LIBS);
 
-(function loadStyles() {
-  const paths = [`${miloLibs}/styles/styles.css`];
-  if (STYLES) { paths.push(STYLES); }
-  paths.forEach((path) => {
-    const link = document.createElement('link');
-    link.setAttribute('rel', 'stylesheet');
-    link.setAttribute('href', path);
-    document.head.appendChild(link);
-  });
-}());
+const { hash } = new URL(window.location);
+if (hash.includes('from_ims=true')) {
+  const ACOM_SIGNED_IN_STATUS = 'acomsis';
+  const date = new Date();
+  date.setTime(date.getTime() + (365*24*60*60*1000));
+  document.cookie = ACOM_SIGNED_IN_STATUS + '=1;path=/;expires='+ date.toUTCString() + ';';
+  window.location.hash = '';
+  window.location.reload();
+} else {
+  (function loadStyles() {
+    const paths = [`${miloLibs}/styles/styles.css`];
+    if (STYLES) { paths.push(STYLES); }
+    paths.forEach((path) => {
+      const link = document.createElement('link');
+      link.setAttribute('rel', 'stylesheet');
+      link.setAttribute('href', path);
+      document.head.appendChild(link);
+    });
+  }());
 
-(async function loadPage() {
-  const { loadArea, setConfig } = await import(`${miloLibs}/utils/utils.js`);
+  (async function loadPage() {
+    const { loadArea, setConfig } = await import(`${miloLibs}/utils/utils.js`);
 
-  setConfig({ ...CONFIG, miloLibs });
-  await loadArea();
-}());
+    setConfig({ ...CONFIG, miloLibs });
+    await loadArea();
+  }());
+}
