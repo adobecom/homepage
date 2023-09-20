@@ -7,5 +7,5 @@
 Resolves: [MWPW-NUMBER](https://jira.corp.adobe.com/browse/MWPW-NUMBER)
 
 **Test URLs:**
-- Before: https://main--homepage--adobecom.hlx.page/?martech=off
-- After: https://<branch>--homepage--adobecom.hlx.page/?martech=off
+- Before: https://main--homepage--adobecom.hlx.page/homepage/index-loggedout?martech=off
+- After: https://<branch>--homepage--adobecom.hlx.page/homepage/index-loggedout?martech=off
