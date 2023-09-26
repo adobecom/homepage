@@ -135,7 +135,6 @@ export default async function init(el) {
   rows.forEach((row) => { row.classList.add('foreground'); });
 
   if (el.classList.contains('click')) {
-    // push
     const { decorateDefaultLinkAnalytics } = await import(`${miloLibs}/martech/analytics.js`);
     await decorateDefaultLinkAnalytics(el);
     const link = el.querySelector('a');
