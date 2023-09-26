@@ -8,16 +8,12 @@
  * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
- */ 
+ */
 
 import { setLibs } from './utils.js';
 
-// Add project-wide style path here.
 const STYLES = '';
-
-// Use 'https://milo.adobe.com/libs' if you cannot map '/libs' to milo's origin.
 const LIBS = '/libs';
-
 const locales = {
   // Americas
   ar: { ietf: 'es-AR', tk: 'oln4yqj.css' },
