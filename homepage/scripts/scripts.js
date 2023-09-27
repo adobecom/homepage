@@ -126,18 +126,6 @@ const CONFIG = {
   locales,
 };
 
-(function addCookieAndReload() {
-  const { hash } = new URL(window.location);
-  if (!hash.includes('from_ims=true')) return;
-
-  const ACOM_SIGNED_IN_STATUS = 'acomsis';
-  const date = new Date();
-  date.setTime(date.getTime() + (365*24*60*60*1000));
-  document.cookie = ACOM_SIGNED_IN_STATUS + '=1;path=/;expires='+ date.toUTCString() + ';';
-  window.location.hash = '';
-  window.location.reload();
-}());
-
 // Load LCP image immediately
 (function loadLCPImage() {
   const lcpImg = document.querySelector('img');
