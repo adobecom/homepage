@@ -24,17 +24,17 @@ describe('homepage-brick block', () => {
       const block = blocks[0];
       await init(block);
       expect(block.className).to.equal('homepage-brick click');
-      const directChildren = block.querySelectorAll(':scope > div');
+      const directChildren = block.querySelectorAll(':scope > *');
       expect(directChildren.length).to.equal(3);
       expect(directChildren[0].className).to.equal('background first-background');
       expect(directChildren[1].className).to.equal('background');
       expect(directChildren[2].className).to.equal('foreground');
+      expect(directChildren[2].getAttribute('target')).to.equal('_blank');
       const h3 = block.querySelector('h3');
       expect(h3).to.be.exist;
-      const link = block.querySelector('div.click-link');
-      expect(link).to.be.exist;
-      const { x, y } = getMiddleOfElement(block);
-      await sendMouse({ type: 'click', position: [x, y] });
+      const divLink = block.querySelector('div.click-link');
+      expect(divLink).to.be.exist;
+      expect(directChildren[2].className).to.equal('foreground');
     });
   });
   describe('news variant', () => {
