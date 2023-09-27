@@ -8,16 +8,13 @@
  * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
- */ 
+ */
 
 import { setLibs } from './utils.js';
 
-// Add project-wide style path here.
+const ACOM_SIGNED_IN_STATUS = 'acomsis';
 const STYLES = '';
-
-// Use 'https://milo.adobe.com/libs' if you cannot map '/libs' to milo's origin.
 const LIBS = '/libs';
-
 const locales = {
   // Americas
   ar: { ietf: 'es-AR', tk: 'oln4yqj.css' },
@@ -129,18 +126,6 @@ const CONFIG = {
   locales,
 };
 
-(function addCookieAndReload() {
-  const { hash } = new URL(window.location);
-  if (!hash.includes('from_ims=true')) return;
-
-  const ACOM_SIGNED_IN_STATUS = 'acomsis';
-  const date = new Date();
-  date.setTime(date.getTime() + (365*24*60*60*1000));
-  document.cookie = ACOM_SIGNED_IN_STATUS + '=1;path=/;expires='+ date.toUTCString() + ';';
-  window.location.hash = '';
-  window.location.reload();
-}());
-
 // Load LCP image immediately
 (function loadLCPImage() {
   const lcpImg = document.querySelector('img');
@@ -155,7 +140,24 @@ const CONFIG = {
 
 const miloLibs = setLibs(LIBS);
 
-(function loadStyles() {
+const getCookie = (name) => document.cookie
+  .split('; ')
+  .find((row) => row.startsWith(`${name}=`))
+  ?.split('=')[1];
+
+async function imsCheck() {
+  const { loadIms, setConfig } = await import(`${miloLibs}/utils/utils.js`);
+  setConfig({ ...CONFIG, miloLibs });
+  try {
+    await loadIms();
+  } catch(e) {
+    console.log(e);
+    return;
+  }
+  return window.adobeIMS?.isSignedInUser()
+}
+
+function loadStyles() {
   const paths = [`${miloLibs}/styles/styles.css`];
   if (STYLES) { paths.push(STYLES); }
   paths.forEach((path) => {
@@ -164,11 +166,24 @@ const miloLibs = setLibs(LIBS);
     link.setAttribute('href', path);
     document.head.appendChild(link);
   });
-}());
+}
 
 (async function loadPage() {
-  const { loadArea, setConfig } = await import(`${miloLibs}/utils/utils.js`);
+  const isSignedInUser = await imsCheck();
+  const signedInCookie = getCookie(ACOM_SIGNED_IN_STATUS);
+  if (isSignedInUser && !signedInCookie) {
+    const date = new Date();
+    date.setTime(date.getTime() + (365*24*60*60*1000));
+    document.cookie = ACOM_SIGNED_IN_STATUS + '=1;path=/;expires='+ date.toUTCString() + ';';
+    window.location.reload();
+  }
+  if (!isSignedInUser && signedInCookie) {
+    document.cookie = ACOM_SIGNED_IN_STATUS + '=;path=/;expires=' + new Date(0).toUTCString() + ';';
+    window.location.reload();
+  }
 
-  setConfig({ ...CONFIG, miloLibs });
+  loadStyles();
+
+  const { loadArea } = await import(`${miloLibs}/utils/utils.js`);
   await loadArea();
 }());

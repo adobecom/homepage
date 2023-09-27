@@ -1,0 +1,13 @@
+version: 1
+
+sitemaps:
+  website:
+    origin: https://www.adobe.com
+    lastmod: YYYY-MM-DD
+    default: en-US
+    languages:
+      us:
+        source: /homepage/query-index.json
+        alternate: /{path}.html
+        destination: /homepage/sitemap.xml
+        hreflang: en-US
