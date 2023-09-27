@@ -78,17 +78,11 @@ export default async function init(el) {
   
   const miloLibs = getLibs();
   const { decorateButtons, decorateBlockText } = await import(`${miloLibs}/utils/decorate.js`);
-  const { decorateDefaultLinkAnalytics, createTag } = await import(`${miloLibs}/utils/utils.js`);
+  const { createTag } = await import(`${miloLibs}/utils/utils.js`);
 
   const blockSize = getBlockSize(el);
   decorateButtons(el, `button-${blockTypeSizes[blockSize][3]}`);
   let rows = el.querySelectorAll(':scope > div');
-
-  try {
-    await decorateDefaultLinkAnalytics(el);
-  } catch (e) {
-    console.log('need new libs');
-  }
 
   if (el.classList.contains('link')) {
     const background = createTag('div', { class: 'background first-background' }, false);
@@ -141,6 +135,8 @@ export default async function init(el) {
   rows.forEach((row) => { row.classList.add('foreground'); });
 
   if (el.classList.contains('click')) {
+    const { decorateDefaultLinkAnalytics } = await import(`${miloLibs}/martech/analytics.js`);
+    await decorateDefaultLinkAnalytics(el);
     const link = el.querySelector('a');
     const foreground = el.querySelector('.foreground');
     if (link && foreground) {
