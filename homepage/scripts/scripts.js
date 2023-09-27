@@ -12,6 +12,7 @@
 
 import { setLibs } from './utils.js';
 
+const ACOM_SIGNED_IN_STATUS = 'acomsis';
 const STYLES = '';
 const LIBS = '/libs';
 const locales = {
@@ -151,7 +152,24 @@ const CONFIG = {
 
 const miloLibs = setLibs(LIBS);
 
-(function loadStyles() {
+const getCookie = (name) => document.cookie
+  .split('; ')
+  .find((row) => row.startsWith(`${name}=`))
+  ?.split('=')[1];
+
+async function imsCheck() {
+  const { loadIms, setConfig } = await import(`${miloLibs}/utils/utils.js`);
+  setConfig({ ...CONFIG, miloLibs });
+  try {
+    await loadIms();
+  } catch(e) {
+    console.log(e);
+    return;
+  }
+  return window.adobeIMS?.isSignedInUser()
+}
+
+function loadStyles() {
   const paths = [`${miloLibs}/styles/styles.css`];
   if (STYLES) { paths.push(STYLES); }
   paths.forEach((path) => {
@@ -160,11 +178,24 @@ const miloLibs = setLibs(LIBS);
     link.setAttribute('href', path);
     document.head.appendChild(link);
   });
-}());
+}
 
 (async function loadPage() {
-  const { loadArea, setConfig } = await import(`${miloLibs}/utils/utils.js`);
+  const isSignedInUser = await imsCheck();
+  const signedInCookie = getCookie(ACOM_SIGNED_IN_STATUS);
+  if (isSignedInUser && !signedInCookie) {
+    const date = new Date();
+    date.setTime(date.getTime() + (365*24*60*60*1000));
+    document.cookie = ACOM_SIGNED_IN_STATUS + '=1;path=/;expires='+ date.toUTCString() + ';';
+    window.location.reload();
+  }
+  if (!isSignedInUser && signedInCookie) {
+    document.cookie = ACOM_SIGNED_IN_STATUS + '=;path=/;expires=' + new Date(0).toUTCString() + ';';
+    window.location.reload();
+  }
 
-  setConfig({ ...CONFIG, miloLibs });
+  loadStyles();
+
+  const { loadArea } = await import(`${miloLibs}/utils/utils.js`);
   await loadArea();
 }());
