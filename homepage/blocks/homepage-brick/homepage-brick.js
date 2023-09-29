@@ -9,13 +9,14 @@ const blockTypeSizes = {
   xlarge: ['xxl', 'l', 'xl', 'l', 'l'],
   'link': ['m', 'xs', 'm', 's', 'xs'],
   'news': ['xs', 's', 'm', 's', 'xs'],
+  'above-pods': ['xl', 'm', 'l', 'xl', 'm'],
   'full-desktop': ['xl', 'l', 'm', 'l', 'm'],
-  default: ['m', 'm', 'l', 's', 'xs'],
+  default: ['m', 'm', 'l', 'l', 'xs'],
 };
 
 function getBlockSize(el) {
   const sizes = Object.keys(blockTypeSizes);
-  return sizes.find((size) => el.classList.contains(size)) || sizes[7];
+  return sizes.find((size) => el.classList.contains(size)) || sizes[8];
 }
 
 function decorateBlockBg(node) {
@@ -72,10 +73,6 @@ export default async function init(el) {
     }
   });
 
-  if (document.querySelector('.homepage-link-bar:not(.custom-bg)')) {
-    document.querySelector('.section.masonry')?.classList.add('small-top-padding');
-  }
-  
   const miloLibs = getLibs();
   const { decorateButtons, decorateBlockText } = await import(`${miloLibs}/utils/decorate.js`);
   const { createTag } = await import(`${miloLibs}/utils/utils.js`);
@@ -102,9 +99,9 @@ export default async function init(el) {
     highlight.classList.add('highlight-row');
     el.querySelectorAll('a').forEach((a) => a.classList.add('body-xs'));
     rows = tail;
-  } else {
-    let [head, ...tail] = rows;
+  } else if (!el.classList.contains('above-pods')) {
     el.classList.add('click');
+    let [head, ...tail] = rows;
     if (rows.length > 1) {
       decorateBlockBg(head);
       head.classList.add('first-background');
@@ -147,7 +144,8 @@ export default async function init(el) {
       };
       if (link.hasAttribute('target')) attributes.target = link.getAttribute('target')
 
-      const divLink = createTag('div', { class: 'click-link body-xs' }, link.innerText);
+      const divLinkClass = link.classList.contains('con-button') ? link.className : 'click-link body-xs';
+      const divLink = createTag('div', { class: divLinkClass }, link.innerText);
       link.insertAdjacentElement('beforebegin', divLink);
       link.remove();
 
