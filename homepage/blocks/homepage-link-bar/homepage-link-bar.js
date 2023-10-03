@@ -87,4 +87,8 @@ export default async function init(el) {
 
   el.classList.add(`button-count-${rows.length}`);
   rows.forEach((row, index) => row.classList.add(`button-index-${index + 1}`));
+  
+  if (document.querySelector('.homepage-link-bar:not(.custom-bg)')) {
+    document.querySelector('main > div:nth-child(3)')?.classList.add('small-top-padding');
+  }
 }
