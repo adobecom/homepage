@@ -124,6 +124,11 @@ const CONFIG = {
   geoRouting: 'on',
   fallbackRouting: 'on',
   locales,
+  jarvis: {
+    id: 'homepage_loggedout_default',
+    version: '1.83',
+    onDemand: false,
+  }
 };
 
 // Load LCP image immediately
