@@ -80,6 +80,7 @@ export default async function init(el) {
   const blockSize = getBlockSize(el);
   decorateButtons(el, `button-${blockTypeSizes[blockSize][3]}`);
   let rows = el.querySelectorAll(':scope > div');
+  const headers = el.querySelectorAll('h1, h2, h3, h4, h5, h6, .highlight-row > *');
 
   if (el.classList.contains('link')) {
     const background = createTag('div', { class: 'background first-background' }, false);
@@ -99,7 +100,10 @@ export default async function init(el) {
     highlight.classList.add('highlight-row');
     el.querySelectorAll('a').forEach((a) => a.classList.add('body-xs'));
     rows = tail;
-  } else if (!el.classList.contains('above-pods')) {
+  } else if (el.classList.contains('above-pods')) {
+    headers.forEach((header) => enforceHeaderLevel(header, 1));
+    el.querySelectorAll('a.con-button').forEach((button) => button.classList.add('button-justified-mobile'));
+  } else {
     el.classList.add('click');
     let [head, ...tail] = rows;
     if (rows.length > 1) {
@@ -114,10 +118,7 @@ export default async function init(el) {
     }
   }
 
-  const headers = el.querySelectorAll('h1, h2, h3, h4, h5, h6, .highlight-row > *');
-  if (el.classList.contains('above-pods')) {
-    headers.forEach((header, counter) => enforceHeaderLevel(header, 1));
-  } else {
+  if (!el.classList.contains('above-pods')) {
     headers.forEach((header, counter) => {
       if (!counter) {
         enforceHeaderLevel(header, 3);
