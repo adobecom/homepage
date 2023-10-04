@@ -105,6 +105,7 @@ export default async function init(el) {
     el.querySelectorAll('a.con-button').forEach((button) => button.classList.add('button-justified-mobile'));
   } else {
     el.classList.add('click');
+    el.querySelectorAll('a:not(.con-button)').forEach((a) => a.classList.add('body-xs'));
     let [head, ...tail] = rows;
     if (rows.length > 1) {
       decorateBlockBg(head);
