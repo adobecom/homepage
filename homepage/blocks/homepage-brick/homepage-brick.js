@@ -9,7 +9,7 @@ const blockTypeSizes = {
   xlarge: ['xxl', 'l', 'xl', 'l', 'l'],
   'link': ['m', 'xs', 'm', 's', 'xs'],
   'news': ['xs', 's', 'm', 's', 'xs'],
-  'above-pods': ['xl', 'm', 'l', 'xl', 'm'],
+  'above-pods': ['xxl', 'm', 'l', 'xl', 'm'],
   'full-desktop': ['xl', 'l', 'm', 'l', 'm'],
   default: ['m', 'm', 'l', 'l', 'xs'],
 };
@@ -75,11 +75,12 @@ export default async function init(el) {
 
   const miloLibs = getLibs();
   const { decorateButtons, decorateBlockText } = await import(`${miloLibs}/utils/decorate.js`);
-  const { createTag } = await import(`${miloLibs}/utils/utils.js`);
+  const { createTag, decorateAutoBlock } = await import(`${miloLibs}/utils/utils.js`);
 
   const blockSize = getBlockSize(el);
   decorateButtons(el, `button-${blockTypeSizes[blockSize][3]}`);
   let rows = el.querySelectorAll(':scope > div');
+  const headers = el.querySelectorAll('h1, h2, h3, h4, h5, h6, .highlight-row > *');
 
   if (el.classList.contains('link')) {
     const background = createTag('div', { class: 'background first-background' }, false);
@@ -99,7 +100,10 @@ export default async function init(el) {
     highlight.classList.add('highlight-row');
     el.querySelectorAll('a').forEach((a) => a.classList.add('body-xs'));
     rows = tail;
-  } else if (!el.classList.contains('above-pods')) {
+  } else if (el.classList.contains('above-pods')) {
+    headers.forEach((header) => enforceHeaderLevel(header, 1));
+    el.querySelectorAll('a.con-button').forEach((button) => button.classList.add('button-justified-mobile'));
+  } else {
     el.classList.add('click');
     let [head, ...tail] = rows;
     if (rows.length > 1) {
@@ -114,14 +118,15 @@ export default async function init(el) {
     }
   }
 
-  const headers = el.querySelectorAll('h1, h2, h3, h4, h5, h6, .highlight-row > *');
-  headers.forEach((header, counter) => {
-    if (!counter) {
-      enforceHeaderLevel(header, 3);
-    } else {
-      enforceHeaderLevel(header, 4);
-    }
-  });
+  if (!el.classList.contains('above-pods')) {
+    headers.forEach((header, counter) => {
+      if (!counter) {
+        enforceHeaderLevel(header, 3);
+      } else {
+        enforceHeaderLevel(header, 4);
+      }
+    });
+  }
   const config = blockTypeSizes[blockSize];
   const overrides = ['-heading', '-body', '-detail'];
   overrides.forEach((override, index) => {
@@ -137,11 +142,16 @@ export default async function init(el) {
     const link = el.querySelector('a');
     const foreground = el.querySelector('.foreground');
     if (link && foreground) {
+      let href = link.href;
+      if (link.dataset.modalPath && link.dataset.modalHash) {
+        href = `${window.location.origin}${link.dataset.modalPath}${link.dataset.modalHash}`;
+      }
       const attributes = {
         class: 'foreground',
-        href: link.href,
+        href: href,
         'daa-ll': link.getAttribute('daa-ll')
       };
+      console.log(link.getAttribute('href'));
       if (link.hasAttribute('target')) attributes.target = link.getAttribute('target')
 
       const divLinkClass = link.classList.contains('con-button') ? link.className : 'click-link body-xs';
@@ -152,6 +162,7 @@ export default async function init(el) {
       const newForeground = createTag('a', attributes, foreground.innerHTML);
       foreground.insertAdjacentElement('beforebegin', newForeground);
       foreground.remove();
+      decorateAutoBlock(newForeground);
     }
   }
 }

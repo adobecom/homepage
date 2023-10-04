@@ -82,6 +82,30 @@
   padding-top: var(--spacing-s);
 }
 
+.homepage-brick.above-pods .foreground {
+  padding-top: var(--spacing-xs);
+}
+
+@media screen and (max-width: 599px) {
+  .homepage-brick.above-pods .foreground > div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .homepage-brick.above-pods .foreground > div .body-m {
+      order: 3;
+  }
+
+  .homepage-brick.above-pods .foreground > div .action-area {
+    order: 2;
+    margin-bottom: var(--spacing-s);
+    display: flex;
+    gap: var(--spacing-s);
+    flex-flow: column wrap;
+    align-items: stretch;
+  }
+}
+
 @media screen and (min-width: 600px) and (max-width: 1199px) {
   .section.masonry {
     grid-template-columns: repeat(2, 1fr);
@@ -118,6 +142,7 @@
   .homepage-brick.above-pods .foreground {
     max-width: 1000px;
     margin: 0 auto;
+    padding-top: var(--spacing-m);
   }
 }
 
@@ -192,15 +217,19 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 
 .homepage-brick [class^="detail"] { margin: 0 0 var(--spacing-xs) 0; }
 .homepage-brick p.action-area { margin-top: var(--spacing-s); }
+.homepage-brick.click p.action-area { margin-top: 0; }
 .homepage-brick div > *:last-child { margin-bottom: 0; }
 .grid .homepage-brick div > *:last-child { margin-bottom: var(--spacing-s); }
 .homepage-brick .foreground > div *:first-child { margin-top: 0; }
 
 .homepage-brick .foreground {
-  max-width: var(--grid-container-width);
   margin: 0 auto;
   position: relative;
   z-index: 2;
+}
+
+.homepage-brick:not(.above-pods) .foreground {
+  max-width: var(--grid-container-width);
 }
 
 [class*='-up'] .homepage-brick .foreground {
