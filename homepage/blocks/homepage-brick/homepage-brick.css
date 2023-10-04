@@ -118,6 +118,7 @@
   .homepage-brick.above-pods .foreground {
     max-width: 1000px;
     margin: 0 auto;
+    padding-top: 32px;
   }
 }
 
@@ -192,15 +193,19 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 
 .homepage-brick [class^="detail"] { margin: 0 0 var(--spacing-xs) 0; }
 .homepage-brick p.action-area { margin-top: var(--spacing-s); }
+.homepage-brick.click p.action-area { margin-top: 0; }
 .homepage-brick div > *:last-child { margin-bottom: 0; }
 .grid .homepage-brick div > *:last-child { margin-bottom: var(--spacing-s); }
 .homepage-brick .foreground > div *:first-child { margin-top: 0; }
 
 .homepage-brick .foreground {
-  max-width: var(--grid-container-width);
   margin: 0 auto;
   position: relative;
   z-index: 2;
+}
+
+.homepage-brick:not(.above-pods) .foreground {
+  max-width: var(--grid-container-width);
 }
 
 [class*='-up'] .homepage-brick .foreground {

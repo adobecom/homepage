@@ -75,7 +75,7 @@ export default async function init(el) {
 
   const miloLibs = getLibs();
   const { decorateButtons, decorateBlockText } = await import(`${miloLibs}/utils/decorate.js`);
-  const { createTag } = await import(`${miloLibs}/utils/utils.js`);
+  const { createTag, decorateAutoBlock } = await import(`${miloLibs}/utils/utils.js`);
 
   const blockSize = getBlockSize(el);
   decorateButtons(el, `button-${blockTypeSizes[blockSize][3]}`);
@@ -115,13 +115,17 @@ export default async function init(el) {
   }
 
   const headers = el.querySelectorAll('h1, h2, h3, h4, h5, h6, .highlight-row > *');
-  headers.forEach((header, counter) => {
-    if (!counter) {
-      enforceHeaderLevel(header, 3);
-    } else {
-      enforceHeaderLevel(header, 4);
-    }
-  });
+  if (el.classList.contains('above-pods')) {
+    headers.forEach((header, counter) => enforceHeaderLevel(header, 1));
+  } else {
+    headers.forEach((header, counter) => {
+      if (!counter) {
+        enforceHeaderLevel(header, 3);
+      } else {
+        enforceHeaderLevel(header, 4);
+      }
+    });
+  }
   const config = blockTypeSizes[blockSize];
   const overrides = ['-heading', '-body', '-detail'];
   overrides.forEach((override, index) => {
@@ -137,11 +141,16 @@ export default async function init(el) {
     const link = el.querySelector('a');
     const foreground = el.querySelector('.foreground');
     if (link && foreground) {
+      let href = link.href;
+      if (link.dataset.modalPath && link.dataset.modalHash) {
+        href = `${window.location.origin}${link.dataset.modalPath}${link.dataset.modalHash}`;
+      }
       const attributes = {
         class: 'foreground',
-        href: link.href,
+        href: href,
         'daa-ll': link.getAttribute('daa-ll')
       };
+      console.log(link.getAttribute('href'));
       if (link.hasAttribute('target')) attributes.target = link.getAttribute('target')
 
       const divLinkClass = link.classList.contains('con-button') ? link.className : 'click-link body-xs';
@@ -152,6 +161,7 @@ export default async function init(el) {
       const newForeground = createTag('a', attributes, foreground.innerHTML);
       foreground.insertAdjacentElement('beforebegin', newForeground);
       foreground.remove();
+      decorateAutoBlock(newForeground);
     }
   }
 }
