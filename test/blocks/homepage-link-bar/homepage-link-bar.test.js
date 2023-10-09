@@ -20,6 +20,7 @@ describe('homepage-link-bar block', () => {
       expect(directChildren[1].className).to.equal('button-index-1');
       const span = block.querySelector('span.icon.icon-edit-videos.margin-right');
       expect(span).to.be.exist;
+      await init(blocks[1]);
     });
   });
 });
