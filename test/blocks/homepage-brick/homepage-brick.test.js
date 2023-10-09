@@ -69,9 +69,11 @@ describe('homepage-brick block', () => {
   describe('miscellaneous', () => {
     it('masonry padding fix', () => {
       const section = document.querySelector('.section');
-      expect(section.className).to.equal('section masonry small-top-padding');
+      expect(section.className).to.equal('section masonry');
     });
     init(blocks[4]);
     init(blocks[5]);
+    init(blocks[6]);
+    init(blocks[7]);
   });
 });
