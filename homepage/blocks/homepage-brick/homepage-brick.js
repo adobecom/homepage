@@ -105,7 +105,6 @@ export default async function init(el) {
     el.querySelectorAll('a.con-button').forEach((button) => button.classList.add('button-justified-mobile'));
   } else {
     el.classList.add('click');
-    el.querySelectorAll('a:not(.con-button)').forEach((a) => a.classList.add('body-xs'));
     let [head, ...tail] = rows;
     if (rows.length > 1) {
       decorateBlockBg(head);
@@ -144,7 +143,9 @@ export default async function init(el) {
     const foreground = el.querySelector('.foreground');
     if (link && foreground) {
       let href = link.href;
+      let modalLink = false;
       if (link.dataset.modalPath && link.dataset.modalHash) {
+        modalLink = true;
         href = `${window.location.origin}${link.dataset.modalPath}${link.dataset.modalHash}`;
       }
       const attributes = {
@@ -152,7 +153,6 @@ export default async function init(el) {
         href: href,
         'daa-ll': link.getAttribute('daa-ll')
       };
-      console.log(link.getAttribute('href'));
       if (link.hasAttribute('target')) attributes.target = link.getAttribute('target')
 
       const divLinkClass = link.classList.contains('con-button') ? link.className : 'click-link body-xs';
@@ -163,7 +163,7 @@ export default async function init(el) {
       const newForeground = createTag('a', attributes, foreground.innerHTML);
       foreground.insertAdjacentElement('beforebegin', newForeground);
       foreground.remove();
-      decorateAutoBlock(newForeground);
+      if (modalLink) decorateAutoBlock(newForeground);
     }
   }
 }
