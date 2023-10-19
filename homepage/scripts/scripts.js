@@ -135,6 +135,7 @@ const CONFIG = {
 (function loadLCPImage() {
   const lcpImg = document.querySelector('img');
   lcpImg?.removeAttribute('loading');
+  lcpImg?.setAttribute('fetchpriority', 'high');
 }());
 
 /*
