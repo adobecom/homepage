@@ -135,6 +135,7 @@ const CONFIG = {
 (function loadLCPImage() {
   const lcpImg = document.querySelector('img');
   lcpImg?.removeAttribute('loading');
+  lcpImg?.setAttribute('fetchpriority', 'high');  
 }());
 
 /*
@@ -174,21 +175,22 @@ function loadStyles() {
 }
 
 (async function loadPage() {
-  const isSignedInUser = await imsCheck();
-  const signedInCookie = getCookie(ACOM_SIGNED_IN_STATUS);
-  if (isSignedInUser && !signedInCookie) {
-    const date = new Date();
-    date.setTime(date.getTime() + (365*24*60*60*1000));
-    document.cookie = ACOM_SIGNED_IN_STATUS + '=1;path=/;expires='+ date.toUTCString() + ';';
-    window.location.reload();
-  }
-  if (!isSignedInUser && signedInCookie) {
-    document.cookie = ACOM_SIGNED_IN_STATUS + '=;path=/;expires=' + new Date(0).toUTCString() + ';';
-    window.location.reload();
-  }
-
   loadStyles();
-
-  const { loadArea } = await import(`${miloLibs}/utils/utils.js`);
-  await loadArea();
+  const { loadArea, setConfig } = await import(`${miloLibs}/utils/utils.js`);
+  setConfig({ ...CONFIG, miloLibs });
+  const loadAreaPromise = loadArea();
+  imsCheck().then(isSignedInUser => {
+    const signedInCookie = getCookie(ACOM_SIGNED_IN_STATUS);
+    if (isSignedInUser && !signedInCookie) {
+      const date = new Date();
+      date.setTime(date.getTime() + (365*24*60*60*1000));
+      document.cookie = ACOM_SIGNED_IN_STATUS + '=1;path=/;expires='+ date.toUTCString() + ';';
+      window.location.reload();
+    }
+    if (!isSignedInUser && signedInCookie) {
+      document.cookie = ACOM_SIGNED_IN_STATUS + '=;path=/;expires=' + new Date(0).toUTCString() + ';';
+      window.location.reload();
+    }
+  })
+  await loadAreaPromise;
 }());
