@@ -174,7 +174,16 @@ function loadStyles() {
   });
 }
 
+function mediaPathAlter() {
+  document.querySelectorAll('img').forEach((img) => {
+    let { pathname } = new URL(img.src);
+    if (pathname.startsWith('/media_')) pathname = `/homepage${pathname}`;
+    img.src = pathname;
+  });
+}
+
 (async function loadPage() {
+  mediaPathAlter();
   loadStyles();
   const { loadArea, setConfig } = await import(`${miloLibs}/utils/utils.js`);
   setConfig({ ...CONFIG, miloLibs });
@@ -193,7 +202,4 @@ function loadStyles() {
     }
   })
   await loadAreaPromise;
-  const allImgs = document.querySelectorAll('img').forEach((img) => {
-    console.log(img.src)
-  });
 }());
