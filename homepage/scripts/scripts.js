@@ -193,4 +193,7 @@ function loadStyles() {
     }
   })
   await loadAreaPromise;
+  const allImgs = document.querySelectorAll('img').forEach((img) => {
+    console.log(img.src)
+  });
 }());
