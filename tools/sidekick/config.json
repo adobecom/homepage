@@ -26,7 +26,7 @@
       "environments": [
         "edit"
       ],
-      "url": "https://milo.adobe.com/tools/loc/index.html",
+      "url": "https://main--milo--adobecom.hlx.page/tools/loc/index.html",
       "passReferrer": true,
       "passConfig": true,
       "excludePaths": [ "/**" ],
