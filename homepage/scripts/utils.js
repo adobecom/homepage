@@ -99,8 +99,10 @@ const pluginContext = {
 
 export async function setExperimentsContext(codeBasePath) {
   const miloLibs = getLibs();
-  const { getMetadata } = await import(`${miloLibs}/utils/utils.js`);
-  const { sampleRUM } = await import(`${miloLibs}/utils/samplerum.js`);
+  const [{ getMetadata }, { sampleRUM }] = await Promise.all([
+    import(`${miloLibs}/utils/utils.js`),
+    import(`${miloLibs}/utils/samplerum.js`),
+  ])
   pluginContext.getMetadata = getMetadata;
   pluginContext.sampleRUM = sampleRUM;
   window.hlx.codeBasePath = codeBasePath;

@@ -148,7 +148,6 @@ function loadLCPImage() {
   lcpImg?.removeAttribute('loading');
   lcpImg?.setAttribute('fetchpriority', 'high');  
 }
-loadLCPImage();
 
 /*
  * ------------------------------------------------------------
@@ -190,10 +189,8 @@ function loadStyles() {
   const { loadArea, setConfig } = await import(`${miloLibs}/utils/utils.js`);
   setConfig({ ...CONFIG, miloLibs });
   await setExperimentsContext('/homepage');
-  const replaced = await runExperiments({ audiences: AUDIENCES });
-  if (replaced) {
-    loadLCPImage();
-  }
+  await runExperiments({ audiences: AUDIENCES });
+  loadLCPImage();
   const loadAreaPromise = loadArea();
   imsCheck().then(isSignedInUser => {
     const signedInCookie = getCookie(ACOM_SIGNED_IN_STATUS);
