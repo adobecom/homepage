@@ -12,12 +12,10 @@
 
 import {
   setLibs,
-} from './utils.js';
-import {
   runExperiments,
   setExperimentsContext,
   showExperimentsOverlay,
-} from './experimentation-loader.js';
+} from './utils.js';
 
 const ACOM_SIGNED_IN_STATUS = 'acomsis';
 const STYLES = '';
