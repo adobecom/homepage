@@ -160,9 +160,10 @@ export default async function init(el) {
       link.insertAdjacentElement('beforebegin', divLink);
       foreground.insertAdjacentElement('beforebegin', link);
       link.innerHTML = '';
-      link.append(...foreground.childNodes);
       link.classList.add('foreground');
       link.classList.remove('con-button', 'button-l', 'blue');
+      link.append(...foreground.childNodes);
+      foreground.remove();
     }
   }
 }
