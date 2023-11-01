@@ -75,7 +75,7 @@ export default async function init(el) {
 
   const miloLibs = getLibs();
   const { decorateButtons, decorateBlockText } = await import(`${miloLibs}/utils/decorate.js`);
-  const { createTag, decorateAutoBlock } = await import(`${miloLibs}/utils/utils.js`);
+  const { createTag } = await import(`${miloLibs}/utils/utils.js`);
 
   const blockSize = getBlockSize(el);
   decorateButtons(el, `button-${blockTypeSizes[blockSize][3]}`);
