@@ -138,7 +138,7 @@ export default async function init(el) {
 
   if (el.classList.contains('click')) {
     const { decorateDefaultLinkAnalytics } = await import(`${miloLibs}/martech/analytics.js`);
-    // await decorateDefaultLinkAnalytics(el);
+    await decorateDefaultLinkAnalytics(el);
     const link = el.querySelector('a');
     const foreground = el.querySelector('.foreground');
     if (link && foreground) {
@@ -158,7 +158,7 @@ export default async function init(el) {
       const divLinkClass = link.classList.contains('con-button') ? link.className : 'click-link body-xs';
       const divLink = createTag('div', { class: divLinkClass }, link.innerText);
       link.insertAdjacentElement('beforebegin', divLink);
-      link.remove();
+      // link.remove();
 
       const newForeground = createTag('a', attributes, foreground.innerHTML);
       foreground.insertAdjacentElement('beforebegin', newForeground);
