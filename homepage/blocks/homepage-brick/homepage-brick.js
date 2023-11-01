@@ -158,11 +158,10 @@ export default async function init(el) {
       const divLinkClass = link.classList.contains('con-button') ? link.className : 'click-link body-xs';
       const divLink = createTag('div', { class: divLinkClass }, link.innerText);
       link.insertAdjacentElement('beforebegin', divLink);
-      // link.remove();
-
       const newForeground = createTag('a', attributes, foreground.innerHTML);
-      foreground.insertAdjacentElement('beforebegin', newForeground);
-      foreground.remove();
+      foreground.insertAdjacentElement('beforebegin', link);
+      link.innerHTML = '';
+      link.append(foreground);
       if (modalLink) decorateAutoBlock(newForeground);
     }
   }
