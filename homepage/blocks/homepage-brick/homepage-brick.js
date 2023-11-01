@@ -136,9 +136,9 @@ export default async function init(el) {
   decorateBlockText(el, config);
   rows.forEach((row) => { row.classList.add('foreground'); });
 
-  if (false && el.classList.contains('click')) {
+  if (el.classList.contains('click')) {
     const { decorateDefaultLinkAnalytics } = await import(`${miloLibs}/martech/analytics.js`);
-    await decorateDefaultLinkAnalytics(el);
+    // await decorateDefaultLinkAnalytics(el);
     const link = el.querySelector('a');
     const foreground = el.querySelector('.foreground');
     if (link && foreground) {
