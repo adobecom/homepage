@@ -263,13 +263,13 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
   color: #FFF;
 }
 
-.homepage-brick a,
+.homepage-brick a:not(.con-button),
 .homepage-brick.click div.click-link,
 .homepage-brick.link a:not(.con-button) {
   color: inherit;
 }
 
-.homepage-brick.news a,
+.homepage-brick.news a:not(.con-button),
 .homepage-brick.click div.click-link,
 .homepage-brick.link a:not(.con-button) {
   color: inherit;
