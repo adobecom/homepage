@@ -143,26 +143,21 @@ const AUDIENCES = {
   desktop: () => window.innerWidth >= 600,
   // define your custom audiences here as needed
 };
-const miloLibs = setLibs(LIBS);
-
-(async function() {
-  await setExperimentsContext('/homepage');
-  await runExperiments({ audiences: AUDIENCES });
-}());
 
 // Load LCP image immediately
-(function loadLCPImage() {
+function loadLCPImage() {
   const lcpImg = document.querySelector('img');
   lcpImg?.removeAttribute('loading');
   lcpImg?.setAttribute('fetchpriority', 'high');  
-}());
+}
+loadLCPImage();
 
 /*
  * ------------------------------------------------------------
  * Edit below at your own risk
  * ------------------------------------------------------------
  */
-
+const miloLibs = setLibs(LIBS);
 
 const getCookie = (name) => document.cookie
   .split('; ')
@@ -196,6 +191,11 @@ function loadStyles() {
   loadStyles();
   const { loadArea, setConfig } = await import(`${miloLibs}/utils/utils.js`);
   setConfig({ ...CONFIG, miloLibs });
+  await setExperimentsContext('/homepage');
+  const replaced = await runExperiments({ audiences: AUDIENCES });
+  if (replaced) {
+    loadLCPImage();
+  }
   const loadAreaPromise = loadArea();
   imsCheck().then(isSignedInUser => {
     const signedInCookie = getCookie(ACOM_SIGNED_IN_STATUS);

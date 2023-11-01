@@ -653,6 +653,7 @@ export async function loadEager(document, options, context) {
   if (!res) {
     res = await serveAudience(document, options, context);
   }
+  return res;
 }
 
 export async function loadLazy(document, options, context) {
