@@ -10,7 +10,14 @@
  * governing permissions and limitations under the License.
  */
 
-import { setLibs } from './utils.js';
+import {
+  setLibs,
+} from './utils.js';
+import {
+  runExperiments,
+  setExperimentsContext,
+  showExperimentsOverlay,
+} from './experimentation-loader.js';
 
 const ACOM_SIGNED_IN_STATUS = 'acomsis';
 const STYLES = '';
@@ -131,6 +138,18 @@ const CONFIG = {
   }
 };
 
+const AUDIENCES = {
+  mobile: () => window.innerWidth < 600,
+  desktop: () => window.innerWidth >= 600,
+  // define your custom audiences here as needed
+};
+const miloLibs = setLibs(LIBS);
+
+(async function() {
+  await setExperimentsContext('/homepage');
+  await runExperiments({ audiences: AUDIENCES });
+}());
+
 // Load LCP image immediately
 (function loadLCPImage() {
   const lcpImg = document.querySelector('img');
@@ -144,7 +163,6 @@ const CONFIG = {
  * ------------------------------------------------------------
  */
 
-const miloLibs = setLibs(LIBS);
 
 const getCookie = (name) => document.cookie
   .split('; ')
@@ -193,4 +211,5 @@ function loadStyles() {
     }
   })
   await loadAreaPromise;
+  showExperimentsOverlay({ audiences: AUDIENCES });
 }());
