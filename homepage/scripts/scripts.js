@@ -186,7 +186,10 @@ function loadStyles() {
 
 (async function loadPage() {
   loadStyles();
-  const { loadArea, setConfig } = await import(`${miloLibs}/utils/utils.js`);
+  const [{ loadArea, setConfig }] = await Promise.all([
+    import(`${miloLibs}/utils/utils.js`),
+    import(`${miloLibs}/utils/samplerum.js`),
+  ])
   setConfig({ ...CONFIG, miloLibs });
   await setExperimentsContext('/homepage');
   await runExperiments({ audiences: AUDIENCES });
