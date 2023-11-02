@@ -263,13 +263,13 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
   color: #FFF;
 }
 
-.homepage-brick a:not(.con-button),
+.homepage-brick a,
 .homepage-brick.click div.click-link,
 .homepage-brick.link a:not(.con-button) {
   color: inherit;
 }
 
-.homepage-brick.news a:not(.con-button),
+.homepage-brick.news a,
 .homepage-brick.click div.click-link,
 .homepage-brick.link a:not(.con-button) {
   color: inherit;
@@ -369,14 +369,6 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 .homepage-brick .tabletOnly,
 .homepage-brick .desktopOnly {
   display: none;
-}
-
-/* mashup */
-.homepage-brick.click:hover .con-button:not(.blue):not(.fill) {
-    background-color: var(--color-white);
-    border-color: var(--color-white);
-    color: var(--color-black);
-    text-decoration: none;
 }
 
 @media screen and (max-width: 1023px) {

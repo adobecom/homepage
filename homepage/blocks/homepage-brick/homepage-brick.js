@@ -166,4 +166,8 @@ export default async function init(el) {
       foreground.remove();
     }
   }
+  el.querySelectorAll('.con-button').forEach((btn) => {
+    btn.classList.add('click-link', 'body-xs');
+    btn.classList.remove('con-button', 'button-l', 'blue');
+  });
 }
