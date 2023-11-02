@@ -371,6 +371,14 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
   display: none;
 }
 
+/* mashup */
+.homepage-brick.click:hover .con-button:not(.blue):not(.fill) {
+    background-color: var(--color-black);
+    border-color: var(--color-black);
+    color: var(--color-white);
+    text-decoration: none;
+}
+
 @media screen and (max-width: 1023px) {
   .section.masonry:not([class*="spacing"]) {
     padding: var(--spacing-s) var(--spacing-s);
