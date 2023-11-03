@@ -16,8 +16,8 @@ describe('homepage-link-bar block', () => {
       expect(block.className).to.equal('homepage-link-bar justified custom-bg button-count-5');
       const directChildren = block.querySelectorAll(':scope > div');
       expect(directChildren.length).to.equal(6);
-      expect(directChildren[0].className).to.equal('header');
-      expect(directChildren[1].className).to.equal('button-index-1');
+      expect(directChildren[0].classList.contains('header')).to.be.true;
+      expect(directChildren[1].classList.contains('button-index-1')).to.be.true;
       const span = block.querySelector('span.icon.icon-edit-videos.margin-right');
       expect(span).to.be.exist;
       await init(blocks[1]);
