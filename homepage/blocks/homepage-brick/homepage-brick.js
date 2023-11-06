@@ -73,11 +73,13 @@ export default async function init(el) {
     }
   });
 
+  const linkParentNode = el.querySelector('a').parentNode;
+  const linkParentNodeName = linkParentNode.nodeName === 'CHECKOUT-LINK' ? linkParentNode.parentNode.nodeName : linkParentNode.nodeName;
   const miloLibs = getLibs();
   const { decorateButtons, decorateBlockText } = await import(`${miloLibs}/utils/decorate.js`);
-  const { createTag, decorateAutoBlock } = await import(`${miloLibs}/utils/utils.js`);
-
+  const { createTag } = await import(`${miloLibs}/utils/utils.js`);
   const blockSize = getBlockSize(el);
+
   decorateButtons(el, `button-${blockTypeSizes[blockSize][3]}`);
   let rows = el.querySelectorAll(':scope > div');
   const headers = el.querySelectorAll('h1, h2, h3, h4, h5, h6, .highlight-row > *');
@@ -154,16 +156,16 @@ export default async function init(el) {
         'daa-ll': link.getAttribute('daa-ll')
       };
       if (link.hasAttribute('target')) attributes.target = link.getAttribute('target')
-
-      const divLinkClass = link.classList.contains('con-button') ? link.className : 'click-link body-xs';
+      
+      const divLinkClass = linkParentNodeName === 'P' ? 'click-link body-xs' : link.className;
       const divLink = createTag('div', { class: divLinkClass }, link.innerText);
       link.insertAdjacentElement('beforebegin', divLink);
-      link.remove();
-
-      const newForeground = createTag('a', attributes, foreground.innerHTML);
-      foreground.insertAdjacentElement('beforebegin', newForeground);
+      foreground.insertAdjacentElement('beforebegin', link);
+      link.innerHTML = '';
+      link.classList.add('foreground');
+      link.classList.remove('con-button', 'button-l', 'blue');
+      link.append(...foreground.childNodes);
       foreground.remove();
-      if (modalLink) decorateAutoBlock(newForeground);
     }
   }
 }
