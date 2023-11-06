@@ -162,8 +162,7 @@ const getCookie = (name) => document.cookie
   ?.split('=')[1];
 
 async function imsCheck() {
-  const { loadIms, setConfig } = await import(`${miloLibs}/utils/utils.js`);
-  setConfig({ ...CONFIG, miloLibs });
+  const { getConfig, loadIms, updateConfig } = await import(`${miloLibs}/utils/utils.js`);
   try {
     await loadIms();
   } catch(e) {
