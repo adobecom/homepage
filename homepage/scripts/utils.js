@@ -89,7 +89,6 @@ function toCamelCase(name) {
   return toClassName(name).replace(/-([a-z])/g, (g) => g[1].toUpperCase());
 }
 
-
 const pluginContext = {
   getAllMetadata,
   loadCSS,
