@@ -127,7 +127,7 @@ const CONFIG = {
   jarvis: {
     id: 'homepage_loggedout_default',
     version: '1.83',
-    onDemand: false,
+    onDemand: true,
   }
 };
 
