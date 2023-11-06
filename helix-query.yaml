@@ -9,6 +9,7 @@ indices:
     - '/homepage/drafts/**'
     - '/homepage/assets/**'
     - '/homepage/gnav/**'
+    - '/homepage/footer/**'
     target: /homepage/query-index.xlsx
     properties:
       title:
