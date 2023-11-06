@@ -108,38 +108,43 @@ export async function setExperimentsContext(codeBasePath) {
 }
 
 export async function runExperiments(config) {
+  if (!pluginContext.getMetadata('experiment')
+    && !Object.keys(getAllMetadata('campaign')).length
+    && !Object.keys(getAllMetadata('audience')).length) {
+    return;
+  }
+  // eslint-disable-next-line import/no-relative-packages
+  const { loadEager: runEager } = await import('../plugins/experimentation/src/index.js');
+  await runEager(document, { ...config }, pluginContext);
+  const { experiment } = window.hlx;
+  if (!experiment) {
+    return;
+  }
+  const { selectedVariant } = experiment;
+  const control = experiment.variants[experiment.variantNames[0]];
+  if (selectedVariant === experiment.variantNames[0] || !control?.blocks?.length) {
+    return;
+  }
   const miloLibs = getLibs();
   const { getConfig, updateConfig } = await import(`${miloLibs}/utils/utils.js`);
-  if (pluginContext.getMetadata('experiment')
-    || Object.keys(getAllMetadata('campaign')).length
-    || Object.keys(getAllMetadata('audience')).length) {
-    // eslint-disable-next-line import/no-relative-packages
-    const { loadEager: runEager, parseExperimentConfig } = await import('../plugins/experimentation/src/index.js');
-    await runEager(document, { ...config }, pluginContext);
-    const control = window.hlx.experiment.variants[window.hlx.experiment.variantNames[0]];
-    const { selectedVariant } = window.hlx.experiment;
-    if (selectedVariant !== window.hlx.experiment.variantNames[0] && control?.blocks?.length) {
-      const variant = window.hlx.experiment.variants[selectedVariant];
-      updateConfig({
-        ...getConfig(),
-        expBlocks: control.blocks.reduce((res, block, i) => {
-          res[block] = variant.blocks[i];
-          return res;
-        }, {}),
-      });
-    }
-  }
+  const variant = experiment.variants[selectedVariant];
+  updateConfig({
+    ...getConfig(),
+    expBlocks: control.blocks.reduce((res, block, i) => {
+      res[block] = variant.blocks[i];
+      return res;
+    }, {}),
+  });
 }
 
 export async function showExperimentsOverlay(config) {
-  const miloLibs = getLibs();
-  const { getConfig, updateConfig } = await import(`${miloLibs}/utils/utils.js`);
-  if (pluginContext.getMetadata('experiment')
-    || Object.keys(getAllMetadata('campaign')).length
-    || Object.keys(getAllMetadata('audience')).length) {
-    // eslint-disable-next-line import/no-relative-packages
-    const { loadLazy: runLazy, parseExperimentConfig } = await import('../plugins/experimentation/src/index.js');
-    return runLazy(document, { ...config }, pluginContext);
+  if (!pluginContext.getMetadata('experiment')
+    && !Object.keys(getAllMetadata('campaign')).length
+    && !Object.keys(getAllMetadata('audience')).length) {
+    return;
   }
+  // eslint-disable-next-line import/no-relative-packages
+  const { loadLazy: runLazy } = await import('../plugins/experimentation/src/index.js');
+  return runLazy(document, { ...config }, pluginContext);
 }
 
