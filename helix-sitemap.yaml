@@ -11,3 +11,15 @@ sitemaps:
         alternate: /{path}.html
         destination: /homepage/sitemap.xml
         hreflang: en-US
+
+      de:
+        source: /de/homepage/query-index.json
+        alternate: /de/{path}.html
+        destination: /de/homepage/sitemap.xml
+        hreflang: de-DE
+
+      fr:
+        source: /fr/homepage/query-index.json
+        alternate: /fr/{path}.html
+        destination: /fr/homepage/sitemap.xml
+        hreflang: fr-FR
