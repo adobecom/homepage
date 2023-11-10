@@ -131,6 +131,14 @@ const CONFIG = {
   }
 };
 
+(function mediaPathAlter() {
+  document.querySelectorAll('source').forEach((source) => {
+    console.log(`${window.location.origin}${source.srcset.substring(1)}`);
+    const { pathname, search } = new URL(`${window.location.origin}${source.srcset.substring(1)}`);
+    if (pathname.startsWith('/media_')) source.srcset = `/homepage11${pathname}${search}`;
+  });
+}());
+
 // Load LCP image immediately
 (function loadLCPImage() {
   const lcpImg = document.querySelector('img');
@@ -174,16 +182,7 @@ function loadStyles() {
   });
 }
 
-function mediaPathAlter() {
-  document.querySelectorAll('source').forEach((source) => {
-    console.log(`${window.location.origin}${source.srcset.substring(1)}`);
-    const { pathname, search } = new URL(`${window.location.origin}${source.srcset.substring(1)}`);
-    if (pathname.startsWith('/media_')) source.srcset = `/homepage11${pathname}${search}`;
-  });
-}
-
 (async function loadPage() {
-  mediaPathAlter();
   loadStyles();
   const { loadArea, setConfig } = await import(`${miloLibs}/utils/utils.js`);
   setConfig({ ...CONFIG, miloLibs });
