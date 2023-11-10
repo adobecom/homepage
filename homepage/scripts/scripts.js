@@ -136,6 +136,8 @@ const decorateArea = (area = document) => {
   loadLCPImage(area);
 };
 
+decorateArea();
+
 // Add any config options.
 const CONFIG = {
   decorateArea: decorateArea,
