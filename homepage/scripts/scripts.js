@@ -141,7 +141,6 @@ const CONFIG = {
   const resetAttributeBase = (tag, attr) => {
     document.querySelectorAll(`${tag}[${attr}^="./media_"]`).forEach((el) => {
       el[attr] = `${new URL(`${CONFIG.contentRoot}${el.getAttribute(attr).substring(1)}`, window.location).href}`;
-      console.log(attr, el[attr]);
     });
   };
   resetAttributeBase('img', 'src');
