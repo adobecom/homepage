@@ -116,31 +116,8 @@ const locales = {
   vn_en: { ietf: 'en-GB', tk: 'pps7abe.css' },
 };
 
-const mediaPathAlter = (area = document) => {
-  area.querySelectorAll('source').forEach((source) => {
-    if (source.srcset.startsWith('./media_')) {
-      const { pathname, search } = new URL(`${window.location.origin}${source.srcset.substring(1)}`);
-      source.srcset = `/homepage11${pathname}${search}`;
-    }
-  });
-};
-
-const loadLCPImage = (area = document) => {
-  const lcpImg = area.querySelector('img');
-  lcpImg?.removeAttribute('loading');
-  lcpImg?.setAttribute('fetchpriority', 'high');  
-}
-
-const decorateArea = (area = document) => {
-  mediaPathAlter(area);
-  loadLCPImage(area);
-};
-
-decorateArea();
-
 // Add any config options.
 const CONFIG = {
-  decorateArea: decorateArea,
   codeRoot: '/homepage',
   contentRoot: '/homepage',
   imsClientId: 'homepage_milo',
@@ -159,6 +136,23 @@ const CONFIG = {
  * Edit below at your own risk
  * ------------------------------------------------------------
  */
+
+(function replaceDotMedia() {
+  const resetAttributeBase = (tag, attr) => {
+    document.querySelectorAll(`${tag}[${attr}^="./media_"]`).forEach((el) => {
+      el[attr] = `${new URL(`${CONFIG.contentRoot}${el.getAttribute(attr).substring(1)}`, window.location).href}`;
+      console.log(attr, el[attr]);
+    });
+  };
+  resetAttributeBase('img', 'src');
+  resetAttributeBase('source', 'srcset');
+}());
+
+(function loadLCPImage() {
+  const lcpImg = document.querySelector('img');
+  lcpImg?.removeAttribute('loading');
+  lcpImg?.setAttribute('fetchpriority', 'high');  
+}());
 
 const miloLibs = setLibs(LIBS);
 
