@@ -120,6 +120,7 @@ const locales = {
 const CONFIG = {
   codeRoot: '/homepage',
   contentRoot: '/homepage',
+  mediaPrefix: '/homepage1',
   imsClientId: 'homepage_milo',
   geoRouting: 'on',
   fallbackRouting: 'on',
@@ -133,7 +134,6 @@ const CONFIG = {
 
 (function mediaPathAlter() {
   document.querySelectorAll('source').forEach((source) => {
-    console.log(`${window.location.origin}${source.srcset.substring(1)}`);
     const { pathname, search } = new URL(`${window.location.origin}${source.srcset.substring(1)}`);
     if (pathname.startsWith('/media_')) source.srcset = `/homepage11${pathname}${search}`;
   });
