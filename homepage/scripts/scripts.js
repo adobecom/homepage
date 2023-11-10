@@ -175,10 +175,10 @@ function loadStyles() {
 }
 
 function mediaPathAlter() {
-  document.querySelectorAll('img').forEach((img) => {
-    let { pathname } = new URL(img.src);
-    if (pathname.startsWith('/media_')) pathname = `/homepage${pathname}`;
-    img.src = pathname;
+  document.querySelectorAll('source').forEach((source) => {
+    console.log(`${window.location.origin}${source.srcset.substring(1)}`);
+    const { pathname, search } = new URL(`${window.location.origin}${source.srcset.substring(1)}`);
+    if (pathname.startsWith('/media_')) source.srcset = `/homepage11${pathname}${search}`;
   });
 }
 
