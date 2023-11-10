@@ -116,7 +116,6 @@ const locales = {
   vn_en: { ietf: 'en-GB', tk: 'pps7abe.css' },
 };
 
-// Add any config options.
 const CONFIG = {
   codeRoot: '/homepage',
   contentRoot: '/homepage',
@@ -128,15 +127,43 @@ const CONFIG = {
     id: 'homepage_loggedout_default',
     version: '1.83',
     onDemand: true,
-  }
+  },
 };
 
-// Load LCP image immediately
 (function loadLCPImage() {
   const lcpImg = document.querySelector('img');
   lcpImg?.removeAttribute('loading');
-  lcpImg?.setAttribute('fetchpriority', 'high');  
+  lcpImg?.setAttribute('fetchpriority', 'high');
 }());
+
+const getCookie = (name) => document.cookie
+  .split('; ')
+  .find((row) => row.startsWith(`${name}=`))
+  ?.split('=')[1];
+
+async function imsCheck({ loadIms, eager = false }) {
+  if (eager) {
+    const prevSession = Object.keys(sessionStorage).some((key) => key.startsWith('adobeid'));
+    if (!prevSession) return;
+  }
+
+  try { await loadIms(); } catch { return; }
+  const signedIn = window.adobeIMS?.isSignedInUser();
+  const sisCookie = getCookie(ACOM_SIGNED_IN_STATUS);
+
+  // Set SIS cookie & reload
+  if (signedIn && !sisCookie) {
+    const date = new Date();
+    date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
+    document.cookie = `${ACOM_SIGNED_IN_STATUS}=1;path=/;expires=${date.toUTCString()};`;
+    window.location.reload();
+  }
+  // Remove SIS cookie & reload
+  if (!signedIn && sisCookie) {
+    document.cookie = `${ACOM_SIGNED_IN_STATUS}=;path=/;expires=${new Date(0).toUTCString()};`;
+    window.location.reload();
+  }
+}
 
 /*
  * ------------------------------------------------------------
@@ -145,23 +172,6 @@ const CONFIG = {
  */
 
 const miloLibs = setLibs(LIBS);
-
-const getCookie = (name) => document.cookie
-  .split('; ')
-  .find((row) => row.startsWith(`${name}=`))
-  ?.split('=')[1];
-
-async function imsCheck() {
-  const { loadIms, setConfig } = await import(`${miloLibs}/utils/utils.js`);
-  setConfig({ ...CONFIG, miloLibs });
-  try {
-    await loadIms();
-  } catch(e) {
-    console.log(e);
-    return;
-  }
-  return window.adobeIMS?.isSignedInUser()
-}
 
 function loadStyles() {
   const paths = [`${miloLibs}/styles/styles.css`];
@@ -175,22 +185,13 @@ function loadStyles() {
 }
 
 (async function loadPage() {
-  loadStyles();
-  const { loadArea, setConfig } = await import(`${miloLibs}/utils/utils.js`);
+  const { loadIms, loadArea, setConfig } = await import(`${miloLibs}/utils/utils.js`);
   setConfig({ ...CONFIG, miloLibs });
-  const loadAreaPromise = loadArea();
-  imsCheck().then(isSignedInUser => {
-    const signedInCookie = getCookie(ACOM_SIGNED_IN_STATUS);
-    if (isSignedInUser && !signedInCookie) {
-      const date = new Date();
-      date.setTime(date.getTime() + (365*24*60*60*1000));
-      document.cookie = ACOM_SIGNED_IN_STATUS + '=1;path=/;expires='+ date.toUTCString() + ';';
-      window.location.reload();
-    }
-    if (!isSignedInUser && signedInCookie) {
-      document.cookie = ACOM_SIGNED_IN_STATUS + '=;path=/;expires=' + new Date(0).toUTCString() + ';';
-      window.location.reload();
-    }
-  })
-  await loadAreaPromise;
+
+  await imsCheck({ loadIms, eager: true });
+
+  loadStyles();
+  await loadArea();
+
+  await imsCheck({ loadIms });
 }());
