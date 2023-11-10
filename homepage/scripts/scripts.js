@@ -116,11 +116,31 @@ const locales = {
   vn_en: { ietf: 'en-GB', tk: 'pps7abe.css' },
 };
 
+const mediaPathAlter = (area = document) => {
+  area.querySelectorAll('source').forEach((source) => {
+    if (source.srcset.startsWith('./media_')) {
+      const { pathname, search } = new URL(`${window.location.origin}${source.srcset.substring(1)}`);
+      source.srcset = `/homepage11${pathname}${search}`;
+    }
+  });
+};
+
+const loadLCPImage = (area = document) => {
+  const lcpImg = area.querySelector('img');
+  lcpImg?.removeAttribute('loading');
+  lcpImg?.setAttribute('fetchpriority', 'high');  
+}
+
+const decorateArea = (area = document) => {
+  mediaPathAlter(area);
+  loadLCPImage(area);
+};
+
 // Add any config options.
 const CONFIG = {
+  decorateArea: decorateArea,
   codeRoot: '/homepage',
   contentRoot: '/homepage',
-  mediaPrefix: '/homepage1',
   imsClientId: 'homepage_milo',
   geoRouting: 'on',
   fallbackRouting: 'on',
@@ -131,20 +151,6 @@ const CONFIG = {
     onDemand: false,
   }
 };
-
-(function mediaPathAlter() {
-  document.querySelectorAll('source').forEach((source) => {
-    const { pathname, search } = new URL(`${window.location.origin}${source.srcset.substring(1)}`);
-    if (pathname.startsWith('/media_')) source.srcset = `/homepage11${pathname}${search}`;
-  });
-}());
-
-// Load LCP image immediately
-(function loadLCPImage() {
-  const lcpImg = document.querySelector('img');
-  lcpImg?.removeAttribute('loading');
-  lcpImg?.setAttribute('fetchpriority', 'high');  
-}());
 
 /*
  * ------------------------------------------------------------
