@@ -6,3 +6,17 @@
  * 
  *
  */
+
+ .dialog-modal.locale-modal-v2 {
+  background-image: var(--mobileGeo) !important;
+ }
+
+ @media (min-width: 480px) {
+  .dialog-modal.locale-modal-v2 {
+    background-image: var(--tabletGeo) !important;  }
+}
+
+@media (min-width: 1200px) {
+  .dialog-modal.locale-modal-v2 {
+    background-image: var(--desktopGeo) !important;  }
+}

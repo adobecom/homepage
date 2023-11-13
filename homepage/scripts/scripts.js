@@ -13,7 +13,7 @@
 import { setLibs } from './utils.js';
 
 const ACOM_SIGNED_IN_STATUS = 'acomsis';
-const STYLES = '';
+const STYLES = 'styles/styles.css';
 const LIBS = '/libs';
 const locales = {
   // Americas
@@ -176,7 +176,16 @@ function loadStyles() {
 
 (async function loadPage() {
   loadStyles();
-  const { loadArea, setConfig } = await import(`${miloLibs}/utils/utils.js`);
+  const { loadArea, setConfig, loadLink } = await import(`${miloLibs}/utils/utils.js`);
+  if(CONFIG.geoRouting === 'on') {
+    loadLink(`${miloLibs}/img/georouting/background-mobile.png?format=webply&optimize=medium`, { as: 'image', rel: 'preload' });
+    const mobileGeo = `${miloLibs}/img/georouting/background-mobile.png?format=webply&optimize=medium`;
+    const tabletGeo = `${miloLibs}/img/georouting/background-tablet.png?format=webply&optimize=medium`;
+    const desktopGeo = `${miloLibs}/img/georouting/background-desktop.png?format=webply&optimize=medium`;
+    document.documentElement.style.setProperty('--mobileGeo', `url('${mobileGeo}')`);
+    document.documentElement.style.setProperty('--tabletGeo', `url('${tabletGeo}')`);
+    document.documentElement.style.setProperty('--desktopGeo', `url('${desktopGeo}')`);
+  }
   setConfig({ ...CONFIG, miloLibs });
   const loadAreaPromise = loadArea();
   imsCheck().then(isSignedInUser => {
