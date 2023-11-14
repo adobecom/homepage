@@ -177,14 +177,16 @@ function loadStyles() {
 (async function loadPage() {
   loadStyles();
   const { loadArea, setConfig, loadLink } = await import(`${miloLibs}/utils/utils.js`);
-  if(CONFIG.geoRouting === 'on') {
-    loadLink(`${miloLibs}/img/georouting/background-mobile.png?format=webply&optimize=medium`, { as: 'image', rel: 'preload' });
-    const mobileGeo = `${miloLibs}/img/georouting/background-mobile.png?format=webply&optimize=medium`;
-    const tabletGeo = `${miloLibs}/img/georouting/background-tablet.png?format=webply&optimize=medium`;
-    const desktopGeo = `${miloLibs}/img/georouting/background-desktop.png?format=webply&optimize=medium`;
-    document.documentElement.style.setProperty('--mobileGeo', `url('${mobileGeo}')`);
-    document.documentElement.style.setProperty('--tabletGeo', `url('${tabletGeo}')`);
-    document.documentElement.style.setProperty('--desktopGeo', `url('${desktopGeo}')`);
+  if (CONFIG.geoRouting === 'on') {
+    const basePath = `${miloLibs}/img/georouting`;
+    const imageTypes = ['mobile', 'tablet', 'desktop'];
+    imageTypes.forEach(type => {
+      const imageUrl = `${basePath}/background-${type}.png?format=webply&optimize=medium`;
+      if (type === 'mobile') {
+        loadLink(imageUrl, { as: 'image', rel: 'preload' });
+      }
+      document.documentElement.style.setProperty(`--${type}Geo`, `url('${imageUrl}')`);
+    });
   }
   setConfig({ ...CONFIG, miloLibs });
   const loadAreaPromise = loadArea();
