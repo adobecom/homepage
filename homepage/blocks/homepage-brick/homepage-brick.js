@@ -106,9 +106,8 @@ export default async function init(el) {
     headers.forEach((header) => enforceHeaderLevel(header, 1));
     el.querySelectorAll('a.con-button').forEach((button) => button.classList.add('button-justified-mobile'));
   } else {
-    el.classList.add('click');
-    let [head, ...tail] = rows;
     if (rows.length > 1) {
+      let [head, ...tail] = rows;
       decorateBlockBg(head);
       head.classList.add('first-background');
       rows = tail;
@@ -116,6 +115,12 @@ export default async function init(el) {
         [head, ...tail] = rows;
         decorateBlockBg(head);
         rows = tail;
+      }
+      const links = el.querySelectorAll('a');
+      if (links.length === 1) {
+        el.classList.add('click');
+      } else {
+        links.forEach((a) => a.parentNode.className = 'body-xs');
       }
     }
   }
