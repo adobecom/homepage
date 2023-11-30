@@ -182,7 +182,7 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
   background-color: #ededed;
 }
 
-.homepage-brick.click.semi-transparent .first-background {
+.homepage-brick.semi-transparent .first-background {
   background: linear-gradient(130deg, rgba(255,255,255,0.6), transparent);
   border: solid 2px #fff;
 }
