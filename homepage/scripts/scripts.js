@@ -142,7 +142,7 @@ const CONFIG = {
 function decorateArea(area = document) {
   (function replaceDotMedia() {
     const resetAttributeBase = (tag, attr) => {
-      document.querySelectorAll(`${tag}[${attr}^="./media_"]`).forEach((el) => {
+      area.querySelectorAll(`${tag}[${attr}^="./media_"]`).forEach((el) => {
         el[attr] = `${new URL(`${CONFIG.contentRoot}${el.getAttribute(attr).substring(1)}`, window.location).href}`;
       });
     };
@@ -151,7 +151,7 @@ function decorateArea(area = document) {
   }());
   
   (function loadLCPImage() {
-    const lcpImg = document.querySelector('img');
+    const lcpImg = area.querySelector('img');
     lcpImg?.setAttribute('loading', 'eager');
     lcpImg?.setAttribute('fetchpriority', 'high');  
   }());
