@@ -121,28 +121,38 @@ const CONFIG = {
   codeRoot: '/homepage',
   contentRoot: '/homepage',
   imsClientId: 'homepage_milo',
+  prodDomains: ['business.adobe.com', 'www.adobe.com'],
   geoRouting: 'on',
   fallbackRouting: 'on',
   locales,
   jarvis: {
     id: 'homepage_loggedout_default',
     version: '1.83',
-    onDemand: false,
+    onDemand: true,
   }
 };
-
-// Load LCP image immediately
-(function loadLCPImage() {
-  const lcpImg = document.querySelector('img');
-  lcpImg?.removeAttribute('loading');
-  lcpImg?.setAttribute('fetchpriority', 'high');  
-}());
 
 /*
  * ------------------------------------------------------------
  * Edit below at your own risk
  * ------------------------------------------------------------
  */
+
+(function replaceDotMedia() {
+  const resetAttributeBase = (tag, attr) => {
+    document.querySelectorAll(`${tag}[${attr}^="./media_"]`).forEach((el) => {
+      el[attr] = `${new URL(`${CONFIG.contentRoot}${el.getAttribute(attr).substring(1)}`, window.location).href}`;
+    });
+  };
+  resetAttributeBase('img', 'src');
+  resetAttributeBase('source', 'srcset');
+}());
+
+(function loadLCPImage() {
+  const lcpImg = document.querySelector('img');
+  lcpImg?.setAttribute('loading', 'eager');
+  lcpImg?.setAttribute('fetchpriority', 'high');  
+}());
 
 const miloLibs = setLibs(LIBS);
 
