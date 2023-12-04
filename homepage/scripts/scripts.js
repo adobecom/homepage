@@ -152,7 +152,7 @@ function decorateArea(area = document) {
   
   (function loadLCPImage() {
     const lcpImg = document.querySelector('img');
-    lcpImg?.removeAttribute('loading');
+    lcpImg?.setAttribute('loading', 'eager');
     lcpImg?.setAttribute('fetchpriority', 'high');  
   }());
 }
