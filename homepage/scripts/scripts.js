@@ -125,6 +125,7 @@ const CONFIG = {
   geoRouting: 'on',
   fallbackRouting: 'on',
   locales,
+  decorateArea,
   jarvis: {
     id: 'homepage_loggedout_default',
     version: '1.83',
@@ -138,21 +139,25 @@ const CONFIG = {
  * ------------------------------------------------------------
  */
 
-(function replaceDotMedia() {
-  const resetAttributeBase = (tag, attr) => {
-    document.querySelectorAll(`${tag}[${attr}^="./media_"]`).forEach((el) => {
-      el[attr] = `${new URL(`${CONFIG.contentRoot}${el.getAttribute(attr).substring(1)}`, window.location).href}`;
-    });
-  };
-  resetAttributeBase('img', 'src');
-  resetAttributeBase('source', 'srcset');
-}());
+function decorateArea(area = document) {
+  (function replaceDotMedia() {
+    const resetAttributeBase = (tag, attr) => {
+      area.querySelectorAll(`${tag}[${attr}^="./media_"]`).forEach((el) => {
+        el[attr] = `${new URL(`${CONFIG.contentRoot}${el.getAttribute(attr).substring(1)}`, window.location).href}`;
+      });
+    };
+    resetAttributeBase('img', 'src');
+    resetAttributeBase('source', 'srcset');
+  }());
+  
+  (function loadLCPImage() {
+    const lcpImg = area.querySelector('img');
+    lcpImg?.setAttribute('loading', 'eager');
+    lcpImg?.setAttribute('fetchpriority', 'high');  
+  }());
+}
+decorateArea();
 
-(function loadLCPImage() {
-  const lcpImg = document.querySelector('img');
-  lcpImg?.setAttribute('loading', 'eager');
-  lcpImg?.setAttribute('fetchpriority', 'high');  
-}());
 
 const miloLibs = setLibs(LIBS);
 
