@@ -132,18 +132,27 @@ const CONFIG = {
   }
 };
 
-// Load LCP image immediately
-(function loadLCPImage() {
-  const lcpImg = document.querySelector('img');
-  lcpImg?.setAttribute('loading', 'eager');
-  lcpImg?.setAttribute('fetchpriority', 'high');  
-}());
-
 /*
  * ------------------------------------------------------------
  * Edit below at your own risk
  * ------------------------------------------------------------
  */
+
+(function replaceDotMedia() {
+  const resetAttributeBase = (tag, attr) => {
+    document.querySelectorAll(`${tag}[${attr}^="./media_"]`).forEach((el) => {
+      el[attr] = `${new URL(`${CONFIG.contentRoot}${el.getAttribute(attr).substring(1)}`, window.location).href}`;
+    });
+  };
+  resetAttributeBase('img', 'src');
+  resetAttributeBase('source', 'srcset');
+}());
+
+(function loadLCPImage() {
+  const lcpImg = document.querySelector('img');
+  lcpImg?.setAttribute('loading', 'eager');
+  lcpImg?.setAttribute('fetchpriority', 'high');  
+}());
 
 const miloLibs = setLibs(LIBS);
 
