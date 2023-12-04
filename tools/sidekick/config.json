@@ -26,7 +26,7 @@
       "environments": [
         "edit"
       ],
-      "url": "https://milo.adobe.com/tools/loc/index.html",
+      "url": "https://main--milo--adobecom.hlx.page/tools/loc/index.html?project=homepage--adobecom",
       "passReferrer": true,
       "passConfig": true,
       "excludePaths": [ "/**" ],
@@ -53,6 +53,18 @@
         "live"
       ],
       "event": "preflight"
+    },
+    {
+      "containerId": "tools",
+      "id": "version-history",
+      "title": "Version History",
+      "environments": [ "edit" ],
+      "url": "https://milo.adobe.com/tools/version-history",
+      "isPalette": true,
+      "passReferrer": true,
+      "passConfig": true,
+      "paletteRect": "top: auto; bottom: 20px; left: 20px; height: 498px; width: 460px;",
+      "includePaths": [ "**.docx**", "**.xlsx**" ]
     },
     {
       "containerId": "tools",

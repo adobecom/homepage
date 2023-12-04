@@ -121,13 +121,14 @@ const CONFIG = {
   codeRoot: '/homepage',
   contentRoot: '/homepage',
   imsClientId: 'homepage_milo',
+  prodDomains: ['business.adobe.com', 'www.adobe.com'],
   geoRouting: 'on',
   fallbackRouting: 'on',
   locales,
   jarvis: {
     id: 'homepage_loggedout_default',
     version: '1.83',
-    onDemand: false,
+    onDemand: true,
   }
 };
 
