@@ -77,7 +77,7 @@ export default async function init(el) {
   const linkParentNodeName = linkParentNode.nodeName === 'CHECKOUT-LINK' ? linkParentNode.parentNode.nodeName : linkParentNode.nodeName;
   const miloLibs = getLibs();
   const { decorateButtons, decorateBlockText } = await import(`${miloLibs}/utils/decorate.js`);
-  const { createTag, getConfig } = await import(`${miloLibs}/utils/utils.js`);
+  const { createTag } = await import(`${miloLibs}/utils/utils.js`);
   const blockSize = getBlockSize(el);
 
   decorateButtons(el, `button-${blockTypeSizes[blockSize][3]}`);
@@ -140,7 +140,7 @@ export default async function init(el) {
 
   if (el.classList.contains('click')) {
     const { decorateDefaultLinkAnalytics } = await import(`${miloLibs}/martech/attributes.js`);
-    await decorateDefaultLinkAnalytics(el, getConfig());
+    await decorateDefaultLinkAnalytics(el);
     const link = el.querySelector('a');
     const foreground = el.querySelector('.foreground');
     if (link && foreground) {
