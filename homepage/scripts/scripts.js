@@ -121,7 +121,7 @@ const CONFIG = {
   codeRoot: '/homepage',
   contentRoot: '/homepage',
   imsClientId: 'homepage_milo',
-  prodDomains: ['business.adobe.com', 'www.adobe.com'],
+  prodDomains: ['helpx.adobe.com', 'business.adobe.com', 'www.adobe.com'],
   geoRouting: 'on',
   fallbackRouting: 'on',
   locales,
