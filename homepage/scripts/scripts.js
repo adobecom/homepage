@@ -162,7 +162,7 @@ function decorateArea(area = document, options = {}) {
       return;
     }
 
-    // For fragment
+    // For fragment LCP
     const isFirstFragment = fragmentLink === document.querySelector('a.fragment');
     const documentHasEagerImg = document.querySelector('img[fetchpriority="high"]');
     if (!documentHasEagerImg && isFirstFragment) {
