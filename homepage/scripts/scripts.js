@@ -154,15 +154,17 @@ function decorateArea(area = document, options = {}) {
     const { fragmentLink } = options;
     const lcpImg = area.querySelector('img');
     if (!lcpImg) return;
+    
+    // For non-fragment
     if (!fragmentLink) {
       lcpImg.setAttribute('loading', 'eager');
       lcpImg.setAttribute('fetchpriority', 'high');
       return;
     }
 
+    // For fragment
     const isFirstFragment = fragmentLink === document.querySelector('a.fragment');
     const documentHasEagerImg = document.querySelector('img[fetchpriority="high"]');
-    
     if (!documentHasEagerImg && isFirstFragment) {
       lcpImg.setAttribute('loading', 'eager');
       lcpImg.setAttribute('fetchpriority', 'high');
