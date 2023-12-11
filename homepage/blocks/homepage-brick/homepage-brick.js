@@ -121,7 +121,7 @@ export default async function init(el) {
         el.classList.add('click');
       } else {
         el.classList.add('multi-link');
-        links.forEach((a) => a.parentNode.className = 'action-area body-s');
+        links.forEach((a) => a.parentNode.className = 'action-area body-m');
       }
     }
   }
