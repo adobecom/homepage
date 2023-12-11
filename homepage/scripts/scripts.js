@@ -114,6 +114,8 @@ const locales = {
   el: { ietf: 'el', tk: 'aaz7dvd.css' },
   vn_vi: { ietf: 'vi', tk: 'jii8bki.css' },
   vn_en: { ietf: 'en-GB', tk: 'pps7abe.css' },
+  cis_en: { ietf: 'en', tk: 'rks2kng.css' },
+  cis_ru: { ietf: 'ru', tk: 'qxw8hzm.css' },
 };
 
 // Add any config options.
