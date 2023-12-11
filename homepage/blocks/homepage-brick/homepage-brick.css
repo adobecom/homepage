@@ -43,7 +43,7 @@
 .section.masonry:not([class*="border-radius"]) > div > div.fragment > div.section > div,
 .section.masonry:not([class*="border-radius"]) > div .background,
 .section.masonry:not([class*="border-radius"]) > div > div.fragment > div.section > div .background {
-  border-radius: 16px;
+  border-radius: 20px;
 }
 
 
@@ -276,7 +276,7 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
   color: inherit;
 }
 
-.homepage-brick:not(.click) a,
+.homepage-brick a:not(.con-button),
 .homepage-brick.click div.click-link {
   color: inherit;
   font-weight: 700;

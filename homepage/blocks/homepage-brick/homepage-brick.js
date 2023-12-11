@@ -120,7 +120,8 @@ export default async function init(el) {
       if (links.length === 1) {
         el.classList.add('click');
       } else {
-        links.forEach((a) => a.parentNode.className = 'body-xs');
+        el.classList.add('multi-link');
+        links.forEach((a) => a.parentNode.classList.add('body-xs'));
       }
     }
   }
