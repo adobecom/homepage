@@ -276,14 +276,35 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
   color: inherit;
 }
 
-.homepage-brick:not(.multi-link) a:not([class*="button"]),
+.homepage-brick:not(.click) a:not([class*="button"]),
 .homepage-brick.click div.click-link {
   color: inherit;
   font-weight: 700;
 }
 
-.homepage-brick.multi-link a:not([class*="button"]) {
+.homepage-brick a:not([class*="button"]) {
+  text-decoration: none;
+}
+
+.homepage-brick a:not([class*="button"]):hover {
   text-decoration: underline;
+}
+
+.homepage-brick.links-m.multi-link a:not([class*="button"]) {
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.homepage-brick [class^="detail"].icon-detail {
+    margin-top: var(--spacing-xs) !important;
+}
+
+.homepage-brick [class^="detail"].icon-detail picture img {
+    height: 35px;
+    width: 35px;
+    vertical-align: middle;
+    margin-right: var(--spacing-xxs);
+    margin-top: -5px !important;
 }
 
 .static-links a.foreground,
