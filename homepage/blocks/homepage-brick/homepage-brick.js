@@ -106,9 +106,8 @@ export default async function init(el) {
     headers.forEach((header) => enforceHeaderLevel(header, 1));
     el.querySelectorAll('a.con-button').forEach((button) => button.classList.add('button-justified-mobile'));
   } else {
-    el.classList.add('click');
-    let [head, ...tail] = rows;
     if (rows.length > 1) {
+      let [head, ...tail] = rows;
       decorateBlockBg(head);
       head.classList.add('first-background');
       rows = tail;
@@ -116,6 +115,21 @@ export default async function init(el) {
         [head, ...tail] = rows;
         decorateBlockBg(head);
         rows = tail;
+      }
+      const links = el.querySelectorAll('a');
+      if (links.length === 1) {
+        el.classList.add('click');
+      } else {
+        el.classList.add('multi-link');
+        const actionAreaSize = el.classList.contains('static-links') ? 'body-m': 'body-xs';
+        links.forEach((a) => a.parentNode.className = `action-area ${actionAreaSize}`);
+        if (el.classList.contains('icon-in-header')) {
+          const header = el.querySelector('h1, h2, h3, h4, h5, h6');
+          const icon = el.querySelector('picture');
+          if (header && icon) {
+            header.prepend(icon);
+          }
+        }
       }
     }
   }
@@ -167,5 +181,11 @@ export default async function init(el) {
       link.append(...foreground.childNodes);
       foreground.remove();
     }
+  }
+
+  const detail = el.querySelector('p[class*="detail"]');
+  if (detail) {
+    const icon = detail.querySelector('img');
+    if (icon) detail.classList.add('icon-detail');
   }
 }

@@ -23,7 +23,7 @@ const locales = {
   ca_fr: { ietf: 'fr-CA', tk: 'vrk5vyv.css' },
   cl: { ietf: 'es-CL', tk: 'oln4yqj.css' },
   co: { ietf: 'es-CO', tk: 'oln4yqj.css' },
-  la: { ietf: 'es-LA', tk: 'oln4yqj.css' },
+  la: { ietf: 'es-DO', tk: 'oln4yqj.css' },
   mx: { ietf: 'es-MX', tk: 'oln4yqj.css' },
   pe: { ietf: 'es-PE', tk: 'oln4yqj.css' },
   '': { ietf: 'en-US', tk: 'hah7vzn.css' },
@@ -100,10 +100,10 @@ const locales = {
   // geo expansion MWPW-124903
   za: { ietf: 'en-GB', tk: 'pps7abe.css' }, // South Africa (GB English)
   ng: { ietf: 'en-GB', tk: 'pps7abe.css' }, // Nigeria (GB English)
-  cr: { ietf: 'es-419', tk: 'oln4yqj.css' }, // Costa Rica (Spanish Latin America)
-  ec: { ietf: 'es-419', tk: 'oln4yqj.css' }, // Ecuador (Spanish Latin America)
-  pr: { ietf: 'es-419', tk: 'oln4yqj.css' }, // Puerto Rico (Spanish Latin America)
-  gt: { ietf: 'es-419', tk: 'oln4yqj.css' }, // Guatemala (Spanish Latin America)
+  cr: { ietf: 'es-CR', tk: 'oln4yqj.css' }, // Costa Rica (Spanish Latin America)
+  ec: { ietf: 'es-EC', tk: 'oln4yqj.css' }, // Ecuador (Spanish Latin America)
+  pr: { ietf: 'es-US', tk: 'oln4yqj.css' }, // Puerto Rico (Spanish Latin America)
+  gt: { ietf: 'es-GT', tk: 'oln4yqj.css' }, // Guatemala (Spanish Latin America)
   eg_ar: { ietf: 'ar', tk: 'nwq1mna.css', dir: 'rtl' }, // Egypt (Arabic)
   kw_ar: { ietf: 'ar', tk: 'nwq1mna.css', dir: 'rtl' }, // Kuwait (Arabic)
   qa_ar: { ietf: 'ar', tk: 'nwq1mna.css', dir: 'rtl' }, // Quatar (Arabic)
@@ -114,6 +114,8 @@ const locales = {
   el: { ietf: 'el', tk: 'aaz7dvd.css' },
   vn_vi: { ietf: 'vi', tk: 'jii8bki.css' },
   vn_en: { ietf: 'en-GB', tk: 'pps7abe.css' },
+  cis_en: { ietf: 'en', tk: 'rks2kng.css' },
+  cis_ru: { ietf: 'ru', tk: 'qxw8hzm.css' },
 };
 
 // Add any config options.
@@ -121,10 +123,11 @@ const CONFIG = {
   codeRoot: '/homepage',
   contentRoot: '/homepage',
   imsClientId: 'homepage_milo',
-  prodDomains: ['business.adobe.com', 'www.adobe.com'],
+  prodDomains: ['stock.adobe.com', 'helpx.adobe.com', 'business.adobe.com', 'www.adobe.com'],
   geoRouting: 'on',
   fallbackRouting: 'on',
   locales,
+  decorateArea,
   jarvis: {
     id: 'homepage_loggedout_default',
     version: '1.83',
@@ -138,21 +141,44 @@ const CONFIG = {
  * ------------------------------------------------------------
  */
 
-(function replaceDotMedia() {
-  const resetAttributeBase = (tag, attr) => {
-    document.querySelectorAll(`${tag}[${attr}^="./media_"]`).forEach((el) => {
-      el[attr] = `${new URL(`${CONFIG.contentRoot}${el.getAttribute(attr).substring(1)}`, window.location).href}`;
-    });
+function decorateArea(area = document, options = {}) {
+  const lcpImageUpdate = (img) => {
+    img.setAttribute('loading', 'eager');
+    img.setAttribute('fetchpriority', 'high');
   };
-  resetAttributeBase('img', 'src');
-  resetAttributeBase('source', 'srcset');
-}());
 
-(function loadLCPImage() {
-  const lcpImg = document.querySelector('img');
-  lcpImg?.setAttribute('loading', 'eager');
-  lcpImg?.setAttribute('fetchpriority', 'high');  
-}());
+  (function replaceDotMedia() {
+    const resetAttributeBase = (tag, attr) => {
+      area.querySelectorAll(`${tag}[${attr}^="./media_"]`).forEach((el) => {
+        el[attr] = `${new URL(`${CONFIG.contentRoot}${el.getAttribute(attr).substring(1)}`, window.location).href}`;
+      });
+    };
+    resetAttributeBase('img', 'src');
+    resetAttributeBase('source', 'srcset');
+  }());
+  
+  (function loadLCPImage() {
+    const { fragmentLink } = options;
+    const lcpImg = area.querySelector('img');
+    if (!lcpImg) return;
+    
+    // For non-fragment
+    if (!fragmentLink) {
+      lcpImageUpdate(lcpImg);
+      return;
+    }
+
+    // For fragment LCP
+    const isFirstFragment = fragmentLink === document.querySelector('a.fragment');
+    const documentHasEagerImg = document.querySelector('img[fetchpriority="high"]');
+    if (!documentHasEagerImg && isFirstFragment) {
+      lcpImageUpdate(lcpImg);
+      return;
+    }
+  }());
+}
+decorateArea();
+
 
 const miloLibs = setLibs(LIBS);
 
