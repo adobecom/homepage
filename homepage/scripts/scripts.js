@@ -141,7 +141,12 @@ const CONFIG = {
  * ------------------------------------------------------------
  */
 
-function decorateArea(area = document) {
+function decorateArea(area = document, options = {}) {
+  const lcpImageUpdate = (img) => {
+    img.setAttribute('loading', 'eager');
+    img.setAttribute('fetchpriority', 'high');
+  };
+
   (function replaceDotMedia() {
     const resetAttributeBase = (tag, attr) => {
       area.querySelectorAll(`${tag}[${attr}^="./media_"]`).forEach((el) => {
@@ -153,9 +158,23 @@ function decorateArea(area = document) {
   }());
   
   (function loadLCPImage() {
+    const { fragmentLink } = options;
     const lcpImg = area.querySelector('img');
-    lcpImg?.setAttribute('loading', 'eager');
-    lcpImg?.setAttribute('fetchpriority', 'high');  
+    if (!lcpImg) return;
+    
+    // For non-fragment
+    if (!fragmentLink) {
+      lcpImageUpdate(lcpImg);
+      return;
+    }
+
+    // For fragment LCP
+    const isFirstFragment = fragmentLink === document.querySelector('a.fragment');
+    const documentHasEagerImg = document.querySelector('img[fetchpriority="high"]');
+    if (!documentHasEagerImg && isFirstFragment) {
+      lcpImageUpdate(lcpImg);
+      return;
+    }
   }());
 }
 decorateArea();
