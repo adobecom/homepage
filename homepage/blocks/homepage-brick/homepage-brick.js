@@ -121,7 +121,7 @@ export default async function init(el) {
         el.classList.add('click');
       } else {
         el.classList.add('multi-link');
-        const actionAreaSize = el.classList.contains('links-m') ? 'body-m': 'body-xs';
+        const actionAreaSize = el.classList.contains('static-links') ? 'body-m': 'body-xs';
         links.forEach((a) => a.parentNode.className = `action-area ${actionAreaSize}`);
         if (el.classList.contains('icon-in-header')) {
           const header = el.querySelector('h1, h2, h3, h4, h5, h6');
