@@ -43,7 +43,7 @@
 .section.masonry:not([class*="border-radius"]) > div > div.fragment > div.section > div,
 .section.masonry:not([class*="border-radius"]) > div .background,
 .section.masonry:not([class*="border-radius"]) > div > div.fragment > div.section > div .background {
-  border-radius: 16px;
+  border-radius: 20px;
 }
 
 
@@ -154,6 +154,13 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 .homepage-brick {
   position: relative;
   text-size-adjust: none;
+  padding: 0;
+}
+
+.homepage-brick:not(.above-pods) .foreground,
+.homepage-brick.link.split-background .foreground > div,
+.homepage-brick.news > div {
+  padding: var(--spacing-s);
 }
 
 .masonry .homepage-brick {
@@ -175,7 +182,7 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
   background-color: #ededed;
 }
 
-.homepage-brick.click.semi-transparent .first-background {
+.homepage-brick.semi-transparent .first-background {
   background: linear-gradient(130deg, rgba(255,255,255,0.6), transparent);
   border: solid 2px #fff;
 }
@@ -242,7 +249,8 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
   display: flex;
   gap: var(--spacing-s);
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
 }
 
 .homepage-brick.link .foreground > div {
@@ -269,11 +277,30 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
   color: inherit;
 }
 
-.homepage-brick.news a,
-.homepage-brick.click div.click-link,
-.homepage-brick.link a:not(.con-button) {
+.homepage-brick:not(.click):not(.static-links) a:not([class*="button"]),
+.homepage-brick.click div.click-link {
   color: inherit;
   font-weight: 700;
+}
+
+.homepage-brick:not(.static-links) a:not([class*="button"]) {
+  text-decoration: none;
+}
+
+.homepage-brick a:not([class*="button"]):hover {
+  text-decoration: underline;
+}
+
+.homepage-brick [class^="detail"].icon-detail {
+    margin-top: var(--spacing-xs) !important;
+}
+
+.homepage-brick [class^="detail"].icon-detail picture img {
+    height: 35px;
+    width: 35px;
+    vertical-align: middle;
+    margin-right: var(--spacing-xxs);
+    margin-top: -5px !important;
 }
 
 .static-links a.foreground,
@@ -289,12 +316,6 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 .homepage-brick.click .foreground p.detail-m:first-child {
   font-size: var(--type-detail-l-size);
   line-height: var(--type-detail-l-lh);
-}
-
-.homepage-brick,
-.homepage-brick.link.split-background  .foreground > div,
-.homepage-brick.news > div {
-  padding: var(--spacing-s);
 }
 
 .homepage-brick.above-pods {
@@ -398,6 +419,11 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 @media screen and (min-width: 600px) {
   .masonry .homepage-brick {
     min-height: 500px;
+  }
+
+  .homepage-brick .action-area {
+    align-items: center;
+    flex-direction: row;
   }
 }
 
