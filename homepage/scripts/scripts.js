@@ -162,19 +162,23 @@ function decorateArea(area = document, options = {}) {
     const lcpImg = area.querySelector('img');
     if (!lcpImg) return;
     
-    // For non-fragment
-    if (!fragmentLink) {
-      lcpImageUpdate(lcpImg);
-      return;
-    }
-
     // For fragment LCP
-    const isFirstFragment = fragmentLink === document.querySelector('a.fragment');
-    const documentHasEagerImg = document.querySelector('img[fetchpriority="high"]');
-    if (!documentHasEagerImg && isFirstFragment) {
-      lcpImageUpdate(lcpImg);
+    if (fragmentLink) {
+      const isFirstFragment = fragmentLink === document.querySelector('a.fragment');
+      const documentHasEagerImg = document.querySelector('img[fetchpriority="high"]');
+      if (!documentHasEagerImg && isFirstFragment) {
+        lcpImageUpdate(lcpImg);
+        return;
+      }
+    }
+    
+    // For non-fragment
+    const sectionMetadataBg = area.body.querySelector(':scope > main > div:first-child > .section-metadata img');
+    if (sectionMetadataBg) {
+      lcpImageUpdate(sectionMetadataBg);
       return;
     }
+    lcpImageUpdate(lcpImg);
   }());
 }
 decorateArea();
