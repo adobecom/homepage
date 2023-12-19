@@ -160,21 +160,25 @@ function decorateArea(area = document, options = {}) {
   (function loadLCPImage() {
     const { fragmentLink } = options;
     const lcpImg = area.querySelector('img');
-    if (!lcpImg) return;
+    const documentHasEagerImg = document.querySelector('img[fetchpriority="high"]');
+    if (!lcpImg || documentHasEagerImg) return;
+    
+    // For fragment LCP
+    if (fragmentLink) {
+      const isFirstFragment = fragmentLink === document.querySelector('a.fragment');
+      if (!documentHasEagerImg && isFirstFragment) {
+        lcpImageUpdate(lcpImg);
+        return;
+      }
+    }
     
     // For non-fragment
-    if (!fragmentLink) {
-      lcpImageUpdate(lcpImg);
+    const sectionMetadataBg = area.querySelector('main > div:first-child > .section-metadata img');
+    if (sectionMetadataBg) {
+      lcpImageUpdate(sectionMetadataBg);
       return;
     }
-
-    // For fragment LCP
-    const isFirstFragment = fragmentLink === document.querySelector('a.fragment');
-    const documentHasEagerImg = document.querySelector('img[fetchpriority="high"]');
-    if (!documentHasEagerImg && isFirstFragment) {
-      lcpImageUpdate(lcpImg);
-      return;
-    }
+    lcpImageUpdate(lcpImg);
   }());
 }
 decorateArea();
