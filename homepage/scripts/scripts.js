@@ -123,6 +123,15 @@ const CONFIG = {
   codeRoot: '/homepage',
   contentRoot: '/homepage',
   imsClientId: 'homepage_milo',
+  stage: {
+    marTechUrl: 'scripts/deps/martech/launch-5dd5dd2177e6.js',
+  },
+  prod: {
+    marTechUrl: 'scripts/deps/martech/launch-5dd5dd2177e6.js',
+  },
+  local: {
+    marTechUrl: 'scripts/deps/martech/launch-5dd5dd2177e6.js',
+  },
   prodDomains: ['stock.adobe.com', 'helpx.adobe.com', 'business.adobe.com', 'www.adobe.com'],
   geoRouting: 'on',
   fallbackRouting: 'on',
