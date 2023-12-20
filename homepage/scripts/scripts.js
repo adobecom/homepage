@@ -191,16 +191,26 @@ const getCookie = (name) => document.cookie
   .find((row) => row.startsWith(`${name}=`))
   ?.split('=')[1];
 
-async function imsCheck() {
-  const { loadIms, setConfig } = await import(`${miloLibs}/utils/utils.js`);
-  setConfig({ ...CONFIG, miloLibs });
-  try {
-    await loadIms();
-  } catch(e) {
-    console.log(e);
-    return;
+async function imsCheck({ loadIms }) {
+  const testPreVisit = getCookie('fg');
+  if (!testPreVisit) return;
+
+  try { await loadIms(); } catch { return; }
+  const signedIn = window.adobeIMS?.isSignedInUser();
+  const sisCookie = getCookie(ACOM_SIGNED_IN_STATUS);
+
+  // Set SIS cookie & reload
+  if (signedIn && !sisCookie) {
+    const date = new Date();
+    date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
+    document.cookie = `${ACOM_SIGNED_IN_STATUS}=1;path=/;expires=${date.toUTCString()};`;
+    window.location.reload();
   }
-  return window.adobeIMS?.isSignedInUser()
+  // Remove SIS cookie & reload
+  if (!signedIn && sisCookie) {
+    document.cookie = `${ACOM_SIGNED_IN_STATUS}=;path=/;expires=${new Date(0).toUTCString()};`;
+    window.location.reload();
+  }
 }
 
 function loadStyles() {
@@ -215,22 +225,11 @@ function loadStyles() {
 }
 
 (async function loadPage() {
-  loadStyles();
-  const { loadArea, setConfig } = await import(`${miloLibs}/utils/utils.js`);
+  const { loadIms, loadArea, setConfig } = await import(`${miloLibs}/utils/utils.js`);
   setConfig({ ...CONFIG, miloLibs });
-  const loadAreaPromise = loadArea();
-  imsCheck().then(isSignedInUser => {
-    const signedInCookie = getCookie(ACOM_SIGNED_IN_STATUS);
-    if (isSignedInUser && !signedInCookie) {
-      const date = new Date();
-      date.setTime(date.getTime() + (365*24*60*60*1000));
-      document.cookie = ACOM_SIGNED_IN_STATUS + '=1;path=/;expires='+ date.toUTCString() + ';';
-      window.location.reload();
-    }
-    if (!isSignedInUser && signedInCookie) {
-      document.cookie = ACOM_SIGNED_IN_STATUS + '=;path=/;expires=' + new Date(0).toUTCString() + ';';
-      window.location.reload();
-    }
-  })
-  await loadAreaPromise;
+  await imsCheck({ loadIms });
+
+  loadStyles();
+  await loadArea();
 }());
+
