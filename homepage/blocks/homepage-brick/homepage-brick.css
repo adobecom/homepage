@@ -451,3 +451,9 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 }
 
 .homepage-brick.right .action-area { justify-content: end; }
+
+/* Temp Modal Fix */
+.dialog-modal.commerce-frame .fragment,
+.dialog-modal.commerce-frame .section {
+  height: 100vh;
+}
