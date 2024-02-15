@@ -216,8 +216,9 @@ function loadStyles() {
 
 (async function loadPage() {
   loadStyles();
-  const { loadArea, setConfig } = await import(`${miloLibs}/utils/utils.js`);
+  const { loadArea, setConfig, loadLana } = await import(`${miloLibs}/utils/utils.js`);
   setConfig({ ...CONFIG, miloLibs });
+  loadLana({ clientId: 'homepage' });
   const loadAreaPromise = loadArea();
   imsCheck().then(isSignedInUser => {
     const signedInCookie = getCookie(ACOM_SIGNED_IN_STATUS);
