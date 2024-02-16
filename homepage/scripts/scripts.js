@@ -120,6 +120,7 @@ const locales = {
 
 // Add any config options.
 const CONFIG = {
+  chimeraOrigin: 'homepage',
   codeRoot: '/homepage',
   contentRoot: '/homepage',
   imsClientId: 'homepage_milo',
