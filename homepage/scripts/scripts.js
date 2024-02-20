@@ -221,16 +221,18 @@ function loadStyles() {
   setConfig({ ...CONFIG, miloLibs });
   loadLana({ clientId: 'homepage' });
   const loadAreaPromise = loadArea();
+  const isStage = document.location.host.includes('stage');
   imsCheck().then(isSignedInUser => {
     const signedInCookie = getCookie(ACOM_SIGNED_IN_STATUS);
     if (isSignedInUser && !signedInCookie) {
       const date = new Date();
       date.setTime(date.getTime() + (365*24*60*60*1000));
-      document.cookie = ACOM_SIGNED_IN_STATUS + '=1;path=/;expires='+ date.toUTCString() + ';domain=.adobe.com;';
+      document.cookie = `${ACOM_SIGNED_IN_STATUS}=1;path=/;expires=${date.toUTCString()};domain=${isStage ? 'stage.' : ''}adobe.com;`;
       window.location.reload();
     }
     if (!isSignedInUser && signedInCookie) {
-      document.cookie = ACOM_SIGNED_IN_STATUS + '=;path=/;expires=' + new Date(0).toUTCString() + ';domain=.adobe.com;';
+      document.cookie = `${ACOM_SIGNED_IN_STATUS}=;path=/;expires=${new Date(0).toUTCString()};`;
+      document.cookie = `${ACOM_SIGNED_IN_STATUS}=;path=/;expires=${new Date(0).toUTCString()};domain=${isStage ? 'stage.' : ''}adobe.com;`;
       window.location.reload();
     }
   })
