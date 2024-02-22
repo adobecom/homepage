@@ -221,7 +221,7 @@ function loadStyles() {
   setConfig({ ...CONFIG, miloLibs });
   loadLana({ clientId: 'homepage' });
   const loadAreaPromise = loadArea();
-  const isStage = document.location.host.includes('stage');
+  const isStage = window.location.host.includes('stage');
   imsCheck().then(isSignedInUser => {
     const signedInCookie = getCookie(ACOM_SIGNED_IN_STATUS);
     if (isSignedInUser && !signedInCookie) {
