@@ -13,7 +13,7 @@
 import { setLibs } from './utils.js';
 
 const ACOM_SIGNED_IN_STATUS = 'acomsis';
-const STYLES = '';
+const STYLES = '/homepage/styles/styles.css';
 const LIBS = '/libs';
 const locales = {
   // Americas
@@ -228,12 +228,12 @@ function loadStyles() {
       const date = new Date();
       date.setTime(date.getTime() + (365*24*60*60*1000));
       document.cookie = `${ACOM_SIGNED_IN_STATUS}=1;path=/;expires=${date.toUTCString()};domain=${isStage ? 'www.stage.' : ''}adobe.com;`;
-      window.location.reload();
+      window.location.replace('');
     }
     if (!isSignedInUser && signedInCookie) {
       document.cookie = `${ACOM_SIGNED_IN_STATUS}=;path=/;expires=${new Date(0).toUTCString()};`;
       document.cookie = `${ACOM_SIGNED_IN_STATUS}=;path=/;expires=${new Date(0).toUTCString()};domain=${isStage ? 'www.stage.' : ''}adobe.com;`;
-      window.location.reload();
+      window.location.replace('');
     }
   })
   await loadAreaPromise;

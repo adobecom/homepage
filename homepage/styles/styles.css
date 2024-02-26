@@ -6,3 +6,6 @@
  * 
  *
  */
+ header:not(.global-navigation) {
+  border-bottom: none;
+}
