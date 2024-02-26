@@ -13,7 +13,7 @@
 import { setLibs } from './utils.js';
 
 const ACOM_SIGNED_IN_STATUS = 'acomsis';
-const STYLES = '';
+const STYLES = '/homepage/styles/styles.css';
 const LIBS = '/libs';
 const locales = {
   // Americas
@@ -216,6 +216,8 @@ function loadStyles() {
 }
 
 (async function loadPage() {
+  const mainEl = document.querySelector('main');
+  mainEl.style.opacity = 0;
   loadStyles();
   const { loadArea, setConfig, loadLana } = await import(`${miloLibs}/utils/utils.js`);
   setConfig({ ...CONFIG, miloLibs });
@@ -235,6 +237,8 @@ function loadStyles() {
       document.cookie = `${ACOM_SIGNED_IN_STATUS}=;path=/;expires=${new Date(0).toUTCString()};domain=${isStage ? 'www.stage.' : ''}adobe.com;`;
       window.location.reload();
     }
-  })
+  }).finally(() => {
+    mainEl.style.opacity = '';
+  });
   await loadAreaPromise;
 }());
