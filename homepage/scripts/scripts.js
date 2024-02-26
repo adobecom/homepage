@@ -216,13 +216,10 @@ function loadStyles() {
 }
 
 (async function loadPage() {
-  const mainEl = document.querySelector('main');
-  mainEl.style.opacity = 0;
   loadStyles();
   const { loadArea, setConfig, loadLana } = await import(`${miloLibs}/utils/utils.js`);
   setConfig({ ...CONFIG, miloLibs });
   loadLana({ clientId: 'homepage' });
-  const loadAreaPromise = loadArea();
   const isStage = window.location.host.includes('stage');
   imsCheck().then(isSignedInUser => {
     const signedInCookie = getCookie(ACOM_SIGNED_IN_STATUS);
@@ -238,7 +235,6 @@ function loadStyles() {
       window.location.reload();
     }
   }).finally(() => {
-    mainEl.style.opacity = '';
+    loadArea();
   });
-  await loadAreaPromise;
 }());
