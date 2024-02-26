@@ -233,7 +233,7 @@ function loadStyles() {
     if (!isSignedInUser && signedInCookie) {
       document.cookie = `${ACOM_SIGNED_IN_STATUS}=;path=/;expires=${new Date(0).toUTCString()};`;
       document.cookie = `${ACOM_SIGNED_IN_STATUS}=;path=/;expires=${new Date(0).toUTCString()};domain=${isStage ? 'www.stage.' : ''}adobe.com;`;
-      window.location.replace('');
+      window.location.replace(window.location.search);
     }
   })
   await loadAreaPromise;
