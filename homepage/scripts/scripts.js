@@ -240,6 +240,10 @@ function loadStyles() {
       console.log('User NOT signed in / Cookie deleted');
       window.location.reload();
     }
+    if (signedInCookie && isSignedInUser) {
+      console.log('User signed in & cookie');
+      window.location.reload();
+    }
   })
   await loadAreaPromise;
 }());
