@@ -229,7 +229,7 @@ function loadStyles() {
     if (isSignedInUser && !signedInCookie) {
       const date = new Date();
       date.setTime(date.getTime() + (365*24*60*60*1000));
-      document.cookie = `${isStage ? ACOM_SIGNED_IN_STATUS_STAGE : ACOM_SIGNED_IN_STATUS}=1;path=/;expires=${date.toUTCString()};domain=adobe.com;`;
+      document.cookie = `${isStage ? ACOM_SIGNED_IN_STATUS_STAGE : ACOM_SIGNED_IN_STATUS}=1;path=/;expires=${date.toUTCString()};domain=${isStage ? 'www.stage.' : ''}adobe.com;`;
       // window.location.replace(`/home${window.location.search}`);
       console.log('User signed in / No cookie ');
       window.location.reload();
