@@ -80,7 +80,7 @@
       "containerId": "tools",
       "title": "Send to CaaS",
       "id": "sendtocaas",
-      "environments": ["live", "prod"],
+      "environments": ["dev","preview", "live", "prod"],
       "event": "send-to-caas",
       "excludePaths": ["https://milo.adobe.com/tools/caas**", "*.json"]
     },
