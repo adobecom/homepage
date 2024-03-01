@@ -224,7 +224,7 @@ function loadStyles() {
   const loadAreaPromise = loadArea();
   const isStage = window.location.host.includes('stage');
   imsCheck().then(isSignedInUser => {
-    const signedInCookie = getCookie(ACOM_SIGNED_IN_STATUS);
+    const signedInCookie = isStage ? getCookie(ACOM_SIGNED_IN_STATUS_STAGE) : getCookie(ACOM_SIGNED_IN_STATUS);
     console.log('Pre-status');
     if (isSignedInUser && !signedInCookie) {
       const date = new Date();
@@ -235,9 +235,12 @@ function loadStyles() {
       window.location.reload();
     }
     if (!isSignedInUser && signedInCookie) {
-      document.cookie = `${ACOM_SIGNED_IN_STATUS}=;path=/;expires=${new Date(0).toUTCString()};`;
-      document.cookie = `${ACOM_SIGNED_IN_STATUS}=;path=/;expires=${new Date(0).toUTCString()};domain=adobe.com;`;
-      document.cookie = `${isStage ? ACOM_SIGNED_IN_STATUS_STAGE : ACOM_SIGNED_IN_STATUS}=;path=/;expires=${new Date(0).toUTCString()};domain=${isStage ? 'www.stage.' : ''}adobe.com;`;
+      if (!isStage) {
+        document.cookie = `${ACOM_SIGNED_IN_STATUS}=;path=/;expires=${new Date(0).toUTCString()};`;
+        document.cookie = `${ACOM_SIGNED_IN_STATUS}=;path=/;expires=${new Date(0).toUTCString()};domain=adobe.com;`;
+      } else {
+        document.cookie = `${ACOM_SIGNED_IN_STATUS_STAGE}=;path=/;expires=${new Date(0).toUTCString()};domain='www.stage.adobe.com;`;
+      }
       // window.location.replace(window.location.search);
       console.log('User NOT signed in / Cookie deleted');
       window.location.reload();
