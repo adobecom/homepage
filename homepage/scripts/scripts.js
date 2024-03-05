@@ -13,7 +13,8 @@
 import { setLibs } from './utils.js';
 
 const ACOM_SIGNED_IN_STATUS = 'acomsis';
-const STYLES = '';
+const ACOM_SIGNED_IN_STATUS_STAGE = 'acomsis_stage';
+const STYLES = '/homepage/styles/styles.css';
 const LIBS = '/libs';
 const locales = {
   // Americas
@@ -219,16 +220,25 @@ function loadStyles() {
   const { loadArea, setConfig } = await import(`${miloLibs}/utils/utils.js`);
   setConfig({ ...CONFIG, miloLibs });
   const loadAreaPromise = loadArea();
+  const isStage = window.location.host.includes('stage');
   imsCheck().then(isSignedInUser => {
-    const signedInCookie = getCookie(ACOM_SIGNED_IN_STATUS);
+    const signedInCookie = isStage ? getCookie(ACOM_SIGNED_IN_STATUS_STAGE) : getCookie(ACOM_SIGNED_IN_STATUS);
     if (isSignedInUser && !signedInCookie) {
       const date = new Date();
       date.setTime(date.getTime() + (365*24*60*60*1000));
-      document.cookie = ACOM_SIGNED_IN_STATUS + '=1;path=/;expires='+ date.toUTCString() + ';';
+      document.cookie = `${isStage ? ACOM_SIGNED_IN_STATUS_STAGE : ACOM_SIGNED_IN_STATUS}=1;path=/;expires=${date.toUTCString()};domain=${isStage ? 'www.stage.' : ''}adobe.com;`;
       window.location.reload();
     }
     if (!isSignedInUser && signedInCookie) {
-      document.cookie = ACOM_SIGNED_IN_STATUS + '=;path=/;expires=' + new Date(0).toUTCString() + ';';
+      if (!isStage) {
+        document.cookie = `${ACOM_SIGNED_IN_STATUS}=;path=/;expires=${new Date(0).toUTCString()};`;
+        document.cookie = `${ACOM_SIGNED_IN_STATUS}=;path=/;expires=${new Date(0).toUTCString()};domain=adobe.com;`;
+      } else {
+        document.cookie = `${ACOM_SIGNED_IN_STATUS_STAGE}=;path=/;expires=${new Date(0).toUTCString()};domain='www.stage.adobe.com;`;
+      }
+      window.location.reload();
+    }
+    if (signedInCookie && isSignedInUser) {
       window.location.reload();
     }
   })
