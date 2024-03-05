@@ -121,7 +121,6 @@ const locales = {
 
 // Add any config options.
 const CONFIG = {
-  chimeraOrigin: 'homepage',
   codeRoot: '/homepage',
   contentRoot: '/homepage',
   imsClientId: 'homepage_milo',
@@ -218,9 +217,8 @@ function loadStyles() {
 
 (async function loadPage() {
   loadStyles();
-  const { loadArea, setConfig, loadLana } = await import(`${miloLibs}/utils/utils.js`);
+  const { loadArea, setConfig } = await import(`${miloLibs}/utils/utils.js`);
   setConfig({ ...CONFIG, miloLibs });
-  loadLana({ clientId: 'homepage' });
   const loadAreaPromise = loadArea();
   const isStage = window.location.host.includes('stage');
   imsCheck().then(isSignedInUser => {
