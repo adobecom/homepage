@@ -238,7 +238,7 @@ function loadStyles() {
       }
       window.location.reload();
     }
-    if (signedInCookie && isSignedInUser) {
+    if (signedInCookie && isSignedInUser && !window.location.href.includes('/fragments/')) {  
       window.location.reload();
     }
   })
