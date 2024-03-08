@@ -199,7 +199,7 @@ async function imsCheck() {
   try {
     await loadIms();
     if (window.adobeIMS?.isSignedInUser()) {
-      await window.adobeIMS?.validateToken();
+      await window.adobeIMS.validateToken();
       // validate token rejects and falls into the following catch block.
       isSignedInUser = true;
     }
@@ -207,7 +207,7 @@ async function imsCheck() {
     window.lana?.log('Homepage IMS check failed', e);
   }
   if (!isSignedInUser) {
-    document.getElementById('ims-body-style').remove();
+    document.getElementById('ims-body-style')?.remove();
   }
   return isSignedInUser;
 }
