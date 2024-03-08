@@ -197,11 +197,15 @@ async function imsCheck() {
   setConfig({ ...CONFIG, miloLibs });
   try {
     await loadIms();
+    if (window.adobeIMS?.isSignedInUser()) {
+      await window.adobeIMS?.validateToken();
+      // validate token rejects and falls into the following catch block.
+      return true;
+    }
   } catch(e) {
-    console.log(e);
-    return;
+    window.lana?.log('Homepage IMS check failed', e);
   }
-  return window.adobeIMS?.isSignedInUser()
+  return false;
 }
 
 function loadStyles() {
