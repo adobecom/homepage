@@ -206,7 +206,9 @@ async function imsCheck() {
   } catch(e) {
     window.lana?.log('Homepage IMS check failed', e);
   }
-  document.getElementById('ims-body-style').remove();
+  if (!isSignedInUser) {
+    document.getElementById('ims-body-style').remove();
+  }
   return isSignedInUser;
 }
 
