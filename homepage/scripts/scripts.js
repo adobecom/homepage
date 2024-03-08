@@ -231,6 +231,7 @@ function loadStyles() {
   const isStage = window.location.host.includes('stage');
   imsCheck().then(isSignedInUser => {
     const signedInCookie = isStage ? getCookie(ACOM_SIGNED_IN_STATUS_STAGE) : getCookie(ACOM_SIGNED_IN_STATUS);
+    if (document.documentElement.lang.includes('en') && window.adobeIMS)  window.adobeIMS.adobeIdData.redirect_uri = `${isStage ? 'https://www.stage.adobe.com/home' : 'https://www.adobe.com/home'}`;
     if (isSignedInUser && !signedInCookie) {
       const date = new Date();
       date.setTime(date.getTime() + (365*24*60*60*1000));
