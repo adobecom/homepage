@@ -195,13 +195,21 @@ const getCookie = (name) => document.cookie
 async function imsCheck() {
   const { loadIms, setConfig } = await import(`${miloLibs}/utils/utils.js`);
   setConfig({ ...CONFIG, miloLibs });
+  let isSignedInUser = false;
   try {
     await loadIms();
+    if (window.adobeIMS?.isSignedInUser()) {
+      await window.adobeIMS?.validateToken();
+      // validate token rejects and falls into the following catch block.
+      isSignedInUser = true;
+    }
   } catch(e) {
-    console.log(e);
-    return;
+    window.lana?.log('Homepage IMS check failed', e);
   }
-  return window.adobeIMS?.isSignedInUser()
+  if (!isSignedInUser) {
+    document.getElementById('ims-body-style').remove();
+  }
+  return isSignedInUser;
 }
 
 function loadStyles() {
