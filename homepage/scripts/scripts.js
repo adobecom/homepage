@@ -234,7 +234,6 @@ function loadStyles() {
     const baseURL = `${isStage ? 'https://www.stage.adobe.com' : 'https://www.adobe.com'}`;
     if (window.adobeIMS){
       window.adobeid.redirect_uri = `${baseURL}/home?acomLocale=${window.location.pathname ? window.location.pathname.slice(1, -1) : 'us'}`;
-      // window.adobeIMS.adobeIdData.redirect_uri = `${baseURL}/home?acomLocale=${window.location.pathname ? window.location.pathname.slice(1, -1) : 'us'}`;
     }
     if (isSignedInUser && !signedInCookie) {
       const date = new Date();
