@@ -26,5 +26,6 @@ notifications:
           - "OriginatingProcess=Kodiak"
           - "security"
           - "kodiak-ticket"
+          - "homepage"
         components:
           - name: "DevOps Security"
