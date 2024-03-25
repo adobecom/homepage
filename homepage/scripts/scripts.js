@@ -233,7 +233,8 @@ function loadStyles() {
     const signedInCookie = isStage ? getCookie(ACOM_SIGNED_IN_STATUS_STAGE) : getCookie(ACOM_SIGNED_IN_STATUS);
     const baseURL = `${isStage ? 'https://www.stage.adobe.com' : 'https://www.adobe.com'}`;
     if (window.adobeIMS){
-      window.adobeIMS.adobeIdData.redirect_uri = `${baseURL}/home?acomLocale=${window.location.pathname ? window.location.pathname.slice(1, -1) : 'us'}`;
+      const pathname = window.location.pathname.slice(1, -1);
+      window.adobeIMS.adobeIdData.redirect_uri = `${baseURL}/home?acomLocale=${pathname ? pathname : 'us'}`;
     }
     if (isSignedInUser && !signedInCookie) {
       const date = new Date();
