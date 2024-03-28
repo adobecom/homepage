@@ -421,6 +421,10 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
     min-height: 500px;
   }
 
+  .masonry .homepage-brick.tall {
+    min-height: 750px;
+  }
+
   .homepage-brick .action-area {
     align-items: center;
     flex-direction: row;
