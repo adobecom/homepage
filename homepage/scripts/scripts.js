@@ -234,7 +234,7 @@ function loadStyles() {
     const baseURL = `${isStage ? 'https://www.stage.adobe.com' : 'https://www.adobe.com'}`;
     if (window.adobeIMS){
       const pathname = window.location.pathname.slice(1, -1);
-      window.adobeIMS.adobeIdData.redirect_uri = `${baseURL}/home?acomLocale=${pathname ? pathname : 'us'}`;
+      window.adobeIMS.adobeIdData.redirect_uri = `${baseURL}/home${pathname ? `?acomLocale=${pathname}` : ''}`;
     }
     if (isSignedInUser && !signedInCookie) {
       const date = new Date();
