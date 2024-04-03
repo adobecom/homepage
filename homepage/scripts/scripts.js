@@ -229,16 +229,24 @@ function loadStyles() {
   setConfig({ ...CONFIG, miloLibs });
   const loadAreaPromise = loadArea();
   const isStage = window.location.host.includes('stage');
+  
+  const getRedirectUri = () => {
+    if (!window.adobeIMS) return;
+    const baseURL = `${isStage ? 'https://www.stage.adobe.com' : 'https://www.adobe.com'}`;
+    const pathname = window.location.pathname.slice(1, -1);
+    
+    // China & SEA should not redirect
+    if (pathname === 'cn' || pathname === 'sea') return false;
+    
+    // return with ?acomLocale parameter if it is not root
+    return `${baseURL}/home${pathname ? `?acomLocale=${pathname}` : ''}`;
+  }
+
   imsCheck().then(isSignedInUser => {
     const signedInCookie = isStage ? getCookie(ACOM_SIGNED_IN_STATUS_STAGE) : getCookie(ACOM_SIGNED_IN_STATUS);
-    const baseURL = `${isStage ? 'https://www.stage.adobe.com' : 'https://www.adobe.com'}`;
-    if (window.adobeIMS){
-      const pathname = window.location.pathname.slice(1, -1);
-      // China should not redirect
-      if (pathname !== 'cn') {
-        window.adobeIMS.adobeIdData.redirect_uri = `${baseURL}/home${pathname ? `?acomLocale=${pathname}` : ''}`;
-      }
-    }
+    const redirectUri = getRedirectUri();
+    if (redirectUri) window.adobeIMS.adobeIdData.redirect_uri = redirectUri;
+    
     if (isSignedInUser && !signedInCookie) {
       const date = new Date();
       date.setTime(date.getTime() + (365*24*60*60*1000));
