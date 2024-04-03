@@ -231,13 +231,13 @@ function loadStyles() {
   const isStage = window.location.host.includes('stage');
   
   const getRedirectUri = () => {
-    if (!window.adobeIMS) return false;
+    if (!window.adobeIMS) return '';
 
     const baseURL = `${isStage ? 'https://www.stage.adobe.com' : 'https://www.adobe.com'}`;
     const pathname = window.location.pathname.slice(1, -1);
     
     // China & SEA should not redirect
-    if (pathname === 'cn' || pathname === 'sea') return false;
+    if (pathname === 'cn' || pathname === 'sea') return '';
     
     // return with ?acomLocale parameter if it is not root
     return `${baseURL}/home${pathname ? `?acomLocale=${pathname}` : ''}`;
