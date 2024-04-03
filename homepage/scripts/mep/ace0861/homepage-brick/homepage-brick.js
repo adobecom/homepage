@@ -97,11 +97,6 @@ export default async function init(el) {
       const highlight = createTag('div', { class: 'highlight-row' }, false);
       el.prepend(highlight);
     } 
-  // } else if (el.classList.contains('news') && rows.length > 1) {
-  //   const [highlight, ...tail] = rows;
-  //   highlight.classList.add('highlight-row');
-  //   el.querySelectorAll('a').forEach((a) => a.classList.add('body-xs'));
-  //   rows = tail;
   } else if (el.classList.contains('news') && rows.length > 1) {
     const [highlight, ...tail] = rows;
     highlight.classList.add('highlight-row');
@@ -121,8 +116,7 @@ export default async function init(el) {
       section.appendChild(newImageBlock);
       el.querySelectorAll('a').forEach((a) => a.classList.add('body-xs'));
     }
-    else {
-      //highlight.classList.add('highlight-row');
+    else {;
       el.querySelectorAll('a').forEach((a) => a.classList.add('body-xs'));
     }
     rows = tail;

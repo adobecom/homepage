@@ -472,16 +472,27 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 
 .section.news-section .homepage-brick.news .highlight-row  {
   color: var(--text-color);
+  font-size: var(--type-heading-xl-size);
+  line-height: var(--type-heading-xl-lh);
+  background: #FFF;
+  font-weight: 900;
+  text-align: center;
 }
 
 @media screen and (min-width: 1200px) {
-  .masonry .homepage-brick.tall {
-    min-height: 750px;
-  }
+  .masonry .homepage-brick.tall {min-height: 750px}
 }
 
 @media screen and (max-width: 1199px) {  
-  .section.news-section .homepage-brick.news-block-image {
-
+  .section.news-section .homepage-brick.news  {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  .section.news-section .homepage-brick.news-block-image, 
+  .section.news-section .homepage-brick.news-block-image .background {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    max-height: 470px;
   }
 }
