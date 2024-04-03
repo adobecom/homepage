@@ -231,7 +231,8 @@ function loadStyles() {
   const isStage = window.location.host.includes('stage');
   
   const getRedirectUri = () => {
-    if (!window.adobeIMS) return;
+    if (!window.adobeIMS) return false;
+
     const baseURL = `${isStage ? 'https://www.stage.adobe.com' : 'https://www.adobe.com'}`;
     const pathname = window.location.pathname.slice(1, -1);
     
