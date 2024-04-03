@@ -8,7 +8,7 @@ const blockTypeSizes = {
   large: ['xl', 'm', 'l', 'l', 'm'],
   xlarge: ['xxl', 'l', 'xl', 'l', 'l'],
   'link': ['m', 'xs', 'm', 's', 'xs'],
-  'news': ['xs', 's', 'm', 's', 'xs'],
+  'news': ['xs', 's', 'm', 's', 'xs'], // ace0861 there are 2 's' values here
   'above-pods': ['xxl', 'm', 'l', 'xl', 'm'],
   'full-desktop': ['xl', 'l', 'm', 'l', 'm'],
   default: ['m', 'm', 'l', 'l', 'xs'],
@@ -97,10 +97,34 @@ export default async function init(el) {
       const highlight = createTag('div', { class: 'highlight-row' }, false);
       el.prepend(highlight);
     } 
+  // } else if (el.classList.contains('news') && rows.length > 1) {
+  //   const [highlight, ...tail] = rows;
+  //   highlight.classList.add('highlight-row');
+  //   el.querySelectorAll('a').forEach((a) => a.classList.add('body-xs'));
+  //   rows = tail;
   } else if (el.classList.contains('news') && rows.length > 1) {
     const [highlight, ...tail] = rows;
     highlight.classList.add('highlight-row');
-    el.querySelectorAll('a').forEach((a) => a.classList.add('body-xs'));
+    let blockImage = tail[0].querySelector('picture');
+    if (blockImage) {
+      const column = createTag('DIV');
+      column.appendChild(blockImage);
+      const row = createTag('DIV');
+      row.appendChild(column);
+      decorateBlockBg(row);
+
+      const newImageBlock = createTag('DIV', {class: 'homepage-brick news-block-image two-thirds-grid'});
+      newImageBlock.appendChild(row);
+      const section = createTag('DIV', {class: 'section masonry masonry-up news-section'});
+      el.closest('.section').appendChild(section);
+      section.appendChild(el);
+      section.appendChild(newImageBlock);
+      el.querySelectorAll('a').forEach((a) => a.classList.add('body-xs'));
+    }
+    else {
+      //highlight.classList.add('highlight-row');
+      el.querySelectorAll('a').forEach((a) => a.classList.add('body-xs'));
+    }
     rows = tail;
   } else if (el.classList.contains('above-pods')) {
     headers.forEach((header) => enforceHeaderLevel(header, 1));
@@ -170,7 +194,6 @@ export default async function init(el) {
         'daa-ll': link.getAttribute('daa-ll')
       };
       if (link.hasAttribute('target')) attributes.target = link.getAttribute('target')
-      
       const divLinkClass = linkParentNodeName === 'P' ? 'click-link body-xs' : link.className;
       const divLink = createTag('div', { class: divLinkClass }, link.innerText);
       link.insertAdjacentElement('beforebegin', divLink);
