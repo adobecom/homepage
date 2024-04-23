@@ -271,4 +271,5 @@ function loadStyles() {
     }
   })
   await loadAreaPromise;
+  decorateArea();
 }());
