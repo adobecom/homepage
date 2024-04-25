@@ -143,21 +143,23 @@ const CONFIG = {
  * ------------------------------------------------------------
  */
 
+function replaceDotMedia(elem = document) {
+  const resetAttributeBase = (tag, attr) => {
+    elem.querySelectorAll(`${tag}[${attr}^="./media_"]`).forEach((el) => {
+      el[attr] = `${new URL(`${CONFIG.contentRoot}${el.getAttribute(attr).substring(1)}`, window.location).href}`;
+    });
+  };
+  resetAttributeBase('img', 'src');
+  resetAttributeBase('source', 'srcset');
+}
+
 function decorateArea(area = document, options = {}) {
   const lcpImageUpdate = (img) => {
     img.setAttribute('loading', 'eager');
     img.setAttribute('fetchpriority', 'high');
   };
 
-  (function replaceDotMedia() {
-    const resetAttributeBase = (tag, attr) => {
-      area.querySelectorAll(`${tag}[${attr}^="./media_"]`).forEach((el) => {
-        el[attr] = `${new URL(`${CONFIG.contentRoot}${el.getAttribute(attr).substring(1)}`, window.location).href}`;
-      });
-    };
-    resetAttributeBase('img', 'src');
-    resetAttributeBase('source', 'srcset');
-  }());
+  replaceDotMedia(area);
   
   (function loadLCPImage() {
     const { fragmentLink } = options;
@@ -269,6 +271,16 @@ function loadStyles() {
     if (signedInCookie && isSignedInUser && !window.location.href.includes('/fragments/')) {
       window.location.reload();
     }
-  })
+  });
   await loadAreaPromise;
+
+  // for media_ after loading loadAreaPromise
+  const observeCallback = (mutationList, observer) => {
+    for (const mutation of mutationList) {
+      replaceDotMedia(mutation.target);
+    }
+  };
+  const observer = new MutationObserver(observeCallback);
+  observer.observe(document.querySelector('header'), { childList: true, subtree: true });
+  observer.observe(document.querySelector('footer'), { childList: true, subtree: true });
 }());
