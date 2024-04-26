@@ -228,8 +228,9 @@ function loadStyles() {
 
 (async function loadPage() {
   loadStyles();
-  const { loadArea, setConfig, loadLana } = await import(`${miloLibs}/utils/utils.js`);
+  const { loadArea, setConfig, loadLana, getConfig } = await import(`${miloLibs}/utils/utils.js`);
   setConfig({ ...CONFIG, miloLibs });
+  console.log(getConfig());
   loadLana({ clientId: 'homepage' });
   
   const loadAreaPromise = loadArea();
