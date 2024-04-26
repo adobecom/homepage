@@ -272,9 +272,8 @@ function loadStyles() {
       window.location.reload();
     }
   });
-  await loadAreaPromise;
-
-  // for media_ after loading loadAreaPromise
+  
+  // for media_ update for feds
   const observeCallback = (mutationList, observer) => {
     for (const mutation of mutationList) {
       replaceDotMedia(mutation.target);
@@ -283,4 +282,6 @@ function loadStyles() {
   const observer = new MutationObserver(observeCallback);
   observer.observe(document.querySelector('header'), { childList: true, subtree: true });
   observer.observe(document.querySelector('footer'), { childList: true, subtree: true });
+
+  await loadAreaPromise;
 }());
