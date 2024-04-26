@@ -16,6 +16,10 @@ const ACOM_SIGNED_IN_STATUS = 'acomsis';
 const ACOM_SIGNED_IN_STATUS_STAGE = 'acomsis_stage';
 const STYLES = '/homepage/styles/styles.css';
 const LIBS = '/libs';
+const ENV = {
+  stage: { edgeConfigId: 'e065836d-be57-47ef-b8d1-999e1657e8fd' },
+  prod: { edgeConfigId: '913eac4d-900b-45e8-9ee7-306216765cd2' }
+}
 const locales = {
   // Americas
   ar: { ietf: 'es-AR', tk: 'oln4yqj.css' },
@@ -121,6 +125,7 @@ const locales = {
 
 // Add any config options.
 const CONFIG = {
+  ENV,
   chimeraOrigin: 'homepage',
   codeRoot: '/homepage',
   contentRoot: '/homepage',
