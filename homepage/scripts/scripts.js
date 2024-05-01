@@ -16,26 +16,15 @@ const ACOM_SIGNED_IN_STATUS = 'acomsis';
 const ACOM_SIGNED_IN_STATUS_STAGE = 'acomsis_stage';
 const STYLES = '/homepage/styles/styles.css';
 const LIBS = '/libs';
-const ENV = {
-  stage: { 
-    edgeConfigId: 'e065836d-be57-47ef-b8d1-999e1657e8fd',
-    name: 'stage',
-    ims: 'stg1',
-    adobeIO: 'cc-collab-stage.adobe.io',
-    adminconsole: 'stage.adminconsole.adobe.com',
-    account: 'stage.account.adobe.com',
-    pdfViewerClientId: '600a4521c23d4c7eb9c7b039bee534a0',
-  },
-  prod: {
-    edgeConfigId: '913eac4d-900b-45e8-9ee7-306216765cd2',
-    name: 'prod',
-    ims: 'prod',
-    adobeIO: 'cc-collab.adobe.io',
-    adminconsole: 'adminconsole.adobe.com',
-    account: 'account.adobe.com',
-    pdfViewerClientId: '3c0a5ddf2cc04d3198d9e48efc390fa9',
-  }
+const ENVS = {
+  stage: { edgeConfigId: 'e065836d-be57-47ef-b8d1-999e1657e8fd' },
+  prod: { edgeConfigId: '913eac4d-900b-45e8-9ee7-306216765cd2' }
 }
+ENVS.local = {
+  ...ENVS.stage,
+  name: 'local',
+};
+
 const locales = {
   // Americas
   ar: { ietf: 'es-AR', tk: 'oln4yqj.css' },
@@ -141,7 +130,7 @@ const locales = {
 
 // Add any config options.
 const CONFIG = {
-  ENV,
+  ...ENVS,
   chimeraOrigin: 'homepage',
   codeRoot: '/homepage',
   contentRoot: '/homepage',
