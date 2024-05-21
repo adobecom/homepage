@@ -16,6 +16,15 @@ const ACOM_SIGNED_IN_STATUS = 'acomsis';
 const ACOM_SIGNED_IN_STATUS_STAGE = 'acomsis_stage';
 const STYLES = '/homepage/styles/styles.css';
 const LIBS = '/libs';
+const ENVS = {
+  stage: { edgeConfigId: 'e065836d-be57-47ef-b8d1-999e1657e8fd' },
+  prod: { edgeConfigId: '913eac4d-900b-45e8-9ee7-306216765cd2' }
+}
+ENVS.local = {
+  ...ENVS.stage,
+  name: 'local',
+};
+
 const locales = {
   // Americas
   ar: { ietf: 'es-AR', tk: 'oln4yqj.css' },
@@ -121,6 +130,7 @@ const locales = {
 
 // Add any config options.
 const CONFIG = {
+  ...ENVS,
   chimeraOrigin: 'homepage',
   codeRoot: '/homepage',
   contentRoot: '/homepage',
@@ -143,21 +153,23 @@ const CONFIG = {
  * ------------------------------------------------------------
  */
 
+function replaceDotMedia(elem = document) {
+  const resetAttributeBase = (tag, attr) => {
+    elem.querySelectorAll(`${tag}[${attr}^="./media_"]`).forEach((el) => {
+      el[attr] = `${new URL(`${CONFIG.contentRoot}${el.getAttribute(attr).substring(1)}`, window.location).href}`;
+    });
+  };
+  resetAttributeBase('img', 'src');
+  resetAttributeBase('source', 'srcset');
+}
+
 function decorateArea(area = document, options = {}) {
   const lcpImageUpdate = (img) => {
     img.setAttribute('loading', 'eager');
     img.setAttribute('fetchpriority', 'high');
   };
 
-  (function replaceDotMedia() {
-    const resetAttributeBase = (tag, attr) => {
-      area.querySelectorAll(`${tag}[${attr}^="./media_"]`).forEach((el) => {
-        el[attr] = `${new URL(`${CONFIG.contentRoot}${el.getAttribute(attr).substring(1)}`, window.location).href}`;
-      });
-    };
-    resetAttributeBase('img', 'src');
-    resetAttributeBase('source', 'srcset');
-  }());
+  replaceDotMedia(area);
   
   (function loadLCPImage() {
     const { fragmentLink } = options;
@@ -269,6 +281,17 @@ function loadStyles() {
     if (signedInCookie && isSignedInUser && !window.location.href.includes('/fragments/')) {
       window.location.reload();
     }
-  })
+  });
+  
+  // for media_ update for feds
+  const observeCallback = (mutationList, observer) => {
+    for (const mutation of mutationList) {
+      replaceDotMedia(mutation.target);
+    }
+  };
+  const observer = new MutationObserver(observeCallback);
+  observer.observe(document.querySelector('header'), { childList: true, subtree: true });
+  observer.observe(document.querySelector('footer'), { childList: true, subtree: true });
+
   await loadAreaPromise;
 }());
