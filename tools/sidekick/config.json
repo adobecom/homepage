@@ -44,6 +44,16 @@
     },
     {
       "containerId": "tools",
+      "id": "floodgate",
+      "title": "Floodgate",
+      "environments": [ "edit" ],
+      "url": "https://main--homepage--adobecom.hlx.page/tools/floodgate?milolibs=floodgateui",
+      "passReferrer": true,
+      "passConfig": true,
+      "includePaths": [ "**.xlsx**" ]
+    },
+    {
+      "containerId": "tools",
       "title": "Check Schema",
       "id": "checkschema",
       "environments": ["prod"],
