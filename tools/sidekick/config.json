@@ -1,4 +1,6 @@
 {
+  "project": "HOMEPAGE",
+  "host": "www.adobe.com",
   "plugins": [
     {
       "id": "library",
