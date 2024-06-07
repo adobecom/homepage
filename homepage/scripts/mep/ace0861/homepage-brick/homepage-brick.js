@@ -9,14 +9,23 @@ const blockTypeSizes = {
   xlarge: ['xxl', 'l', 'xl', 'l', 'l'],
   'link': ['m', 'xs', 'm', 's', 'xs'],
   'news': ['xs', 's', 'm', 's', 'xs'], // ace0861 there are 2 's' values here
+  'priority-above-pods': ['xxl', 'l', 'l', 'l', 'm'], // ace0861 additional scheme
+  'priority-below-pods': ['l', 'm', 'l', 'l', 'm'], // ace0861 additional scheme
   'above-pods': ['xxl', 'm', 'l', 'xl', 'm'],
   'full-desktop': ['xl', 'l', 'm', 'l', 'm'],
   default: ['m', 'm', 'l', 'l', 'xs'],
 };
 
 function getBlockSize(el) {
-  const sizes = Object.keys(blockTypeSizes);
-  return sizes.find((size) => el.classList.contains(size)) || sizes[8];
+  const sizes = Object.keys(blockTypeSizes); 
+  //ace0861 changes 
+  //return sizes.find((size) => el.classList.contains(size)) || sizes[9]; //original changes index based on added schemas
+  //return el.classList.contains('prioritized-placement') ? sizes[6] : sizes.find((size) => el.classList.contains(size)) || sizes[9];
+  if (el.classList.contains('prioritized-placement')) {
+    if (el.classList.contains('above-pods')) {
+      return sizes[6];
+    } else return sizes[7];
+  } else return sizes.find((size) => el.classList.contains(size)) || sizes[sizes.length - 1];
 }
 
 function decorateBlockBg(node) {
