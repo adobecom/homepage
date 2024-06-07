@@ -129,14 +129,14 @@ const locales = {
 };
 
 const stageDomainsMap = {
-  "www.adobe.com": "www.stage.adobe.com",
-  "business.adobe.com": "business.stage.adobe.com",
-  "learning.adobe.com": "learning.stage.adobe.com",
-  "helpx.adobe.com": "helpx.stage.adobe.com",
-  "status.adobe.com": "status.stage.adobe.com",
-  "news.adobe.com": "news.stage.adobe.com",
-  "blog.adobe.com": "blog.stage.adobe.com",
-  "developer.adobe.com": "developer-stage.adobe.com"
+  'www.adobe.com': 'www.stage.adobe.com',
+  'business.adobe.com': 'business.stage.adobe.com',
+  'learning.adobe.com': 'learning.stage.adobe.com',
+  'helpx.adobe.com': 'helpx.stage.adobe.com',
+  'status.adobe.com': 'status.stage.adobe.com',
+  'news.adobe.com': 'news.stage.adobe.com',
+  'blog.adobe.com': 'blog.stage.adobe.com',
+  'developer.adobe.com': 'developer-stage.adobe.com',
 };
 
 // Add any config options.
