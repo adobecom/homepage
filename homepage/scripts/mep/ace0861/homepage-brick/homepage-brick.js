@@ -8,9 +8,12 @@ const blockTypeSizes = {
   large: ['xl', 'm', 'l', 'l', 'm'],
   xlarge: ['xxl', 'l', 'xl', 'l', 'l'],
   'link': ['m', 'xs', 'm', 's', 'xs'],
-  'news': ['xs', 's', 'm', 's', 'xs'], // ace0861 there are 2 's' values here
-  'priority-above-pods': ['xxl', 'l', 'l', 'l', 'm'], // ace0861 additional scheme
-  'priority-below-pods': ['l', 'm', 'l', 'l', 'm'], // ace0861 additional scheme
+  'prioritized-placement&news': ['xs', 'xs', 'xxl', 'l', 'm'], // ace0861 additional scheme order: news item heading, news item body, detail, button, link - [2] is headline
+  'news': ['xs', 's', 'm', 's', 'xs'], 
+  //'priority-above-pods': ['xxl', 'l', 'l', 'l', 'm'], // ace0861 additional scheme
+  'prioritized-placement&above-pods': ['xxl', 'l', 'l', 'l', 'm'], // ace0861 additional scheme
+  //'priority-below-pods': ['l', 'm', 'l', 'l', 'm'], // ace0861 additional scheme
+  'prioritized-placement&includes-pods': ['l', 'm', 'l', 'l', 'm'], // ace0861 additional scheme
   'above-pods': ['xxl', 'm', 'l', 'xl', 'm'],
   'full-desktop': ['xl', 'l', 'm', 'l', 'm'],
   default: ['m', 'm', 'l', 'l', 'xs'],
@@ -18,14 +21,19 @@ const blockTypeSizes = {
 
 function getBlockSize(el) {
   const sizes = Object.keys(blockTypeSizes); 
-  //ace0861 changes 
-  //return sizes.find((size) => el.classList.contains(size)) || sizes[9]; //original changes index based on added schemas
-  //return el.classList.contains('prioritized-placement') ? sizes[6] : sizes.find((size) => el.classList.contains(size)) || sizes[9];
-  if (el.classList.contains('prioritized-placement')) {
-    if (el.classList.contains('above-pods')) {
-      return sizes[6];
-    } else return sizes[7];
-  } else return sizes.find((size) => el.classList.contains(size)) || sizes[sizes.length - 1];
+
+  // if (el.classList.contains('prioritized-placement')) {
+  //   return el.classList.contains('above-pods') ? sizes[6] : sizes[7];
+  // } else return sizes.find((size) => el.classList.contains(size)) || sizes[sizes.length - 1];
+   //return sizes.find((size) => el.classList.contains(size)) || sizes[sizes.length - 1];
+  
+  return sizes.find((size) => {
+    const sizeList = size.split('&');
+    if (el.classList.contains(sizeList[0])
+      && (sizeList.length === 1 || el.classList.contains(sizeList[1]))) {
+      return size; 
+    }
+  }) || sizes[sizes.length - 1];
 }
 
 function decorateBlockBg(node) {
@@ -88,8 +96,11 @@ export default async function init(el) {
   const { decorateButtons, decorateBlockText } = await import(`${miloLibs}/utils/decorate.js`);
   const { createTag } = await import(`${miloLibs}/utils/utils.js`);
   const blockSize = getBlockSize(el);
+  //ace0861
+  const [headingSize, bodySize, detailSize, buttonSize, linkSize] = blockTypeSizes[blockSize]; 
 
-  decorateButtons(el, `button-${blockTypeSizes[blockSize][3]}`);
+  // decorateButtons(el, `button-${blockTypeSizes[blockSize][3]}`);
+  decorateButtons(el, `button-${buttonSize}`);
   let rows = el.querySelectorAll(':scope > div');
   const headers = el.querySelectorAll('h1, h2, h3, h4, h5, h6, .highlight-row > *');
 
@@ -105,10 +116,12 @@ export default async function init(el) {
     if (!el.classList.contains('split-background')) {
       const highlight = createTag('div', { class: 'highlight-row' }, false);
       el.prepend(highlight);
+
     } 
   } else if (el.classList.contains('news') && rows.length > 1) {
     const [highlight, ...tail] = rows;
-    highlight.classList.add('highlight-row');
+    const detailPrefix = el.classList.contains('prioritized-placement') ? 'heading' : 'body';
+    highlight.classList.add('highlight-row', `${detailPrefix}-${detailSize}`);
     let blockImage = tail[0].querySelector('picture');
     if (blockImage) {
       const column = createTag('DIV');
@@ -123,11 +136,12 @@ export default async function init(el) {
       el.closest('.section').appendChild(section);
       section.appendChild(el);
       section.appendChild(newImageBlock);
-      el.querySelectorAll('a').forEach((a) => a.classList.add('body-xs'));
+      //el.querySelectorAll('a').forEach((a) => a.classList.add('body-xs')); //moved to outside of if statement
     }
-    else {;
-      el.querySelectorAll('a').forEach((a) => a.classList.add('body-xs'));
-    }
+    el.querySelectorAll('a').forEach((a) => a.classList.add('body-xs'));
+    // else {
+    //   el.querySelectorAll('a').forEach((a) => a.classList.add('body-xs'));
+    // }
     rows = tail;
   } else if (el.classList.contains('above-pods')) {
     headers.forEach((header) => enforceHeaderLevel(header, 1));
@@ -163,7 +177,7 @@ export default async function init(el) {
 
   if (!el.classList.contains('above-pods')) {
     headers.forEach((header, counter) => {
-      if (!counter) {
+      if (!counter && !el.classList.contains('news')) {
         enforceHeaderLevel(header, 3);
       } else {
         enforceHeaderLevel(header, 4);
