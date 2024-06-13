@@ -238,7 +238,8 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 
 .homepage-brick [class^="detail"] { margin: 0 0 var(--spacing-xs) 0; }
 .homepage-brick p.action-area { margin-top: var(--spacing-s); }
-.homepage-brick.click p.action-area { margin-top: 0; }
+/* ace0861 */
+.homepage-brick.click p.action-area { margin-top: var(--spacing-s); }
 .homepage-brick div > *:last-child { margin-bottom: 0; }
 .grid .homepage-brick div > *:last-child { margin-bottom: var(--spacing-s); }
 .homepage-brick .foreground > div *:first-child { margin-top: 0; }
