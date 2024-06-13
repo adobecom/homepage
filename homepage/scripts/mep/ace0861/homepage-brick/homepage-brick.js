@@ -83,6 +83,15 @@ function enforceHeaderLevel(node, level) {
   node.replaceWith(clone);
 }
 
+function decorateFillButtons(actionArea) {
+  if (!actionArea) return;
+  const btns = actionArea.querySelectorAll('a.con-button.blue');
+  btns.forEach((b) => {
+    b.classList.remove('blue');
+    b.classList.add('fill');
+  });
+}
+
 export default async function init(el) {
   el.classList.forEach((className) => {
     if (className.includes('-grid')) {
@@ -191,6 +200,7 @@ export default async function init(el) {
     if (hasClass.length) config[index] = hasClass[0].split('-').shift().toLowerCase();
   });
   decorateBlockText(el, config);
+  if (el.classList.contains('button-fill')) decorateFillButtons(el.querySelector('.action-area'));
   rows.forEach((row) => { row.classList.add('foreground'); });
 
   if (el.classList.contains('click')) {
