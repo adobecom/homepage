@@ -508,15 +508,24 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 
 
 /* news section */
+
+
 .section.news-section .homepage-brick.prioritized-placement.news { background-color: #FFF; }
 
 .section.news-section .homepage-brick.prioritized-placement.news .highlight-row  {
   color: var(--text-color);
   /* font-size: var(--type-heading-xxl-size); */
+  /* line-height: var(--type-heading-xl-lh); */
+  background: #FFF; 
+  /* font-weight: 900; */
+  text-align: center;
+}
+
+.section.news-section .homepage-brick.prioritized-placement.news .highlight-row h2 {
+  font-size: var(--type-heading-xxl-size);
   line-height: var(--type-heading-xl-lh);
   background: #FFF;
   font-weight: 900;
-  text-align: center;
 }
 
 /* prioritized placement class doesn't make sense in news section? */
@@ -533,5 +542,4 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
     max-height: 470px;
   }
 }
-
 

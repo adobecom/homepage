@@ -188,9 +188,10 @@ export default async function init(el) {
     headers.forEach((header, counter) => {
       if (!counter && !el.classList.contains('news')) {
         enforceHeaderLevel(header, 3);
-      } else {
-        enforceHeaderLevel(header, 4);
-      }
+      } else if (!counter && (el.classList.contains('news') && header.closest('.highlight-row'))) {
+        // ace0861
+        enforceHeaderLevel(header, 2); 
+      } else enforceHeaderLevel(header, 4);
     });
   }
   const config = blockTypeSizes[blockSize];
