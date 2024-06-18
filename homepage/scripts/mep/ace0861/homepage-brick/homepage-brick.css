@@ -484,7 +484,7 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 
 .homepage-brick.prioritized-placement.heading-heavy h1 { line-height: 56.34px; }
 
-/* heading sizing changes, added more than needed - regular is 1000px which only matters on desktop */
+/* heading sizing changes, added more than needed - alt 1000px */
 .homepage-brick.prioritized-placement.above-pods.heading-wide > .foreground, 
 .homepage-brick.prioritized-placement.above-pods.heading-wide > .foreground > div[data-valign] { max-width: 1200px !important; } 
 
@@ -506,25 +506,19 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
   }
 }
 
-
 /* news section */
-
-
 .section.news-section .homepage-brick.prioritized-placement.news { background-color: #FFF; }
 
 .section.news-section .homepage-brick.prioritized-placement.news .highlight-row  {
   color: var(--text-color);
-  /* font-size: var(--type-heading-xxl-size); */
-  /* line-height: var(--type-heading-xl-lh); */
   background: #FFF; 
-  /* font-weight: 900; */
+  background: #FFF; 
   text-align: center;
 }
 
 .section.news-section .homepage-brick.prioritized-placement.news .highlight-row h2 {
-  font-size: var(--type-heading-xxl-size);
+  /* font-size: var(--type-heading-xxl-size); */
   line-height: var(--type-heading-xl-lh);
-  background: #FFF;
   font-weight: 900;
 }
 

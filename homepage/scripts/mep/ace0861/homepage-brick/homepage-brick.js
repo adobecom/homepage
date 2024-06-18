@@ -10,9 +10,7 @@ const blockTypeSizes = {
   'link': ['m', 'xs', 'm', 's', 'xs'],
   'prioritized-placement&news': ['xs', 'xs', 'xxl', 'l', 'm'], // ace0861 additional scheme order: news item heading, news item body, detail, button, link - [2] is headline
   'news': ['xs', 's', 'm', 's', 'xs'], 
-  //'priority-above-pods': ['xxl', 'l', 'l', 'l', 'm'], // ace0861 additional scheme
   'prioritized-placement&above-pods': ['xxl', 'l', 'l', 'l', 'm'], // ace0861 additional scheme
-  //'priority-below-pods': ['l', 'm', 'l', 'l', 'm'], // ace0861 additional scheme
   'prioritized-placement&includes-pods': ['l', 'm', 'l', 'l', 'm'], // ace0861 additional scheme
   'above-pods': ['xxl', 'm', 'l', 'xl', 'm'],
   'full-desktop': ['xl', 'l', 'm', 'l', 'm'],
@@ -21,12 +19,6 @@ const blockTypeSizes = {
 
 function getBlockSize(el) {
   const sizes = Object.keys(blockTypeSizes); 
-
-  // if (el.classList.contains('prioritized-placement')) {
-  //   return el.classList.contains('above-pods') ? sizes[6] : sizes[7];
-  // } else return sizes.find((size) => el.classList.contains(size)) || sizes[sizes.length - 1];
-   //return sizes.find((size) => el.classList.contains(size)) || sizes[sizes.length - 1];
-  
   return sizes.find((size) => {
     const sizeList = size.split('&');
     if (el.classList.contains(sizeList[0])
@@ -129,8 +121,10 @@ export default async function init(el) {
     } 
   } else if (el.classList.contains('news') && rows.length > 1) {
     const [highlight, ...tail] = rows;
-    const detailPrefix = el.classList.contains('prioritized-placement') ? 'heading' : 'body';
-    highlight.classList.add('highlight-row', `${detailPrefix}-${detailSize}`);
+    // const detailPrefix = el.classList.contains('prioritized-placement') ? 'heading' : 'body';
+    // const highlightSize = el.classList.contains('prioritized-placement') ? 'xxl' : detailSize;
+    // highlight.classList.add('highlight-row', `${detailPrefix}-${highlightSize}`);
+    highlight.classList.add('highlight-row');
     let blockImage = tail[0].querySelector('picture');
     if (blockImage) {
       const column = createTag('DIV');
@@ -145,12 +139,8 @@ export default async function init(el) {
       el.closest('.section').appendChild(section);
       section.appendChild(el);
       section.appendChild(newImageBlock);
-      //el.querySelectorAll('a').forEach((a) => a.classList.add('body-xs')); //moved to outside of if statement
     }
     el.querySelectorAll('a').forEach((a) => a.classList.add('body-xs'));
-    // else {
-    //   el.querySelectorAll('a').forEach((a) => a.classList.add('body-xs'));
-    // }
     rows = tail;
   } else if (el.classList.contains('above-pods')) {
     headers.forEach((header) => enforceHeaderLevel(header, 1));
@@ -201,6 +191,10 @@ export default async function init(el) {
     if (hasClass.length) config[index] = hasClass[0].split('-').shift().toLowerCase();
   });
   decorateBlockText(el, config);
+  // ace0861
+  if (el.classList.contains('news') && el.classList.contains('prioritized-placement')) {
+    el.querySelector('.highlight-row h2').className = `heading-${detailSize}`;
+  }
   if (el.classList.contains('button-fill')) decorateFillButtons(el.querySelector('.action-area'));
   rows.forEach((row) => { row.classList.add('foreground'); });
 
