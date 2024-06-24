@@ -102,12 +102,12 @@
     flex-direction: column;
   }
 
-  .homepage-brick.above-pods .foreground > div .body-m {
-      order: 3;
+  .homepage-brick.above-pods .foreground > div .supplemental-text {
+      order: 10; 
   }
 
   .homepage-brick.above-pods .foreground > div .action-area {
-    order: 2;
+    /* order: 5; */
     margin-bottom: var(--spacing-s);
     display: flex;
     gap: var(--spacing-s);
@@ -419,25 +419,18 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
   .section.masonry:not([class*="spacing"]) {
     padding: var(--spacing-s) var(--spacing-s);
   }
-
-  .homepage-brick .mobileOnly {
-    display: block;
-  }
 }
 
-@media screen and (min-width: 600px) and (max-width: 1199px) {
+/* ace0681 moved tabletOnly and other breakpoints to bottom of page in breakpoints */
+/* @media screen and (min-width: 600px) and (max-width: 1199px) { 
   .homepage-brick .tabletOnly {
     display: block;
   }
-}
+} */
 
 @media screen and (min-width: 600px) {
   .masonry .homepage-brick {
     min-height: 500px;
-  }
-
-  .masonry .homepage-brick.tall {
-    min-height: 750px;
   }
 
   .homepage-brick .action-area {
@@ -447,9 +440,9 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 }
 
 @media screen and (min-width: 1200px) {
-  .homepage-brick .desktopOnly {
+  /* .homepage-brick .desktopOnly {
     display: block;
-  }
+  } */
 
   /* mashup */
   .homepage-brick.above-pods { text-align: center; }
@@ -473,7 +466,7 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 
 /* ace0861 new css */
 
-/* homepage brick section */
+/* homepage brick prioritized placement section */
 .homepage-brick.prioritized-placement.heading-heavy .highlight-row,
 .homepage-brick.prioritized-placement.heading-heavy h1,
 .homepage-brick.prioritized-placement.heading-heavy h2, 
@@ -484,7 +477,6 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 
 .homepage-brick.prioritized-placement.heading-heavy h1 { line-height: 56.34px; }
 
-/* heading sizing changes, added more than needed - alt 1000px */
 .homepage-brick.prioritized-placement.above-pods.heading-wide > .foreground, 
 .homepage-brick.prioritized-placement.above-pods.heading-wide > .foreground > div[data-valign] { max-width: 1200px !important; } 
 
@@ -495,18 +487,31 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 
 .homepage-brick.prioritized-placement .supplemental-text.body-xl { font-size: var(--type-body-l-size); }
 
-@media screen and (min-width: 1200px) {
-  .section.masonry .homepage-brick.prioritized-placement.tall { min-height: 750px }
-  .homepage-brick.prioritized-placement.above-pods.subheading-compact [class^="body-"] { padding: 0 18%; }  
-}
-
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 599px) {
   .section.masonry .homepage-brick.prioritized-placement.tall {
-    
+    min-height: 600px;
   }
+
+  .homepage-brick .mobileOnly { display: block }
+  .homepage-brick .tabletOnly, .homepage-brick .desktopOnly { display: none}
 }
 
-/* news section */
+@media screen and (min-width: 600px) {
+  .section.masonry .homepage-brick.prioritized-placement.tall { min-height: 700px }
+
+  .homepage-brick .tabletOnly { display: block }
+  .homepage-brick .mobileOnly, .homepage-brick .desktopOnly { display: none}
+}
+
+@media screen and (min-width: 1200px) {
+  .section.masonry .homepage-brick.prioritized-placement.tall { min-height: 900px }
+  .homepage-brick.prioritized-placement.above-pods.subheading-compact [class^="body-"] { padding: 0 18%; }  
+
+  .homepage-brick .desktopOnly { display: block }
+  .homepage-brick .mobileOnly, .homepage-brick .tabletOnly { display: none}
+}
+
+/* news prioritized placement section */
 .section.news-section .homepage-brick.prioritized-placement.news { background-color: #FFF; }
 
 .section.news-section .homepage-brick.prioritized-placement.news .highlight-row  {
@@ -517,18 +522,16 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 }
 
 .section.news-section .homepage-brick.prioritized-placement.news .highlight-row h2 {
-  /* font-size: var(--type-heading-xxl-size); */
   line-height: var(--type-heading-xl-lh);
   font-weight: 900;
 }
 
-/* prioritized placement class doesn't make sense in news section? */
 @media screen and (max-width: 1199px) {  
   .section.news-section .homepage-brick.prioritized-placement.news  {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
-  /* image block will only change if homepage brick news is using prioritized placement */
+
   .section.news-section .homepage-brick.prioritized-placement.news ~ .news-block-image, 
   .section.news-section .homepage-brick.prioritized-placement.news ~ .news-block-image .background {
     border-top-left-radius: 0 !important;
@@ -536,4 +539,6 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
     max-height: 470px;
   }
 }
+
+
 

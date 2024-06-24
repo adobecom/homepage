@@ -11,7 +11,7 @@ const blockTypeSizes = {
   'prioritized-placement&news': ['xs', 'xs', 'xxl', 'l', 'm'], // ace0861 additional scheme order: news item heading, news item body, detail, button, link - [2] is headline
   'news': ['xs', 's', 'm', 's', 'xs'], 
   'prioritized-placement&above-pods': ['xxl', 'l', 'l', 'l', 'm'], // ace0861 additional scheme
-  'prioritized-placement&includes-pods': ['l', 'm', 'l', 'l', 'm'], // ace0861 additional scheme
+  'prioritized-placement&includes-pods': ['xxl', 'm', 'l', 'l', 'm'], // ace0861 additional scheme
   'above-pods': ['xxl', 'm', 'l', 'xl', 'm'],
   'full-desktop': ['xl', 'l', 'm', 'l', 'm'],
   default: ['m', 'm', 'l', 'l', 'xs'],
@@ -54,7 +54,6 @@ function decorateBlockBg(node) {
       if (image) {
         const text = e.textContent.trim();
         if (text !== '') {
-          //const points = text?.slice(text.indexOf(':') + 1).split(',');
           const [x, y = '', s = ''] = text.split(',');
           image.style.objectPosition = `${x.trim().toLowerCase()} ${y.trim().toLowerCase()}`;
           if (s !== '') image.style.objectFit = s.trim().toLowerCase();
@@ -99,8 +98,6 @@ export default async function init(el) {
   const blockSize = getBlockSize(el);
   //ace0861
   const [headingSize, bodySize, detailSize, buttonSize, linkSize] = blockTypeSizes[blockSize]; 
-
-  // decorateButtons(el, `button-${blockTypeSizes[blockSize][3]}`);
   decorateButtons(el, `button-${buttonSize}`);
   let rows = el.querySelectorAll(':scope > div');
   const headers = el.querySelectorAll('h1, h2, h3, h4, h5, h6, .highlight-row > *');
@@ -121,9 +118,6 @@ export default async function init(el) {
     } 
   } else if (el.classList.contains('news') && rows.length > 1) {
     const [highlight, ...tail] = rows;
-    // const detailPrefix = el.classList.contains('prioritized-placement') ? 'heading' : 'body';
-    // const highlightSize = el.classList.contains('prioritized-placement') ? 'xxl' : detailSize;
-    // highlight.classList.add('highlight-row', `${detailPrefix}-${highlightSize}`);
     highlight.classList.add('highlight-row');
     let blockImage = tail[0].querySelector('picture');
     if (blockImage) {
@@ -178,7 +172,7 @@ export default async function init(el) {
     headers.forEach((header, counter) => {
       if (!counter && !el.classList.contains('news')) {
         enforceHeaderLevel(header, 3);
-      } else if (!counter && (el.classList.contains('news') && header.closest('.highlight-row'))) {
+      } else if (!counter && el.classList.contains('news') && header.closest('.highlight-row')) {
         // ace0861
         enforceHeaderLevel(header, 2); 
       } else enforceHeaderLevel(header, 4);
