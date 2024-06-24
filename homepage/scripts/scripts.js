@@ -16,6 +16,15 @@ const ACOM_SIGNED_IN_STATUS = 'acomsis';
 const ACOM_SIGNED_IN_STATUS_STAGE = 'acomsis_stage';
 const STYLES = '/homepage/styles/styles.css';
 const LIBS = '/libs';
+const ENVS = {
+  stage: { edgeConfigId: 'e065836d-be57-47ef-b8d1-999e1657e8fd' },
+  prod: { edgeConfigId: '913eac4d-900b-45e8-9ee7-306216765cd2' }
+}
+ENVS.local = {
+  ...ENVS.stage,
+  name: 'local',
+};
+
 const locales = {
   // Americas
   ar: { ietf: 'es-AR', tk: 'oln4yqj.css' },
@@ -119,12 +128,26 @@ const locales = {
   cis_ru: { ietf: 'ru', tk: 'qxw8hzm.css' },
 };
 
+const stageDomainsMap = {
+  'www.adobe.com': 'www.stage.adobe.com',
+  'business.adobe.com': 'business.stage.adobe.com',
+  'learning.adobe.com': 'learning.stage.adobe.com',
+  'helpx.adobe.com': 'helpx.stage.adobe.com',
+  'status.adobe.com': 'status.stage.adobe.com',
+  'news.adobe.com': 'news.stage.adobe.com',
+  'blog.adobe.com': 'blog.stage.adobe.com',
+  'developer.adobe.com': 'developer-stage.adobe.com',
+};
+
 // Add any config options.
 const CONFIG = {
+  ...ENVS,
+  chimeraOrigin: 'homepage',
   codeRoot: '/homepage',
   contentRoot: '/homepage',
   imsClientId: 'homepage_milo',
   prodDomains: ['stock.adobe.com', 'helpx.adobe.com', 'business.adobe.com', 'www.adobe.com'],
+  stageDomainsMap,
   geoRouting: 'on',
   fallbackRouting: 'on',
   locales,
@@ -142,21 +165,23 @@ const CONFIG = {
  * ------------------------------------------------------------
  */
 
+function replaceDotMedia(elem = document) {
+  const resetAttributeBase = (tag, attr) => {
+    elem.querySelectorAll(`${tag}[${attr}^="./media_"]`).forEach((el) => {
+      el[attr] = `${new URL(`${CONFIG.contentRoot}${el.getAttribute(attr).substring(1)}`, window.location).href}`;
+    });
+  };
+  resetAttributeBase('img', 'src');
+  resetAttributeBase('source', 'srcset');
+}
+
 function decorateArea(area = document, options = {}) {
   const lcpImageUpdate = (img) => {
     img.setAttribute('loading', 'eager');
     img.setAttribute('fetchpriority', 'high');
   };
 
-  (function replaceDotMedia() {
-    const resetAttributeBase = (tag, attr) => {
-      area.querySelectorAll(`${tag}[${attr}^="./media_"]`).forEach((el) => {
-        el[attr] = `${new URL(`${CONFIG.contentRoot}${el.getAttribute(attr).substring(1)}`, window.location).href}`;
-      });
-    };
-    resetAttributeBase('img', 'src');
-    resetAttributeBase('source', 'srcset');
-  }());
+  replaceDotMedia(area);
   
   (function loadLCPImage() {
     const { fragmentLink } = options;
@@ -225,17 +250,31 @@ function loadStyles() {
 
 (async function loadPage() {
   loadStyles();
-  const { loadArea, setConfig } = await import(`${miloLibs}/utils/utils.js`);
+  const { loadArea, setConfig, loadLana } = await import(`${miloLibs}/utils/utils.js`);
   setConfig({ ...CONFIG, miloLibs });
+  loadLana({ clientId: 'homepage' });
+  
   const loadAreaPromise = loadArea();
   const isStage = window.location.host.includes('stage');
+  
+  const getRedirectUri = () => {
+    if (!window.adobeIMS) return '';
+
+    const baseURL = `${isStage ? 'https://www.stage.adobe.com' : 'https://www.adobe.com'}`;
+    const pathname = window.location.pathname.slice(1, -1);
+    
+    // China & SEA should not redirect
+    if (pathname === 'cn' || pathname === 'sea') return '';
+    
+    // return with ?acomLocale parameter if it is not root
+    return `${baseURL}/home${pathname ? `?acomLocale=${pathname}` : ''}`;
+  }
+
   imsCheck().then(isSignedInUser => {
     const signedInCookie = isStage ? getCookie(ACOM_SIGNED_IN_STATUS_STAGE) : getCookie(ACOM_SIGNED_IN_STATUS);
-    const baseURL = `${isStage ? 'https://www.stage.adobe.com' : 'https://www.adobe.com'}`;
-    if (window.adobeIMS){
-      const pathname = window.location.pathname.slice(1, -1);
-      window.adobeIMS.adobeIdData.redirect_uri = `${baseURL}/home?acomLocale=${pathname ? pathname : 'us'}`;
-    }
+    const redirectUri = getRedirectUri();
+    if (redirectUri) window.adobeIMS.adobeIdData.redirect_uri = redirectUri;
+    
     if (isSignedInUser && !signedInCookie) {
       const date = new Date();
       date.setTime(date.getTime() + (365*24*60*60*1000));
@@ -247,13 +286,24 @@ function loadStyles() {
         document.cookie = `${ACOM_SIGNED_IN_STATUS}=;path=/;expires=${new Date(0).toUTCString()};`;
         document.cookie = `${ACOM_SIGNED_IN_STATUS}=;path=/;expires=${new Date(0).toUTCString()};domain=adobe.com;`;
       } else {
-        document.cookie = `${ACOM_SIGNED_IN_STATUS_STAGE}=;path=/;expires=${new Date(0).toUTCString()};domain='www.stage.adobe.com;`;
+        document.cookie = `${ACOM_SIGNED_IN_STATUS_STAGE}=;path=/;expires=${new Date(0).toUTCString()};domain=www.stage.adobe.com;`;
       }
       window.location.reload();
     }
     if (signedInCookie && isSignedInUser && !window.location.href.includes('/fragments/')) {
       window.location.reload();
     }
-  })
+  });
+  
+  // for media_ update for feds
+  const observeCallback = (mutationList, observer) => {
+    for (const mutation of mutationList) {
+      replaceDotMedia(mutation.target);
+    }
+  };
+  const observer = new MutationObserver(observeCallback);
+  observer.observe(document.querySelector('header'), { childList: true, subtree: true });
+  observer.observe(document.querySelector('footer'), { childList: true, subtree: true });
+
   await loadAreaPromise;
 }());

@@ -62,7 +62,7 @@ function enforceHeaderLevel(node, level) {
   for (const attr of node.attributes) {
     clone.setAttribute(attr.name, attr.value);
   }
-  clone.innerText = node.innerText;
+  clone.innerHTML = node.innerHTML;
   node.replaceWith(clone);
 }
 
