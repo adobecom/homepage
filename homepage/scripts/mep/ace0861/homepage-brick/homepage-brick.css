@@ -504,6 +504,9 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
   .homepage-brick.prioritized-placement.above-pods.subheading-compact [class^="body-"] { padding: 0 18%; }  
 
   .homepage-brick .desktopOnly { display: block }
+  
+  .homepage-brick .tabletOnly { display: none }
+  
 }
 
 /* news prioritized placement section */
