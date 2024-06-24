@@ -488,27 +488,22 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 .homepage-brick.prioritized-placement .supplemental-text.body-xl { font-size: var(--type-body-l-size); }
 
 @media screen and (max-width: 599px) {
-  .section.masonry .homepage-brick.prioritized-placement.tall {
-    min-height: 600px;
-  }
+  .section.masonry .homepage-brick.prioritized-placement.tall { min-height: 600px; }
 
   .homepage-brick .mobileOnly { display: block }
-  .homepage-brick .tabletOnly, .homepage-brick .desktopOnly { display: none}
 }
 
 @media screen and (min-width: 600px) {
   .section.masonry .homepage-brick.prioritized-placement.tall { min-height: 700px }
 
   .homepage-brick .tabletOnly { display: block }
-  .homepage-brick .mobileOnly, .homepage-brick .desktopOnly { display: none}
 }
 
 @media screen and (min-width: 1200px) {
-  .section.masonry .homepage-brick.prioritized-placement.tall { min-height: 700px }
+  /* .section.masonry .homepage-brick.prioritized-placement.tall { min-height: 700px } */
   .homepage-brick.prioritized-placement.above-pods.subheading-compact [class^="body-"] { padding: 0 18%; }  
 
   .homepage-brick .desktopOnly { display: block }
-  .homepage-brick .mobileOnly, .homepage-brick .tabletOnly { display: none}
 }
 
 /* news prioritized placement section */
