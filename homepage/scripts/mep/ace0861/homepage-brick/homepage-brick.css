@@ -504,7 +504,7 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 }
 
 @media screen and (min-width: 1200px) {
-  .section.masonry .homepage-brick.prioritized-placement.tall { min-height: 900px }
+  .section.masonry .homepage-brick.prioritized-placement.tall { min-height: 700px }
   .homepage-brick.prioritized-placement.above-pods.subheading-compact [class^="body-"] { padding: 0 18%; }  
 
   .homepage-brick .desktopOnly { display: block }
