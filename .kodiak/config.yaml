@@ -1,0 +1,32 @@
+version: 1.0
+
+snow:
+  - id: 546349 # Milo Homepage https://adobe.service-now.com/service_registry_portal.do#/service/546349
+
+notifications:
+  jira:
+    default:
+      project: MWPW # Mandatory
+      filters:
+        include:
+          risk_rating: R5
+      fields:
+        assignee:
+          name: gunn
+        customfield_11800: MWPW-140779 #epic link
+        customfield_11900:
+          value: "Brahmos"
+        watchers:
+          - casalino
+          - jmichnow
+          - mauchley
+          - tuerkben
+          - seanchoi
+        labels:
+          - "OriginatingProcess=Kodiak"
+          - "security"
+          - "kodiak-ticket"
+          - "homepage-security"
+          - "hp-security"
+        components:
+          - name: "DevOps Security"
