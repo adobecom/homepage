@@ -24,6 +24,10 @@ export const [setLibs, getLibs] = (() => {
         }
         if (!['.hlx.', 'local'].some((i) => hostname.includes(i))) return prodLibs;
         const branch = new URLSearchParams(search).get('milolibs') || 'main';
+        // Validate the branch name to mitigate potential security risks
+        if (!/^[a-zA-Z0-9-_]+$/.test(branch)) {
+          throw new Error("Invalid branch name.");
+        }
         if (branch === 'local') return 'http://localhost:6456/libs';
         return branch.includes('--') ? `https://${branch}.hlx.live/libs` : `https://${branch}--milo--adobecom.hlx.live/libs`;
       })();
