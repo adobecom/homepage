@@ -218,7 +218,10 @@ const getCookie = (name) => document.cookie
   ?.split('=')[1];
 
 async function imsCheck() {
-  if (!window.location.host.includes('adobe.com')) return false;
+  const { host, pathname } = window.location;
+  // no need to check IMS for these cases:
+  if (!host.includes('adobe.com') || pathname.split('/').at(-1).startsWith('media_')) return false;
+  
   const { loadIms, setConfig } = await import(`${miloLibs}/utils/utils.js`);
   setConfig({ ...CONFIG, miloLibs });
   let isSignedInUser = false;
