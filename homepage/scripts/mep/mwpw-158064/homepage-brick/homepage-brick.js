@@ -67,12 +67,14 @@ function enforceHeaderLevel(node, level) {
 }
 
 export default async function init(el) {
-  console.log('mwpw-158064 is running!');
   el.classList.forEach((className) => {
     if (className.includes('-grid')) {
       el.closest('.fragment')?.parentNode.classList.add(className);
     }
   });
+  if (el.classList.contains('link')) {
+    el.classList.add('max-override');
+  }
 
   const linkParentNode = el.querySelector('a').parentNode;
   const linkParentNodeName = linkParentNode.nodeName === 'CHECKOUT-LINK' ? linkParentNode.parentNode.nodeName : linkParentNode.nodeName;
