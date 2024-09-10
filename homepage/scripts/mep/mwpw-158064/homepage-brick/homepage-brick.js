@@ -72,9 +72,6 @@ export default async function init(el) {
       el.closest('.fragment')?.parentNode.classList.add(className);
     }
   });
-  if (el.classList.contains('link')) {
-    el.classList.add('max-override');
-  }
 
   const linkParentNode = el.querySelector('a').parentNode;
   const linkParentNodeName = linkParentNode.nodeName === 'CHECKOUT-LINK' ? linkParentNode.parentNode.nodeName : linkParentNode.nodeName;
