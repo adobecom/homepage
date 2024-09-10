@@ -1,4 +1,4 @@
-import { getLibs } from '../../scripts/utils.js';
+import { getLibs } from '../../../utils.js';
 
 // size: [heading, body, ...detail]
 // blockTypeSizes array order: heading, body, detail, button, link
