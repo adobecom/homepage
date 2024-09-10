@@ -67,7 +67,7 @@ function enforceHeaderLevel(node, level) {
 }
 
 export default async function init(el) {
-  console.log('mwpw-158064 is running');
+  console.log('mwpw-158064 is running!');
   el.classList.forEach((className) => {
     if (className.includes('-grid')) {
       el.closest('.fragment')?.parentNode.classList.add(className);
