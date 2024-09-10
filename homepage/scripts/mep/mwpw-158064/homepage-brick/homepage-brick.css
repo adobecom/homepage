@@ -378,7 +378,7 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 }
 @media screen and (min-width: 1200px) {
   .max-override.homepage-brick.link.split-background>.foreground> :first-child {
-    background: url('homepage/assets/maxlinkpod-images/media_18ae9f841e7d0785e5080f0dd2bc7b27702320799.jpeg') no-repeat center center / cover;
+    background: url('/homepage/assets/maxlinkpod-images/media_18ae9f841e7d0785e5080f0dd2bc7b27702320799.jpeg') no-repeat center center / cover;
   }
 }
 
