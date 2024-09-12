@@ -11,7 +11,7 @@ const blockTypeSizes = {
   'news': ['xs', 's', 'm', 's', 'xs'],
   'above-pods': ['xxl', 'm', 'l', 'xl', 'm'],
   'full-desktop': ['xl', 'l', 'm', 'l', 'm'],
-  default: ['m', 'm', 'l', 'l', 'xs'],
+  default: ['m', 'm', 'xl', 'l', 'xs'],
 };
 
 function getBlockSize(el) {
