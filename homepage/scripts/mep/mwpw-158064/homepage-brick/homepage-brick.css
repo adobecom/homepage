@@ -468,6 +468,6 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 
 .marquee .text .detail-l {
   text-transform: none !important;
-  font-size: var(--type-body-s-size);
-  line-height: var(--type-body-s-lh);
+  font-size: var(--type-detail-l-size);
+  line-height: var(--type-detail-l-lh);
 }
