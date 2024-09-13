@@ -9,9 +9,9 @@ const blockTypeSizes = {
   xlarge: ['xxl', 'l', 'xl', 'l', 'l'],
   'link': ['m', 'xs', 'm', 's', 'xs'],
   'news': ['xs', 's', 'm', 's', 'xs'],
-  'above-pods': ['xxl', 'm', 'l', 'xl', 'm'],
+  'above-pods': ['xxl', 'm', 'xl', 'xl', 'm'],
   'full-desktop': ['xl', 'l', 'm', 'l', 'm'],
-  default: ['m', 'm', 'l', 'l', 'xs'],
+  default: ['m', 'm', 'xl', 'l', 'xs'],
 };
 
 function getBlockSize(el) {
