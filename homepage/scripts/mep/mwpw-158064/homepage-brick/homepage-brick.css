@@ -209,6 +209,7 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 .homepage-brick [class^="body-"] { margin: var(--spacing-xxs) 0; }
 
 .homepage-brick [class^="heading"] { margin: 0 0 var(--spacing-xxs) 0; }
+.homepage-brick.above-pods [class^="heading"] { font-weight: 800; }
 .homepage-brick.link [class^="heading"]:not(:first-child) { margin-top: var(--spacing-xs); }
 
 .homepage-brick.news [class^="heading"] {
