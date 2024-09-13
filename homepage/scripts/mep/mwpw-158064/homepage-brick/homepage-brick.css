@@ -408,7 +408,6 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
   line-height: var(--type-heading-s-lh);
   text-transform: none;
 }
-.homepage-brick.above-pods .foreground p.detail-xl:first-child,
 .homepage-brick.news .highlight-row>div:first-child {
   font-weight: 800;
 }
