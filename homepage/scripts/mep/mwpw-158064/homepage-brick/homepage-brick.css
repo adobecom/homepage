@@ -465,3 +465,7 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 }
 
 .homepage-brick.right .action-area { justify-content: end; }
+
+.marquee .text .detail-l {
+  text-transform: none !important;
+}
