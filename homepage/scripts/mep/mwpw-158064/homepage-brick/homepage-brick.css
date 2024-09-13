@@ -396,6 +396,7 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
   background: linear-gradient(90deg, rgba(33,99,212,1) 0%, rgba(93,227,116,1) 100%);
 }
 
+.homepage-brick.above-pods .foreground p.detail-xl:first-child,
 .homepage-brick.click .foreground p.detail-xl:first-child,
 .homepage-brick.news .highlight-row>div:first-child {
   font-size: var(--type-heading-s-size);
