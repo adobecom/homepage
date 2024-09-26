@@ -391,9 +391,8 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
     min-height: 144px;
   }
 }
-
 [dir="rtl"] .homepage-brick.link.split-background>.foreground> :first-child {
-  background: url('/homepage/assets/maxlinkpod-images/media_104ee31234621e654c2aeaa59a83a118233c68db1.jpeg') no-repeat left top / cover;
+  background: url('/homepage/assets/maxlinkpod-images/media_12d1ae2af078490d8d80069ae583ce37b2df24792.jpeg') no-repeat left top / cover;
 }
 
 @media screen and (min-width: 600px) {
