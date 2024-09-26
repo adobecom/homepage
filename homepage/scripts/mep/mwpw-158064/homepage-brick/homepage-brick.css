@@ -392,6 +392,11 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
   }
 }
 
+[dir="rtl"] .homepage-brick.link.split-background>.foreground> :first-child,
+[dir="rtl"] .homepage-brick.link.split-background>.foreground> :first-child * {
+  transform: scaleX(-1);
+}
+
 .homepage-brick.news hr {
   margin: var(--spacing-xs) 0;
 }
