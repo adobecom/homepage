@@ -391,6 +391,20 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
     min-height: 144px;
   }
 }
+[dir="rtl"] .homepage-brick.link.split-background>.foreground> :first-child {
+  background: url('/homepage/assets/maxlinkpod-images/media_12d1ae2af078490d8d80069ae583ce37b2df24792.jpeg') no-repeat left top / cover;
+}
+
+@media screen and (min-width: 600px) {
+  [dir="rtl"] .homepage-brick.link.split-background>.foreground> :first-child {
+    background: url('/homepage/assets/maxlinkpod-images/media_1df6047ce61d61a14a6b5d46886c3d0cf172f2ce9.jpeg') no-repeat left top / cover;
+  }
+}
+@media screen and (min-width: 1200px) {
+  [dir="rtl"] .homepage-brick.link.split-background>.foreground> :first-child {
+    background: url('/homepage/assets/maxlinkpod-images/media_1585e60554c04efc7edbf6a987563598768274eb4.jpeg') no-repeat left top / cover;
+  }
+}
 
 .homepage-brick.news hr {
   margin: var(--spacing-xs) 0;
