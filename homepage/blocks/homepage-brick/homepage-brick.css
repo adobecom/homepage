@@ -202,7 +202,7 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 }
 
 .homepage-brick p,
-.homepage-brick [class^="body-"] { margin: var(--spacing-xxs) 0; }
+.homepage-brick [class^="body-"] { margin-bottom: var(--spacing-xxs); }
 
 .homepage-brick [class^="heading"] { margin: 0 0 var(--spacing-xxs) 0; }
 .homepage-brick.link [class^="heading"]:not(:first-child) { margin-top: var(--spacing-xs); }
@@ -374,7 +374,7 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 
 .homepage-brick.news .highlight-row {
   color: #FFF;
-  background: linear-gradient(90deg, rgba(33,99,212,1) 0%, rgba(93,227,116,1) 100%);
+  background: #262530;
 }
 
 .homepage-brick .positioned-background {
