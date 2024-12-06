@@ -202,7 +202,13 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 }
 
 .homepage-brick p,
-.homepage-brick [class^="body-"] { margin-bottom: var(--spacing-xxs); }
+.homepage-brick [class^="body-"] { margin: var(--spacing-xxs) 0; }
+.homepage-brick.link .background + .foreground > div:first-child {
+  margin-top: 0px;
+}
+.homepage-brick.link .background + .foreground > div:first-child h3 {
+  margin-top: var(--spacing-xxs);
+}
 
 .homepage-brick [class^="heading"] { margin: 0 0 var(--spacing-xxs) 0; }
 .homepage-brick.link [class^="heading"]:not(:first-child) { margin-top: var(--spacing-xs); }
