@@ -20,16 +20,16 @@ export const [setLibs, getLibs] = (() => {
       libs = (() => {
         const { hostname, search } = location || window.location;
         if (hostname.includes('stage.adobe.com')) {
-          return "https://stage--milo--adobecom.hlx.live/libs";
+          return "https://stage--milo--adobecom.aem.live/libs";
         }
-        if (!['.hlx.', 'local'].some((i) => hostname.includes(i))) return prodLibs;
+        if (!['.hlx.', '.aem.', 'local'].some((i) => hostname.includes(i))) return prodLibs;
         const branch = new URLSearchParams(search).get('milolibs') || 'main';
         // Validate the branch name to mitigate potential security risks
         if (!/^[a-zA-Z0-9-_]+$/.test(branch)) {
           throw new Error("Invalid branch name.");
         }
         if (branch === 'local') return 'http://localhost:6456/libs';
-        return branch.includes('--') ? `https://${branch}.hlx.live/libs` : `https://${branch}--milo--adobecom.hlx.live/libs`;
+        return branch.includes('--') ? `https://${branch}.aem.live/libs` : `https://${branch}--milo--adobecom.aem.live/libs`;
       })();
       return libs;
     }, () => libs,
