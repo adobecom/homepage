@@ -1,0 +1,70 @@
+# Adobe Tools
+> Give your team a creative edge. Create something beautiful, boost productivity, and deliver engaging experiences with Adobe software. 
+
+Adobe offers a suite of industry-standard applications for photography, design, video editing, document editing, web development, and more.
+
+## Adobe Acrobat
+>Do it all with Acrobat. Create and edit PDFs. Collaborate with ease. E-sign documents and collect signatures. Get everything done in one app, wherever you work. Acrobat’s got it.
+- [Acrobat Pro](https://www.adobe.com/acrobat.md): PDF editing and management.
+- [25+ powerful PDF and e-signing tools for free - Adobe Acrobat](https://www.adobe.com/acrobat/online.md): Work smarter from anywhere with Acrobat online tools from Adobe, the inventor of the PDF format.
+- [Chat with your docs - Acrobat Ai Assitant](https://www.adobe.com/acrobat/generative-ai-pdf.md):Save time with AI Assistant. Break down complex language in contracts, summarize your docs in a click, and ask questions to get quick answers.
+- [The original PDF solution -  Acrobat Reader](https://www.adobe.com/acrobat/pdf-reader.md): View, share, sign, comment, and collaborate on PDFs for free on desktop and mobile.
+- [Move your business forward with Acrobat solutions -  Acrobat Business](https://www.adobe.com/acrobat/business.md): Streamline the way you work, communicate, and transact business. Plus, get AI-powered assistance, APIs and integrations, and built-in security tools.
+- [Adobe Acrobat for students](https://www.adobe.com/acrobat/students.md): Whether you need the ultimate creative toolkit or powerful PDF goodness, there’s a plan to help you succeed.
+- [The essential document solution for nonprofits - Adobe Acrobat Pro](https://www.adobe.com/nonprofits/acrobat.md)
+- [Adobe Dcoument Cloud for Goverment](https://www.adobe.com/acrobat/business/industries/government.md): Give citizens a faster digital way to sign.
+- [eSign solution - Acrobat eSign](https://www.adobe.com/acrobat/business/sign.md): eSign documents and manage all your PDFs in one place.
+- [Edit PDFs](https://www.adobe.com/acrobat/online/pdf-editor.md): Modify PDF content quickly.
+- [Merge PDFs](https://www.adobe.com/acrobat/online/merge-pdf.md): Combine PDF files.
+- [Compress PDFs](https://www.adobe.com/acrobat/online/compress-pdf.md): Reduce file size.
+- [Convert PDF to Word](https://www.adobe.com/acrobat/online/convert-pdf-to-word.md): Transform PDFs into editable Word documents.
+- [Sign PDFs](https://www.adobe.com/acrobat/online/sign-pdf.md): Add legally binding signatures.
+- [Protect PDFs](https://www.adobe.com/acrobat/online/protect-pdf.md): Apply password security to PDFs.
+
+## Creative Cloud
+> Adobe Creative Cloud is a subscription-based platform that provides access to Adobe's suite of creative tools, including Photoshop, Illustrator, InDesign, and more. It offers a range of features for creating and editing digital content, including cloud storage, collaboration tools, and access to a library of creative assets. 
+- [Adobe Creative Cloud | Professional Creative Software](https://www.adobe.com/creativecloud_md.md): Enjoy the collection of professional creative software in Adobe Creative Cloud including Photoshop, Illustrator, Premiere Pro & more on desktop, mobile & web.
+- [Official Adobe Photoshop - Free Trial and Online Photo & Design App](https://www.adobe.com/products/photoshop_md.md): Explore quick new ways to create custom scenes, make complex edits, & combine images online or with the free Photoshop mobile app.
+- [Vector Graphics Software – Adobe Illustrator](https://www.adobe.com/products/illustrator_md.md): Powered by generative AI, magically transform a text prompt into a fully editable vector graphic with Adobe Illustrator, the industry-leading vector graphics software.
+- [Layout design and desktop publishing software | Adobe InDesign](https://www.adobe.com/products/indesign_md.md): Create layout designs. Publish printed books, brochures, digital magazines, flyers, and interactive online documents with Adobe InDesign desktop publishing software.
+- [Adobe Firefly - Free Generative AI for creatives](https://www.adobe.com/products/firefly_md.md): Create stunning images, audio, and now video, all in one place, with Adobe Firefly. Go from ideation to production seamlessly with commercially safe Firefly models.
+- [Explore New Features in Photoshop - Adobe](https://www.adobe.com/products/photoshop/features_md.md): Explore Photoshop’s new amazing image-editing features for everything from simple to retouching to expressive artwork — and so much more.
+- [Video editing that's always a cut above - Premiere Pro](https://www.adobe.com/products/premiere.html): Edit and trim video. Add effects. Mix audio. Animate titles. Magically add new frames to your clips. Supercharge your workflow with AI.
+- [Your next move in motion design - After Effects](https://www.adobe.com/products/aftereffects.md): Animate still images and illustrations to create striking motion graphics. Add motion to text for cinematic title sequences and simple credit rolls and bring dimension into your videos in a true 3D workspace right inside After Effects.
+- [Adobe Express](https://www.adobe.com/express/): Quick and easy content creation for social media and more.
+- [Edit, organize, store and share photos from anywhere - Lightroom](https://www.adobe.com/products/photoshop-lightroom.md): Photo editing and organization.
+- [Virtual Staging Studio - Substance 3D Stager](https://www.adobe.com/products/substance3d/apps/stager.md): Compose and render state-of-the-art 3D scenes in your own virtual studio. 
+- [Lightroom Classic](https://www.adobe.com/products/photoshop-lightroom-classic.md): Desktop-focused photo editing.
+- [Fresco](https://www.adobe.com/products/fresco.md): Digital painting and drawing.
+- [Your one-touch photo editor - Photoshop Express ](https://www.adobe.com/products/photoshop-express.md): Get Photoshop Express, the mobile app made for all-in-one photo editing and sharing.
+- [Collaborate and edit video with your team, anywhere - Premiere Pro Features](https://www.adobe.com/products/premiere/collaboration.md): Organize, review, and manage work-in-progress assets and the people and processes supporting them — all in one place.
+- [Rediscover the joy of drawing and painting anywhere - Adobe Fresco](https://www.adobe.com/products/fresco.md): The pro painting and drawing app. Made for everyone. Free for all.
+- [Quickly output video files for virtually any screen - Media Encoder](https://www.adobe.com/products/media-encoder.md): Ingest, transcode, create proxies, and output to almost any format you can imagine.
+- [Click. Capture. Create - Capture](https://www.adobe.com/products/capture.md): Transform images on your mobile device into creative building blocks for all your designs with our powerful vector converter.
+- [Animate your 2D characters in real time - Character Animator](https://www.adobe.com/products/character-animator.md): Use your expressions and movements to bring your characters to life with Character Animator. 
+- [Augmented reality - Adobe Aero](https://www.adobe.com/products/aero.md): Adobe Aero is the most intuitive way to build, view, and share robust immersive storytelling experiences in mobile AR.
+- [Creative Cloud FAQ](https://helpx.adobe.com/creative-cloud/help/creative-cloud-desktop-app-faq.md): Common questions and answers.
+
+## Substance 3D
+- [Paint game-changing textures in real time - Substance 3D Painter](https://www.adobe.com/products/substance3d/apps/painter.md):Texture 3D models in real time with this industry standard app. 
+- [Digitize and enrich assets with our 3D photogrammetry app - Substance 3D Sampler](https://www.adobe.com/products/substance3d/apps/sampler.md): Create 3D materials and lights in a flash from real-life images.
+- [Design parametric 3D assets with full control and infinite possibilities - Substance 3D Designer ](https://www.adobe.com/products/substance3d/apps/designer.md): Create seamless materials, patterns, image filters, and environment lights with infinite variations.
+- [Create 3D Models on Desktop and in VR - Substance 3D Modeler](https://www.adobe.com/products/substance3d/apps/modeler.md): Intuitively create 3D models on desktop and in VR. 
+
+## Video & Motion
+- [Premiere Rush](https://www.adobe.com/products/premiere-rush.md): Video editing on the go.
+- [Character Animator](https://www.adobe.com/products/character-animator.md): Animate characters in real-time.
+
+## Audio
+- [Audition](https://www.adobe.com/products/audition.md): Audio recording, mixing, and restoration.
+
+## Web & UX
+- [Dreamweaver](https://www.adobe.com/products/dreamweaver.md): Web design and development.
+- [Adobe XD](https://www.adobe.com/products/xd.md): User experience design and prototyping.
+
+## Additional Tools
+- [Bridge](https://www.adobe.com/products/bridge.md): Media asset management.
+- [Media Encoder](https://www.adobe.com/products/media-encoder.md): Media processing and export.
+- [Capture](https://www.adobe.com/products/capture.md): Convert images into color themes, patterns, and more.
+- [Firefly](https://www.adobe.com/sensei/generative-ai/firefly.md): Generative AI for creative content.
+- [Collaborate with copywriters and editors - InCopy](https://www.adobe.com/products/incopy.md): InCopy lets copywriters and editors style text, track changes, and make simple layout modifications to a document while designers work on the same document simultaneously in Adobe InDesign — all without overwriting each other’s contributions.
