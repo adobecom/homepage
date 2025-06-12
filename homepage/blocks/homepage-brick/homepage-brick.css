@@ -466,6 +466,7 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 }
 
 .homepage-brick.stack .background {
+    margin-top: 8px;
     align-self: center;
 }
 
