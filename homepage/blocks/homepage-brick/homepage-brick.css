@@ -459,10 +459,14 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 .homepage-brick.right .action-area { justify-content: end; }
 
 /* stack background */
-.homepage-brick.stack {
-  flex-direction: column-reverse;
-  align-items: center;
-  padding-bottom: 16px;
+.homepage-brick.stack .foreground {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.homepage-brick.stack .background {
+    align-self: center;
 }
 
 .homepage-brick.stack .background {
@@ -494,14 +498,8 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 }
 
 @media screen and (min-width: 1200px) {
-  .homepage-brick.two-thirds-grid.stack {
-    flex-direction: row-reverse;
-    align-items: initial;
-  }
-
-  .homepage-brick.two-thirds-grid.stack .background {
-    align-self: center;
-    padding-right: .5rem;
+  .homepage-brick.two-thirds-grid.stack .foreground {
+    flex-direction: row;
   }
 
   .homepage-brick.two-thirds-grid.stack .background .desktopOnly img {

@@ -186,6 +186,10 @@ export default async function init(el) {
       link.classList.remove('con-button', 'button-l', 'blue');
       link.append(...foreground.childNodes);
       foreground.remove();
+      const background = el.querySelector('.background:not(.first-background)');
+      if (el.classList.contains('stack') && background) {
+        link.append(background)
+      }
     }
   }
 
