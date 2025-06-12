@@ -457,3 +457,53 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 }
 
 .homepage-brick.right .action-area { justify-content: end; }
+
+/* stack background */
+.homepage-brick.stack .foreground {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.homepage-brick.stack .background {
+    margin-top: 8px;
+    align-self: center;
+}
+
+.homepage-brick.stack .background {
+  position: static;
+}
+
+.homepage-brick.stack .background img {
+  object-fit: initial;
+  width: initial;
+  height: initial;
+}
+
+.homepage-brick.stack .background .desktopOnly img {
+  max-height: 287px;
+}
+
+.homepage-brick.stack .background .tabletOnly img {
+  max-height: 267px;
+}
+
+.homepage-brick.stack .background .mobileOnly img {
+  max-height: 214px;
+}
+
+@media screen and (min-width: 600px) {
+  .homepage-brick .mobileOnly {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .homepage-brick.two-thirds-grid.stack .foreground {
+    flex-direction: row;
+  }
+
+  .homepage-brick.two-thirds-grid.stack .background .desktopOnly img {
+    max-height: initial;
+  }
+}
