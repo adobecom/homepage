@@ -141,8 +141,8 @@ const stageDomainsMap = {
     'creativecloud.adobe.com': 'stage.creativecloud.adobe.com',
     'projectneo.adobe.com': 'stg.projectneo.adobe.com',
   },
-  '.graybox.adobe.com': { 'www.adobe.com': 'origin' },
-  '.business-graybox.adobe.com': { 'business.adobe.com': 'origin' },
+  '.graybox.adobe.com': { 'www.stage.adobe.com': 'origin' },
+  '.business-graybox.adobe.com': { 'business.stage.adobe.com': 'origin' },
 };
 
 // Add any config options.
@@ -152,7 +152,7 @@ const CONFIG = {
   codeRoot: '/homepage',
   contentRoot: '/homepage',
   imsClientId: 'homepage_milo',
-  prodDomains: ['stock.adobe.com', 'helpx.adobe.com', 'business.adobe.com', 'www.adobe.com'],
+  prodDomains: ['stock.adobe.com', 'helpx.adobe.com', 'business.adobe.com', 'www.adobe.com', 'blog.adobe.com'],
   stageDomainsMap,
   geoRouting: 'on',
   fallbackRouting: 'on',
