@@ -21,7 +21,13 @@ function getBlockSize(el) {
 
 function decorateBlockBg(node) {
   node.classList.add('background');
-  if (!node.querySelector('img')) {
+  const blockNode = node.closest('.homepage-brick');
+  if (!node.querySelector('img') && blockNode.classList.contains('stack')) {
+    blockNode.style.background = node.textContent.trim();
+    [...node.children].forEach((e) => {
+      e.remove();
+    });
+  } else if (!node.querySelector('img')) {
     node.style.background = node.textContent.trim();
     [...node.children].forEach((e) => {
       e.remove();
@@ -180,6 +186,10 @@ export default async function init(el) {
       link.classList.remove('con-button', 'button-l', 'blue');
       link.append(...foreground.childNodes);
       foreground.remove();
+      const background = el.querySelector('.background:not(.first-background)');
+      if (el.classList.contains('stack') && background) {
+        link.append(background)
+      }
     }
   }
 
