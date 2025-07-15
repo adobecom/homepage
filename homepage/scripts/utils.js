@@ -20,7 +20,7 @@ export const [setLibs, getLibs] = (() => {
       libs = (() => {
         const { hostname, search } = location || window.location;
         if (hostname.includes('stage.adobe.com')) {
-          return "https://stage--milo--adobecom.aem.live/libs";
+          return "https://www.stage.adobe.com/libs";
         }
         if (!['.hlx.', '.aem.', 'local'].some((i) => hostname.includes(i))) return prodLibs;
         const branch = new URLSearchParams(search).get('milolibs') || 'main';
