@@ -335,13 +335,18 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 }
 
 .homepage-brick.click > .foreground {
-  padding: var(--spacing-m) var(--spacing-s) var(--spacing-s);
+  padding: var(--spacing-s) var(--spacing-s) var(--spacing-s);
   flex-grow: 1;
 }
 
 .homepage-brick.link,
-.homepage-brick.link .foreground {
+.homepage-brick.link .foreground,
+.homepage-brick.click.stack > .foreground {
   padding: 0;
+}
+
+.homepage-brick.click.stack > .foreground > .body-m {
+  padding: var(--spacing-s);
 }
 
 .section:not(.no-border-radius) .homepage-brick .highlight-row,
@@ -396,6 +401,7 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 .homepage-brick .tabletOnly,
 .homepage-brick .desktopOnly {
   display: none;
+  line-height: 0;
 }
 
 /* mashup */
@@ -466,7 +472,6 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 }
 
 .homepage-brick.stack .background {
-    margin-top: 8px;
     align-self: center;
 }
 
