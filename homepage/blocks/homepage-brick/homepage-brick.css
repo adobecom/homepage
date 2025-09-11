@@ -512,6 +512,10 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
     flex-direction: row;
   }
 
+  .homepage-brick.two-thirds-grid.stack .foreground > .body-m {
+    width: 40%;
+  }
+
   .homepage-brick.two-thirds-grid.stack .background .desktopOnly img {
     max-height: initial;
   }
