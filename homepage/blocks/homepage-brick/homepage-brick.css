@@ -465,6 +465,10 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 .homepage-brick.right .action-area { justify-content: end; }
 
 /* stack background */
+.section.masonry .homepage-brick.stack .background {
+  border-radius: initial;
+}
+
 .homepage-brick.stack .foreground {
   display: flex;
   flex-direction: column;
