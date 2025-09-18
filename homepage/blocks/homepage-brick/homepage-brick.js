@@ -52,7 +52,6 @@ function decorateBlockBg(node) {
         const text = e.textContent.trim();
         if (text !== '') {
           if (node.closest('.stack')) {
-            console.log('stack', text);
             text.split(',').forEach((t) => {
               const styleT = t.trim().toLowerCase();
               if (styleT === 'left' || styleT === 'top') node.style.alignSelf = 'flex-start';
