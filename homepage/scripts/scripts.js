@@ -162,7 +162,11 @@ const CONFIG = {
     id: 'homepage_loggedout_default',
     version: '1.83',
     onDemand: true,
-  }
+  },
+  placeholderPath: {
+    contentRoot: '/cc-shared',
+    repo: 'cc',
+  },
 };
 
 /*
