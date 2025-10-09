@@ -13,7 +13,7 @@
 import { setLibs } from './utils.js';
 
 const ACOM_SIGNED_IN_STATUS = 'acomsis';
-const ACOM_SIGNED_IN_STATUS_STAGE = 'acomsis_stage_disabled';
+const ACOM_SIGNED_IN_STATUS_STAGE = 'acomsis_stage';
 const STYLES = '/homepage/styles/styles.css';
 const LIBS = '/libs';
 const ENVS = {
@@ -224,7 +224,6 @@ const getCookie = (name) => document.cookie
   ?.split('=')[1];
 
 async function imsCheck() {
-  return false;
   const { host, pathname } = window.location;
   // no need to check IMS for these cases:
   if (!host.includes('adobe.com') || pathname.split('/').at(-1).startsWith('media_')) return false;
@@ -282,7 +281,6 @@ function loadStyles() {
   }
 
   imsCheck().then(isSignedInUser => {
-    return;
     const signedInCookie = isStage ? getCookie(ACOM_SIGNED_IN_STATUS_STAGE) : getCookie(ACOM_SIGNED_IN_STATUS);
     const redirectUri = getRedirectUri();
     if (redirectUri) window.adobeIMS.adobeIdData.redirect_uri = redirectUri;
