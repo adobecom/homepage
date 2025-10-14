@@ -58,7 +58,6 @@ function decorateBlockBg(node) {
               if (styleT === 'right' || styleT === 'bottom') node.style.alignSelf = 'flex-end';
             });
           } else {
-            //const points = text?.slice(text.indexOf(':') + 1).split(',');
             const [x, y = '', s = ''] = text.split(',');
             image.style.objectPosition = `${x.trim().toLowerCase()} ${y.trim().toLowerCase()}`;
             if (s !== '') image.style.objectFit = s.trim().toLowerCase();
