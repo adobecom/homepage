@@ -512,8 +512,16 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
     flex-direction: row;
   }
 
+  .homepage-brick.two-thirds-grid.stack.vertical .foreground {
+    flex-direction: column;
+  }
+
   .homepage-brick.two-thirds-grid.stack .foreground > .body-m {
     width: 40%;
+  }
+  
+  .homepage-brick.two-thirds-grid.stack.vertical .foreground > .body-m {
+    width: 100%;
   }
 
   .homepage-brick.two-thirds-grid.stack .background .desktopOnly img {
