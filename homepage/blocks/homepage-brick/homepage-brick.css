@@ -465,7 +465,7 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 .homepage-brick.right .action-area { justify-content: end; }
 
 /* stack background */
-.section.masonry .homepage-brick.stack .background {
+.section.masonry .homepage-brick.stack.click .foreground .background {
   border-radius: initial;
 }
 
