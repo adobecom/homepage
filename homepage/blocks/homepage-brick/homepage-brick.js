@@ -72,6 +72,13 @@ function enforceHeaderLevel(node, level) {
   node.replaceWith(clone);
 }
 
+function enforceHeaderLevels(headers, baseLevel) {
+  headers.forEach((header, counter) => {
+    const level = counter === 0 ? baseLevel : baseLevel + 1;
+    enforceHeaderLevel(header, level);
+  });
+}
+
 export default async function init(el) {
   el.classList.forEach((className) => {
     if (className.includes('-grid')) {
@@ -140,15 +147,13 @@ export default async function init(el) {
     }
   }
 
+  const linkBar = document.querySelector('.homepage-link-bar');
+
   if (!el.classList.contains('above-pods')) {
-    headers.forEach((header, counter) => {
-      if (!counter) {
-        enforceHeaderLevel(header, 3);
-      } else {
-        enforceHeaderLevel(header, 4);
-      }
-    });
+    const baseLevel = linkBar ? 3 : 2;
+    enforceHeaderLevels(headers, baseLevel);
   }
+
   const config = blockTypeSizes[blockSize];
   const overrides = ['-heading', '-body', '-detail'];
   overrides.forEach((override, index) => {
