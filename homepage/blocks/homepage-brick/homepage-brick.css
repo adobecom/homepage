@@ -490,15 +490,15 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 }
 
 .homepage-brick.stack .background .desktopOnly img {
-  max-height: 287px;
+  max-height: 308px;
 }
 
 .homepage-brick.stack .background .tabletOnly img {
-  max-height: 267px;
+  max-height: 292px;
 }
 
 .homepage-brick.stack .background .mobileOnly img {
-  max-height: 214px;
+  max-height: 238px;
 }
 
 @media screen and (min-width: 600px) {
