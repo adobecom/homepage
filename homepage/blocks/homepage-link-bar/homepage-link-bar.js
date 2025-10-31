@@ -43,15 +43,6 @@ const icons = {
 
 }
 
-function enforceHeaderLevel(node, level) {
-  const clone = document.createElement(`H${level}`);
-  for (const attr of node.attributes) {
-    clone.setAttribute(attr.name, attr.value);
-  }
-  clone.innerText = node.innerText;
-  node.replaceWith(clone);
-}
-
 export default async function init(el) {
   const { decorateButtons, decorateBlockText, decorateBlockBg } = await import(`${getLibs()}/utils/decorate.js`);
 
@@ -79,14 +70,29 @@ export default async function init(el) {
     let [head, ...tail] = rows;
     const header = head.querySelector('h1, h2, h3, h4, h5, h6');
     if (header) {
+      const pTag = document.createElement('p');
+      pTag.innerHTML = header.innerHTML;
+      pTag.className = header.className;
+      header.replaceWith(pTag);
       head.classList.add('header');
-      enforceHeaderLevel(header, 2);
       rows = tail;
     }
   }
 
   el.classList.add(`button-count-${rows.length}`);
-  rows.forEach((row, index) => row.classList.add(`button-index-${index + 1}`));
+  
+  // Create ul and wrap button rows in li elements
+  const ul = document.createElement('ul');
+  ul.classList.add('reset-list');
+  rows.forEach((row, index) => {
+    const li = document.createElement('li');
+    li.innerHTML = row.innerHTML;
+    li.className = row.className;
+    li.classList.add(`button-index-${index + 1}`);
+    ul.appendChild(li);
+    row.remove();
+  });
+  el.appendChild(ul);
   
   if (document.querySelector('.homepage-link-bar:not(.custom-bg)')) {
     document.querySelector('main > div:nth-child(3)')?.classList.add('small-top-padding');

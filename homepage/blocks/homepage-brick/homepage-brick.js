@@ -72,11 +72,18 @@ function enforceHeaderLevel(node, level) {
   node.replaceWith(clone);
 }
 
-function enforceHeaderLevels(headers, baseLevel) {
-  headers.forEach((header, counter) => {
-    const level = counter === 0 ? baseLevel : baseLevel + 1;
-    enforceHeaderLevel(header, level);
-  });
+function enforceHeaderLevels(headers, baseLevel, isNews = false) { 
+  if (isNews) {
+    const nextLevel = baseLevel + 1;
+    headers.forEach((header, counter) => {
+      enforceHeaderLevel(header, counter === 0 ? baseLevel : nextLevel);
+    });
+  } else {
+    // Make everything h2 unless parent is 'news'
+    headers.forEach((header) => {
+      enforceHeaderLevel(header, 2);
+    });
+  }
 }
 
 export default async function init(el) {
@@ -147,11 +154,8 @@ export default async function init(el) {
     }
   }
 
-  const linkBar = document.querySelector('.homepage-link-bar');
-
   if (!el.classList.contains('above-pods')) {
-    const baseLevel = linkBar ? 3 : 2;
-    enforceHeaderLevels(headers, baseLevel);
+    enforceHeaderLevels(headers, 2, el.classList.contains('news'));
   }
 
   const config = blockTypeSizes[blockSize];
