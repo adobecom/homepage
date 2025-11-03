@@ -335,13 +335,18 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 }
 
 .homepage-brick.click > .foreground {
-  padding: var(--spacing-m) var(--spacing-s) var(--spacing-s);
+  padding: var(--spacing-s) var(--spacing-s) var(--spacing-s);
   flex-grow: 1;
 }
 
 .homepage-brick.link,
-.homepage-brick.link .foreground {
+.homepage-brick.link .foreground,
+.homepage-brick.click.stack > .foreground {
   padding: 0;
+}
+
+.homepage-brick.click.stack > .foreground > .body-m {
+  padding: var(--spacing-s);
 }
 
 .section:not(.no-border-radius) .homepage-brick .highlight-row,
@@ -396,6 +401,7 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 .homepage-brick .tabletOnly,
 .homepage-brick .desktopOnly {
   display: none;
+  line-height: 0;
 }
 
 /* mashup */
@@ -459,6 +465,10 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 .homepage-brick.right .action-area { justify-content: end; }
 
 /* stack background */
+.section.masonry .homepage-brick.stack.click .foreground .background {
+  border-radius: 0 0 20px 20px;
+}
+
 .homepage-brick.stack .foreground {
   display: flex;
   flex-direction: column;
@@ -466,7 +476,6 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 }
 
 .homepage-brick.stack .background {
-    margin-top: 8px;
     align-self: center;
 }
 
@@ -481,15 +490,15 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 }
 
 .homepage-brick.stack .background .desktopOnly img {
-  max-height: 287px;
+  max-height: 308px;
 }
 
 .homepage-brick.stack .background .tabletOnly img {
-  max-height: 267px;
+  max-height: 292px;
 }
 
 .homepage-brick.stack .background .mobileOnly img {
-  max-height: 214px;
+  max-height: 238px;
 }
 
 @media screen and (min-width: 600px) {
@@ -501,6 +510,18 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 @media screen and (min-width: 1200px) {
   .homepage-brick.two-thirds-grid.stack .foreground {
     flex-direction: row;
+  }
+
+  .homepage-brick.two-thirds-grid.stack.vertical .foreground {
+    flex-direction: column;
+  }
+
+  .homepage-brick.two-thirds-grid.stack .foreground > .body-m {
+    width: 40%;
+  }
+  
+  .homepage-brick.two-thirds-grid.stack.vertical .foreground > .body-m {
+    width: 100%;
   }
 
   .homepage-brick.two-thirds-grid.stack .background .desktopOnly img {

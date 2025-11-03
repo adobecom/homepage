@@ -51,10 +51,17 @@ function decorateBlockBg(node) {
       if (image) {
         const text = e.textContent.trim();
         if (text !== '') {
-          //const points = text?.slice(text.indexOf(':') + 1).split(',');
-          const [x, y = '', s = ''] = text.split(',');
-          image.style.objectPosition = `${x.trim().toLowerCase()} ${y.trim().toLowerCase()}`;
-          if (s !== '') image.style.objectFit = s.trim().toLowerCase();
+          if (node.closest('.stack')) {
+            text.split(',').forEach((t) => {
+              const styleT = t.trim().toLowerCase();
+              if (styleT === 'left' || styleT === 'top') node.style.alignSelf = 'flex-start';
+              if (styleT === 'right' || styleT === 'bottom') node.style.alignSelf = 'flex-end';
+            });
+          } else {
+            const [x, y = '', s = ''] = text.split(',');
+            image.style.objectPosition = `${x.trim().toLowerCase()} ${y.trim().toLowerCase()}`;
+            if (s !== '') image.style.objectFit = s.trim().toLowerCase();
+          }
           const picture = e.querySelector('picture');
           e.innerHTML = picture.outerHTML;
         }
@@ -70,6 +77,20 @@ function enforceHeaderLevel(node, level) {
   }
   clone.innerHTML = node.innerHTML;
   node.replaceWith(clone);
+}
+
+function enforceHeaderLevels(headers, baseLevel, isNews = false) { 
+  if (isNews) {
+    const nextLevel = baseLevel + 1;
+    headers.forEach((header, counter) => {
+      enforceHeaderLevel(header, counter === 0 ? baseLevel : nextLevel);
+    });
+  } else {
+    // Make everything h2 unless parent is 'news'
+    headers.forEach((header) => {
+      enforceHeaderLevel(header, 2);
+    });
+  }
 }
 
 export default async function init(el) {
@@ -141,14 +162,9 @@ export default async function init(el) {
   }
 
   if (!el.classList.contains('above-pods')) {
-    headers.forEach((header, counter) => {
-      if (!counter) {
-        enforceHeaderLevel(header, 3);
-      } else {
-        enforceHeaderLevel(header, 4);
-      }
-    });
+    enforceHeaderLevels(headers, 2, el.classList.contains('news'));
   }
+
   const config = blockTypeSizes[blockSize];
   const overrides = ['-heading', '-body', '-detail'];
   overrides.forEach((override, index) => {
