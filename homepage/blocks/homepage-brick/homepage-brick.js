@@ -51,10 +51,17 @@ function decorateBlockBg(node) {
       if (image) {
         const text = e.textContent.trim();
         if (text !== '') {
-          //const points = text?.slice(text.indexOf(':') + 1).split(',');
-          const [x, y = '', s = ''] = text.split(',');
-          image.style.objectPosition = `${x.trim().toLowerCase()} ${y.trim().toLowerCase()}`;
-          if (s !== '') image.style.objectFit = s.trim().toLowerCase();
+          if (node.closest('.stack')) {
+            text.split(',').forEach((t) => {
+              const styleT = t.trim().toLowerCase();
+              if (styleT === 'left' || styleT === 'top') node.style.alignSelf = 'flex-start';
+              if (styleT === 'right' || styleT === 'bottom') node.style.alignSelf = 'flex-end';
+            });
+          } else {
+            const [x, y = '', s = ''] = text.split(',');
+            image.style.objectPosition = `${x.trim().toLowerCase()} ${y.trim().toLowerCase()}`;
+            if (s !== '') image.style.objectFit = s.trim().toLowerCase();
+          }
           const picture = e.querySelector('picture');
           e.innerHTML = picture.outerHTML;
         }
