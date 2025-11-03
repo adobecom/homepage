@@ -79,6 +79,20 @@ function enforceHeaderLevel(node, level) {
   node.replaceWith(clone);
 }
 
+function enforceHeaderLevels(headers, baseLevel, isNews = false) { 
+  if (isNews) {
+    const nextLevel = baseLevel + 1;
+    headers.forEach((header, counter) => {
+      enforceHeaderLevel(header, counter === 0 ? baseLevel : nextLevel);
+    });
+  } else {
+    // Make everything h2 unless parent is 'news'
+    headers.forEach((header) => {
+      enforceHeaderLevel(header, 2);
+    });
+  }
+}
+
 export default async function init(el) {
   el.classList.forEach((className) => {
     if (className.includes('-grid')) {
@@ -148,14 +162,9 @@ export default async function init(el) {
   }
 
   if (!el.classList.contains('above-pods')) {
-    headers.forEach((header, counter) => {
-      if (!counter) {
-        enforceHeaderLevel(header, 3);
-      } else {
-        enforceHeaderLevel(header, 4);
-      }
-    });
+    enforceHeaderLevels(headers, 2, el.classList.contains('news'));
   }
+
   const config = blockTypeSizes[blockSize];
   const overrides = ['-heading', '-body', '-detail'];
   overrides.forEach((override, index) => {

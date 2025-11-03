@@ -14,10 +14,14 @@ describe('homepage-link-bar block', () => {
       const block = blocks[0];
       await init(block);
       expect(block.className).to.equal('homepage-link-bar justified custom-bg button-count-5');
-      const directChildren = block.querySelectorAll(':scope > div');
-      expect(directChildren.length).to.equal(6);
+      const directChildren = block.querySelectorAll(':scope > *');
+      expect(directChildren.length).to.equal(2);
       expect(directChildren[0].classList.contains('header')).to.be.true;
-      expect(directChildren[1].classList.contains('button-index-1')).to.be.true;
+      expect(directChildren[1].tagName).to.equal('UL');
+      expect(directChildren[1].classList.contains('reset-list')).to.be.true;
+      const listItems = block.querySelectorAll('ul.reset-list > li');
+      expect(listItems.length).to.equal(5);
+      expect(listItems[0].classList.contains('button-index-1')).to.be.true;
       const span = block.querySelector('span.icon.icon-edit-videos.margin-right');
       expect(span).to.be.exist;
       await init(blocks[1]);

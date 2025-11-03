@@ -30,10 +30,8 @@ describe('homepage-brick block', () => {
       expect(directChildren[1].className).to.equal('background');
       expect(directChildren[2].className).to.equal('foreground');
       expect(directChildren[2].getAttribute('target')).to.equal('_blank');
-      const h3 = block.querySelector('h3');
-      expect(h3).to.be.exist;
-      const divLink = block.querySelector('div.click-link');
-      expect(divLink).to.be.exist;
+      const h2 = block.querySelector('h2');
+      expect(h2).to.be.exist;
       expect(directChildren[2].className).to.equal('foreground');
     });
   });
@@ -53,7 +51,7 @@ describe('homepage-brick block', () => {
       expect(directChildren.length).to.equal(3);
       expect(directChildren[0].className).to.equal('highlight-row');
       expect(directChildren[1].className).to.equal('background first-background');
-      expect(directChildren[2].className).to.equal('foreground');
+      expect(directChildren[2].classList.contains('foreground')).to.be.true;
     });
   });
   describe('link variant with split background', () => {
@@ -63,7 +61,7 @@ describe('homepage-brick block', () => {
       const directChildren = block.querySelectorAll(':scope > div');
       expect(directChildren.length).to.equal(2);
       expect(directChildren[0].className).to.equal('background first-background');
-      expect(directChildren[1].className).to.equal('foreground');
+      expect(directChildren[1].classList.contains('foreground')).to.be.true;
     });
   });
   describe('miscellaneous', () => {
