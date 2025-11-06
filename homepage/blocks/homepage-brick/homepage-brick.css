@@ -406,10 +406,17 @@ body:not([data-mep-highlight="true"]) .section.masonry [data-removed-manifest-id
 
 /* mashup */
 .homepage-brick.click:hover .con-button:not(.blue):not(.fill) {
-    background-color: var(--color-black);
-    border-color: var(--color-black);
-    color: var(--color-white);
-    text-decoration: none;
+  background-color: var(--color-black);
+  border-color: var(--color-black);
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+.homepage-brick.dark.click:hover .con-button:not(.blue):not(.fill) {
+  background-color: var(--color-white);
+  border-color: var(--color-white);
+  color: var(--color-black);
+  text-decoration: none;
 }
 
 @media screen and (max-width: 1023px) {
