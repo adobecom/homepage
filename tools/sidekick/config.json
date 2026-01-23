@@ -3,6 +3,7 @@
   "host": "www.adobe.com",
   "previewHost": "main--homepage--adobecom.aem.page",
   "liveHost": "main--homepage--adobecom.aem.live",
+  "trustedHosts": [ "da.live" ],
   "plugins": [
     {
       "id": "path",
